@@ -1,6 +1,3 @@
-<?php
-include "dbconnect.php";
-include "nameParser.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
