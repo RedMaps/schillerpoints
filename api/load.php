@@ -9,7 +9,11 @@
 </head>
 <body>
 
+<?php include 'navbar.php'; ?>
+
   <div class="active_projects"></div>
+
+  <a onclick="addProject()" class="btn-floating halfway-fab waves-effect waves-light blue-grey addbtn z-depth-4"><i class="material-icons">add</i></a>
 
   <!-- <div class="row">
     <div class="col s12 m4"></div>
@@ -24,6 +28,12 @@
       </div>
     </div>
     <div class="col s12 m4"></div>
+  </div> -->
+
+  <!-- <div class="fixed-action-btn horizontal">
+    <a class="btn-floating btn-large green waves-effect waves-light addbtn">
+      <i class="large material-icons">add</i>
+    </a>
   </div> -->
 
   <?php

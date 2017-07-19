@@ -33,3 +33,5 @@ $('.timepicker').pickatime({
      } // Callback for Modal close
   }
 );
+
+ $(".button-collapse").sideNav();

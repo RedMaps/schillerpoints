@@ -1,4 +1,4 @@
-<div id="editWin" class="modal modal-fixed-footer blue-grey white-text editWin">
+<div id="editWin" class="modal modal-fixed-footer blue-grey white-text editWin full">
   <div class="modal-content">
 
     <h4>EDIT</h4>

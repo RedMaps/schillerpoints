@@ -2,6 +2,40 @@ body{
   background: #282C34;
 }
 
+.addbtn{
+    position: fixed !important;
+    bottom: 20px !important;
+    background: #00C853 !important;
+    height: 50px;
+    width: 50px;
+}
+
+.btn-floating.addbtn i{
+  line-height: 50px;
+}
+
+
+@media only screen and (max-width: 500px) {
+.modal.full{
+  width: 90%;
+  max-height: 95%;
+  height: 95%;
+  top: 3% !important;
+}
+
+.modal.modal-fixed-footer{
+  height: 95%;
+}
+
+.addbtn{
+    position: fixed !important;
+    bottom: 10px !important;
+    top: 30px;
+    z-index: 1000;
+    background: #607D8B !important;
+}
+}
+
 .absolute{
   position: absolute;
 }
@@ -25,8 +59,20 @@ body{
   left: 20px;
 }
 
+.navbar-fixed{
+  margin-bottom: 30px;
+}
+
 .row{
   margin-bottom: 0px;
+}
+
+.fixed{
+  position: fixed;
+}
+
+.bottom{
+  bottom: -15px;
 }
 
 [type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after{
