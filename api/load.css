@@ -1,0 +1,46 @@
+body{
+  background: #282C34;
+}
+
+.absolute{
+  position: absolute;
+}
+.right{
+  float: right;
+}
+
+.joinbtn{
+  top: -20px;
+  right: 20px;
+}
+
+.editbtn{
+  top: -20px;
+  right: 10px;
+  margin-right: 20px;
+}
+
+.morebtn{
+  top: -20px;
+  left: 20px;
+}
+
+.row{
+  margin-bottom: 0px;
+}
+
+[type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after{
+  border: 2px solid white;
+}
+
+input[type=range]{
+  border: none;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: white;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    background: white;
+}

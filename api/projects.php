@@ -1,7 +1,8 @@
 <?php
 require_once 'Mobile_Detect.php';
 include 'dbconnect.php';
-include 'nameParser.php';
+//include 'nameParser.php';
+include 'api.php';
 
 $uId = $_POST['id'];
 

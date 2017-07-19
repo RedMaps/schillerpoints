@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="../css/materialize.css"  media="screen","projection"/>
+  <link type="text/css" rel="stylesheet" href="load.css"  media="screen,projection"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+  <div class="active_projects"></div>
+
+  <!-- <div class="row">
+    <div class="col s12 m4"></div>
+    <div class="col s12 m4">
+      <div class="card blue-grey darken-1" onclick="console.log('click')">
+        <div class="card-content white-text">
+          <span class="card-title">Theaterstück</span>
+          <p>Gemeinsam mit bisher zwanzig Weiteren, habe&nbsp;ich im zweitem Halbjahr der EF einen Theaterkurs auf die Beine gestellt. Wir wollen uns bisher dienstags in der 55min Pause treffen und bis zum Ende des Schuljahres ein St&uuml;ck ein&uuml;ben. Der Gewinn vom Eintritt unserer Vorstellung wird dann nat&uuml;rlich auf&nbsp;unser Stufenkonto &uuml;berwiesen.</p>
+        </div>
+        <a class="btn-floating waves-effect waves-light green right join tooltipped" data-position="bottom" data-delay="50" data-tooltip="join project"><i class="material-icons">person_add</i></a>
+        <a class="btn-floating waves-effect waves-light blue-grey darken-3 right edit tooltipped" data-position="bottom" data-delay="50" data-tooltip="edit project"><i class="material-icons">edit</i></a>
+      </div>
+    </div>
+    <div class="col s12 m4"></div>
+  </div> -->
+
+  <?php
+    include "../modals/editModal.php";
+    include "../modals/addModal.php";
+    include "../modals/loginModal.php";
+   ?>
+
+  <script type="text/javascript" src="../js/materialize.js"></script>
+  <script src="api.js"></script>
+  <script src="load.js"></script>
+</body>
+</html>

@@ -187,10 +187,44 @@ class Project {
     location='$pLocation',
     max='$pMax'
     WHERE id=$prId");
-    return json_encode($query);
+    return json_encode($pTitle);
   }
   public static function get($id, $con){
 
+  }
+
+  //returns true if user joined project
+  public static function checkJoin($uId, $id, $con){
+    $double = false;
+    $query = mysqli_query($con, "select members from projects where id=$id");
+    $array = mysqli_fetch_array($query);
+    $array = $array['members'];
+    $decoded = json_decode($array, true);
+    for($i = 0; $i < count($decoded); $i++){
+      if($decoded[$i] == $uId) $double = true;
+    }
+    return $double;
+  }
+
+  public static function checkFull($id, $con){
+    $query = mysqli_query($con, "select members from projects where id=$id");
+    $array = mysqli_fetch_array($query);
+    $array = $array['members'];
+    $decoded = json_decode($array, true);
+    $query = mysqli_query($con, "select max from projects where id=$id");
+    $array = mysqli_fetch_array($query);
+    $max = $array['max'];
+    $amount = count($decoded);
+    if($amount < $max) return false; else return true;
+  }
+
+  public static function canEdit($uId, $id, $con){
+    $array = mysqli_fetch_array(mysqli_query($con, "select userStatus from users where userId=$uId"));
+    $status = $array['userStatus'];
+    if($status) return true;
+    $array = mysqli_fetch_array(mysqli_query($con, "select leader from projects where id=$id"));
+    $leader = $array['leader'];
+    if($leader == $uId) return true; else return false;
   }
 
   //IDEA: maybe make users join/leave by userId?

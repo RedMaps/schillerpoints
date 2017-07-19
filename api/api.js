@@ -1,3 +1,19 @@
+init();
+
+function init(){
+	if($('.active_projects').length || $('.pending_projects').length) loadProjects();
+}
+
+$(".del-checkbox").change(function() {
+    if(this.checked) {
+      $(".deletebtn").removeClass("disabled");
+      console.log("checked!");
+    }else{
+      $(".deletebtn").addClass("disabled");
+      console.log("unchecked!");
+    }
+});
+
 //javascript equivalent to the uniqid function from php
 (function () {
 	this.uniqid = function (pr, en) {
@@ -229,7 +245,7 @@ function getEditElements() {
 	var pTitle = $(".pTitle.edit").val();
 	var pContent = $(".pContent.edit").val();
 	var pLeader = $(".pLeader.edit").val();
-	var pDate = $('.datepicker.edit').pickadate('picker').get('highlight', 'yyyy-mm-dd');
+	var pDate = $('.pDate.edit').pickadate('picker').get('highlight', 'yyyy/mm/dd');
 	var pTime = $(".pTime.edit").val();
 	var pDuration = $(".pDuration.edit").val();
 	var pLocation = $(".pLocation.edit").val();
@@ -285,7 +301,7 @@ function createProject() {
 //sends userid to the php api to make the use join a given project
 function join(prId) {
 	checkLogin();
-	if(!localStorage.getItem("loginStatus")){
+	if(!localStorage.getItem("loginstatus")){
 		console.log("not logged in!");
 	}else{
 		$.ajax({
@@ -293,11 +309,12 @@ function join(prId) {
 							url: "api.php",
 							data: {
 								action: "joinproject",
-								id: data.userId,
+								id: localStorage.getItem("userid"),
 								prId: prId
 							},
 							success: function(results){
 											console.log(results);
+											loadProjects();
 									},
 							error: function(results){
 											console.log(results);
@@ -309,7 +326,7 @@ function join(prId) {
 
 function leave(prId) {
 	checkLogin();
-	if(!localStorage.getItem("loginStatus")){
+	if(!localStorage.getItem("loginstatus")){
 		console.log("not logged in!");
 	}else{
 		$.ajax({
@@ -317,11 +334,12 @@ function leave(prId) {
 							url: "api.php",
 							data: {
 								action: "leaveproject",
-								id: data.userId,
+								id: localStorage.getItem("userid"),
 								prId: prId
 							},
 							success: function(results){
 											console.log(results);
+											loadProjects();
 									},
 							error: function(results){
 											console.log(results);
@@ -332,7 +350,7 @@ function leave(prId) {
 
 function edit(prId) {
 	checkLogin();
-	if(!localStorage.getItem("loginStatus")){
+	if(!localStorage.getItem("loginstatus")){
 		console.log("not logged in!");
 	}else{
 		$.ajax({
@@ -345,6 +363,7 @@ function edit(prId) {
 							},
 							success: function(results){
 											console.log(results);
+											openEditWin(results);
 									},
 							error: function(results){
 											console.log(results);
@@ -356,21 +375,26 @@ function edit(prId) {
 function openEditWin(res){
 	res = JSON.parse(res);
 	var date = new Date(res.date);
-	date = date.toLocaleDateString('de-DE');
+	var datede = date.toLocaleDateString('de-DE');
+	var dateus = date.toLocaleDateString('en-US');
+	console.log(dateus);
 	$("#title").val(res.title);
 	$("#location").val(res.location);
-	$("#date").val(date);
+	//$("#date").attr("data-value",dateus);
+	$("#date").pickadate('set').set('select', date);
 	$("#time").val(res.time);
 	$("#duration").val(res.duration);
 	$("#description").val(res.content);
 	$("#max").val(res.max);
+	$("#submitEdit").attr('onclick', 'submitEdit(' + res.id + ')');
 	$("#editWin").modal("open");
 }
 
 function submitEdit(prId){
 	var pData = getEditElements();
+	console.log(pData);
 	checkLogin();
-	if(!localStorage.getItem("loginStatus")){
+	if(!localStorage.getItem("loginstatus")){
 		console.log("not logged in!");
 	}else{
 		$.ajax({
@@ -378,12 +402,13 @@ function submitEdit(prId){
 							url: "api.php",
 							data: {
 								action: "submitedit",
-								id: data.userId,
+								id: localStorage.getItem("userid"),
 								prId: prId,
 								pData: pData
 							},
 							success: function(results){
 											console.log(results);
+											loadProjects();
 									},
 							error: function(results){
 											console.log(results);
@@ -394,18 +419,16 @@ function submitEdit(prId){
 
 function loadProjects(){
 	checkLogin();
-	if(!localStorage.getItem("loginStatus")){
+	if(!localStorage.getItem("loginstatus")){
 
 	}else{
-
-	}
 	if(log)console.log("ajax active!");
 	$.ajax({
 				type: "POST",
 				url: "projects.php",
 				data: {
 					type: "active",
-					id: id
+					id: localStorage.getItem("userid")
 				},
 				success: function(results){
 						$(".active_projects").html(results);
@@ -419,7 +442,7 @@ function loadProjects(){
 				url: "projects.php",
 				data: {
 					type: "pending",
-					id: id
+					id: localStorage.getItem("userid")
 				},
 				success: function(results){
 						$(".pending_projects").html(results);
@@ -433,7 +456,7 @@ function loadProjects(){
 				url: "projects.php",
 				data: {
 					type: "finished",
-					id: id
+					id: localStorage.getItem("userid")
 				},
 				success: function(results){
 						$(".finished_projects").html(results);
@@ -447,7 +470,7 @@ function loadProjects(){
 				url: "projects.php",
 				data: {
 					type: "removed",
-					id: id
+					id: localStorage.getItem("userid")
 				},
 				success: function(results){
 						$(".removed_projects").html(results);
@@ -456,6 +479,7 @@ function loadProjects(){
 						console.log(message);
 				}
 	})
+	}
 }
 
 function addProject(){
