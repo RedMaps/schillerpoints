@@ -1,0 +1,37 @@
+#loginModal{
+  max-width: 400px;
+}
+
+body{
+  background: #282C34;
+  padding-left: 50px;
+}
+
+h3{
+  color: white;
+}
+
+h1{
+  color: white;
+}
+
+.card{
+  margin-right: 3rem;
+}
+
+.modal{
+  width: 60%;
+}
+
+.fixed-action-btn{
+  bottom: 14px;
+  right: 14px;
+}
+
+.fixed-action-btn.horizontal ul li{
+  margin: 0px 0px 0px 5px;
+}
+
+.absolute{
+  position: absolute;
+}
