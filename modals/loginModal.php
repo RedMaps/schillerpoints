@@ -1,7 +1,8 @@
-<div id="loginModal" class="modal modal-fixed-footer loginModal">
+<div id="loginModal" class="modal modal-fixed-footer blue-grey white-text loginModal">
   <div class="modal-content">
 
-    <h4>LOGIN</h4>
+    <h4 class="modalTitle">LOGIN</h4>
+    <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
 
     <div class="row">
 

@@ -99,6 +99,15 @@ function array_to_object($array) {
     return (object) $array;
 }
 
+function nameParser($name){
+  $UN = explode(' ', $name);
+  $lastName = $UN[1];
+  $firstName = $UN[0];
+  $lastName = substr($lastName, 0 , 1);
+  $lastName = strtoupper($lastName);
+  return $firstName . " " . $lastName . ".";
+}
+
 class Project {
   //HACK: TODO: Fix all of the code below and finish up project creation system
   public static function create($uId, $arr, $con){
@@ -170,7 +179,6 @@ class Project {
 
     $pTitle = $pData['pTitle'];
     $pContent = $pData['pContent'];
-    $pLeader = $pData['pLeader'];
     $pDate = $pData['pDate'];
     $pTime = $pData['pTime'];
     $pDuration = $pData['pDuration'];
@@ -180,7 +188,6 @@ class Project {
     $query = mysqli_query($con, "UPDATE projects SET
     title='$pTitle',
     content='$pContent',
-    leader='$pLeader',
     date='$pDate',
     time='$pTime',
     duration='$pDuration',
@@ -238,11 +245,11 @@ class Project {
     }
     if(!$double){
       array_push($decoded,$uId);
-      print_r($decoded);
       $serialized_array = json_encode($decoded);
       $result = mysqli_query($con, "update projects set members='$serialized_array' where id='".$id."'");
+      echo "SUCCESS: Sucessfully joined the project!";
     }else{
-      echo "ERROR: User already joined the project!";
+      echo "ERROR: Already joined the project!";
     }
   }
 
@@ -259,20 +266,22 @@ class Project {
       }
       if($lId){
         unset($decoded[$lId]);
-        print_r($decoded);
         $serialized_array = json_encode($decoded);
         $result = mysqli_query($con, "update projects set members='$serialized_array' where id='".$id."'");
+        echo "SUCCESS: Successfully left the project!";
       }else{
-        echo "ERROR: User hasn't joined project!";
+        echo "ERROR: You havent joined the project yet!";
       }
     }else{
-      echo "ERROR: Leader cannot leave project!";
+      echo "ERROR: Leader cannot leave the project!";
     }
   }
 }
 
-if(isset($_POST['action'])){
-  switch ($_POST['action']) {
+if(isset($_POST['action']) || $val != null){
+  $action = $_POST['action'];
+  if($val != null) $action = $val;
+  switch ($action) {
     case 'settoken':
       //TODO: implement getting id from login and then giving the user id to the setTokenSql function
       if(!Api::setTokenSql($_POST['token'], $_POST['id'], $con)) echo "\nerror: couldnt write to database!"; else echo "sucessfully written to database!";

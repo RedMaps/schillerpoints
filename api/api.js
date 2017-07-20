@@ -39,6 +39,22 @@ String.prototype.replaceAll = function(s1, s2) {
     );
 };
 
+function error(text){
+	Materialize.toast(text, 3000, 'red');
+}
+function success(text){
+	Materialize.toast(text, 3000, 'green');
+}
+function msg(text){
+	Materialize.toast(text, 3000, 'blue-grey');
+}
+
+function resultHandler(res){
+	if(res.substring(0,5) == "ERROR") error(res.slice(7));
+	if(res.substring(0,7) == "SUCCESS") success(res.slice(9));
+	if(res.substring(0,3) == "MSG") msg(res.slice(5));
+}
+
 if(localStorage.getItem("loginstatus") === null) localStorage.setItem("loginstatus",false);
 
 var data, id;
@@ -59,6 +75,7 @@ function genToken(id){
             },
             success: function(results){
                     console.log(results);
+										resultHandler(results);
                 },
             error: function(results){
                     console.log(results);
@@ -107,8 +124,10 @@ function getData(){
             },
             success: function(results){
 										console.log(results);
+										resultHandler(results);
 										var data = JSON.parse(results);
 										loginStatus = true;
+										updateSite(data);
 										localStorage.setItem("userid", data.userId);
 										localStorage.setItem("loginstatus", true);
                 },
@@ -140,9 +159,11 @@ function logIn(){
             },
             success: function(results){
 										console.log(results);
+										resultHandler(results);
 										var data = JSON.parse(results);
 										loginStatus = true;
 										localStorage.setItem("userid", data.userId);
+										updateSite(data);
 										localStorage.setItem("loginstatus", true);
 										genToken(data.userId);
                 },
@@ -163,6 +184,7 @@ function logOut(){
             },
             success: function(results){
 										console.log(results);
+										resultHandler(results);
 										loginStatus = false;
 										localStorage.setItem("loginstatus",false);
 										localStorage.setItem("userid", 0);
@@ -174,22 +196,53 @@ function logOut(){
 	localStorage.removeItem('token');
 }
 
+// TODO: also test through all other systems!
+// TODO: add project view modal!
+// TODO: create backend maybe
+// TODO: add money view somewhere
+// TODO: add main screen + load points
+// TODO: create some kind of documentation
+// TODO: comment everything
+// TODO: give users better feedback
+// TODO: add translation function
+// TODO: add profiles maybe
+// TODO: add color change or dark / light theme
+// TODO: add tabs for own projects / finished projects
+// TODO: make lists work?
+// TODO: maybe put something right or left to projects on desktop version
+// TODO: make database more adaptable
+// TODO: create deploy version of project
+// TODO: add point system (update every half year) -> collect points in total score
+// TODO: make timetable thing work properly and show extra text
+// TODO: migrate project for q1
+// TODO: add user options (mobile view)
+// TODO: implement external cronjobs
+// TODO: add project finished system
+// TODO: add forum for school related things
+// TODO: add password reset system
+// TODO: add notification system (app?)
+// TODO: add poll / voting system
+// TODO: add expire date
+// TODO: add login to current page
+// TODO: add salt n' pepper maybe
+// TODO: make todo list even longer
+
 //replaces certain tags on the site with login details
-function updateSite(){
+function updateSite(data){
 	//HACK: this setlogin thing doesnt work correctly yet...
 	if($('.setlogin').val()){
 		var rep;
-		rep = $(".uName").html().replaceAll("{uName}",data.userName);
-		$(".uName").html(rep);
-		rep = $(".uMail").html().replaceAll("{uMail}",data.userEmail);
-		$(".uMail").html(rep);
-		rep = $(".uPoints").html().replaceAll("{uPoints}",data.userPoints);
-		$(".uPoints").html(rep);
-		rep = $(".uTotal").html().replaceAll("{uTotal}",data.userTotal);
-		$(".uTotal").html(rep);
-		rep = $(".uId").html().replaceAll("{uId}",data.userId);
-		$(".uId").html(rep);
-		$(".uLoggedIn").html("true");
+		if($('.uName').length){ rep = $(".uName").html().replaceAll("{uName}",data.userName);
+		$(".uName").html(rep); }
+		if($('.uMail').length){ rep = $(".uMail").html().replaceAll("{uMail}",data.userEmail);
+		$(".uMail").html(rep); }
+		if($('.uPoints').length){ rep = $(".uPoints").html().replaceAll("{uPoints}",data.userPoints);
+		$(".uPoints").html(rep); }
+		if($('.uTotal').length){ rep = $(".uTotal").html().replaceAll("{uTotal}",data.userTotal);
+		$(".uTotal").html(rep); }
+		if($('.uId').length){ rep = $(".uId").html().replaceAll("{uId}",data.userId);
+		$(".uId").html(rep); }
+		if($('.uLoggedIn').length) $(".uLoggedIn").html("true");
 	}else{
 		console.log("loginset flag doesnt exist or is set to false!");
 	}
@@ -280,22 +333,28 @@ function getTest(){
 //gets the input data using the getProjectElements() function and sends it to the php api via ajax
 function createProject() {
 	var elements = getProjectElements();
-	console.log(elements);
-	$.ajax({
-						type: "POST",
-						url: "api.php",
-						data: {
-							action: "createproject",
-							pData: elements,
-							id: data.userId
-						},
-						success: function(results){
-										console.log(results);
-								},
-						error: function(results){
-										console.log(results);
-						}
-	});
+	checkLogin();
+	if(!localStorage.getItem("loginstatus")){
+		console.log("not logged in!");
+	}else{
+		console.log(elements);
+		$.ajax({
+							type: "POST",
+							url: "api.php",
+							data: {
+								action: "createproject",
+								pData: elements,
+								id: localStorage.getItem("userid")
+							},
+							success: function(results){
+											console.log(results);
+											resultHandler(results);
+									},
+							error: function(results){
+											console.log(results);
+							}
+		});
+	}
 }
 
 //sends userid to the php api to make the use join a given project
@@ -314,6 +373,7 @@ function join(prId) {
 							},
 							success: function(results){
 											console.log(results);
+											resultHandler(results);
 											loadProjects();
 									},
 							error: function(results){
@@ -322,7 +382,6 @@ function join(prId) {
 		});
 	}
 }
-
 
 function leave(prId) {
 	checkLogin();
@@ -339,6 +398,7 @@ function leave(prId) {
 							},
 							success: function(results){
 											console.log(results);
+											resultHandler(results);
 											loadProjects();
 									},
 							error: function(results){
@@ -363,6 +423,7 @@ function edit(prId) {
 							},
 							success: function(results){
 											console.log(results);
+											resultHandler(results);
 											openEditWin(results);
 									},
 							error: function(results){
@@ -408,6 +469,7 @@ function submitEdit(prId){
 							},
 							success: function(results){
 											console.log(results);
+											resultHandler(results);
 											loadProjects();
 									},
 							error: function(results){
@@ -431,7 +493,9 @@ function loadProjects(){
 					id: localStorage.getItem("userid")
 				},
 				success: function(results){
+						resultHandler(results);
 						$(".active_projects").html(results);
+						$('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -445,7 +509,9 @@ function loadProjects(){
 					id: localStorage.getItem("userid")
 				},
 				success: function(results){
+						resultHandler(results);
 						$(".pending_projects").html(results);
+						$('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -459,7 +525,9 @@ function loadProjects(){
 					id: localStorage.getItem("userid")
 				},
 				success: function(results){
+						resultHandler(results);
 						$(".finished_projects").html(results);
+						$('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -473,7 +541,9 @@ function loadProjects(){
 					id: localStorage.getItem("userid")
 				},
 				success: function(results){
+						resultHandler(results);
 						$(".removed_projects").html(results);
+						$('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -492,11 +562,12 @@ function deleteProject(prId){
 						url: "api.php",
 						data: {
 							action: "deleteproject",
-							id: data.userId,
+							id: localStorage.getItem("userid"),
 							prId: prId
 						},
 						success: function(results){
 										console.log(results);
+										resultHandler(results);
 								},
 						error: function(results){
 										console.log(results);
@@ -513,6 +584,7 @@ function loadData(){
 				},
 				success: function(results){
 						console.log(results);
+						resultHandler(results);
 					},
 				error: function(message){
 						console.log(message);

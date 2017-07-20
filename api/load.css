@@ -14,7 +14,6 @@ body{
   line-height: 50px;
 }
 
-
 @media only screen and (max-width: 500px) {
 .modal.full{
   width: 90%;
@@ -31,8 +30,20 @@ body{
     position: fixed !important;
     bottom: 10px !important;
     top: 30px;
-    z-index: 1000;
+    z-index: 997;
     background: #607D8B !important;
+}
+
+.nav-up {
+  margin-top: -45px;
+}
+
+.addbtn{
+  transition: margin-top 0.2s ease-in-out;
+}
+
+.btn-up {
+  margin-top: -45px;
 }
 }
 
@@ -75,6 +86,18 @@ body{
   bottom: -15px;
 }
 
+.modalTitle{
+    margin-bottom: -40px;
+}
+
+.x-button{
+  padding: 0rem;
+}
+
+.badge{
+  
+}
+
 [type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after{
   border: 2px solid white;
 }
@@ -89,4 +112,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 input[type=range]::-webkit-slider-runnable-track {
     background: white;
+}
+
+header{
+  transition: margin-top 0.2s ease-in-out;
 }

@@ -7,13 +7,14 @@
   <link type="text/css" rel="stylesheet" href="load.css"  media="screen,projection"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body>
-
+<?php include 'api.php'; ?>
 <?php include 'navbar.php'; ?>
+<body>
+  <input type="hidden" name="setlogin" class="setlogin" value="true">
 
   <div class="active_projects"></div>
 
-  <a onclick="addProject()" class="btn-floating halfway-fab waves-effect waves-light blue-grey addbtn z-depth-4"><i class="material-icons">add</i></a>
+  <a onclick="addProject()" class="btn-floating halfway-fab waves-effect waves-light blue-grey addbtn z-depth-4 tooltipped btn-down" data-position="left" data-tooltip="suggest project"><i class="material-icons">add</i></a>
 
   <!-- <div class="row">
     <div class="col s12 m4"></div>
@@ -40,6 +41,8 @@
     include "../modals/editModal.php";
     include "../modals/addModal.php";
     include "../modals/loginModal.php";
+    include "../modals/projectModal.php";
+    include "../modals/scoreModal.php";
    ?>
 
   <script type="text/javascript" src="../js/materialize.js"></script>

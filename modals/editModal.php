@@ -1,7 +1,8 @@
 <div id="editWin" class="modal modal-fixed-footer blue-grey white-text editWin full">
   <div class="modal-content">
 
-    <h4>EDIT</h4>
+    <h4 class="modalTitle">EDIT</h4>
+    <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
 
     <div class="row">
 

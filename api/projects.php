@@ -1,6 +1,5 @@
 <?php
-require_once 'Mobile_Detect.php';
-include 'dbconnect.php';
+//require_once 'Mobile_Detect.php';
 //include 'nameParser.php';
 include 'api.php';
 
