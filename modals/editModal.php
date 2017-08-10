@@ -1,8 +1,8 @@
 <div id="editWin" class="modal modal-fixed-footer blue-grey white-text editWin full">
   <div class="modal-content">
 
-    <h4 class="modalTitle">EDIT</h4>
     <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
+    <h4 class="modalTitle">EDIT</h4>
 
     <div class="row">
 
@@ -57,12 +57,10 @@
   </div>
 
   <div class="modal-footer blue-grey darken-1 white-text">
-    <a href="#!" class="white-text modal-action modal-close waves-effect waves-light btn-flat red" onclick="$('.deleteModal').modal('open');">Delete</a>
+    <a href="#!" class="white-text modal-action waves-effect waves-light btn-flat red" onclick="$('.deleteModal').modal('open');">Delete</a>
     <a href="#!" id="submitEdit" class="white-text modal-action modal-close waves-effect waves-light btn-flat green">Submit</a>
   </div>
 </div>
-
-<!-- TODO: Make this work :D -->
 
 <div id="deleteModal" class="modal deleteModal blue-grey white-text">
   <div class="modal-content">
@@ -77,7 +75,7 @@
     </div>
   </div>
   <div class="modal-footer blue-grey darken-1 white-text">
-    <a href="#!" class="modal-action modal-close waves-light waves-effect btn-flat green deletebtn disabled white-text" onclick="deleteProject(16)">YES</a>
-    <a href="#!" class="modal-action modal-close waves-light waves-effect btn-flat red white-text">NO</a>
+    <a id="deleteEdit" class="modal-action waves-light waves-effect btn-flat green deletebtn disabled white-text">YES</a>
+    <a class="modal-action modal-close waves-light waves-effect btn-flat red white-text">NO</a>
   </div>
 </div>

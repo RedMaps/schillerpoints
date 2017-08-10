@@ -22,7 +22,7 @@ function checkJoin($uId, $id, $con){
 }
 
 function isAdmin(){
-  
+
 }
 
 ?>

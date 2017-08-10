@@ -21,3 +21,6 @@
 	if ( !$dbcon ) {
 		die("Database Connection failed : " . mysql_error());
 	}
+
+	define("USERBASE","users");
+	define("PRJBASE","projects");

@@ -1,0 +1,8 @@
+.loginModal{
+  max-width: 400px;
+  max-height: 500px;
+}
+
+.impressumModal{
+  max-height: 90% !important;
+}

@@ -1,8 +1,8 @@
 <div id="addModal" class="modal full modal-fixed-footer blue-grey white-text addModal">
   <div class="modal-content">
 
-    <h4 class="modalTitle">SUBMIT A PROJECT</h4>
     <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
+    <h4 class="modalTitle">SUBMIT A PROJECT</h4>
 
     <div class="row">
 

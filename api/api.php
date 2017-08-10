@@ -26,21 +26,37 @@ class Api {
     }
   }
 
+  public static function getNames($ids, $con){
+    $array = array();
+    for($i = 0; $i < count($ids); $i++){
+      $result = mysqli_query($con, "select userName from ".USERBASE." where userId='".$ids[$i]."'");
+      $assoc = mysqli_fetch_array($result);
+      array_push($array, nameParser($assoc[0]));
+    }
+    echo json_encode($array);
+  }
+
+  public static function getName($id, $con){
+    $result = mysqli_query($con, "select userName from ".USERBASE." where userId='".$id."'");
+    $assoc = mysqli_fetch_array($result);
+    echo json_encode(nameParser($assoc[0]));
+  }
+
   //writes token to database
   public static function setTokenSql($token, $id, $con){
-    $result = mysqli_query($con, "update users set token='".$token."' where userId='".$id."'");
+    $result = mysqli_query($con, "update ".USERBASE." set token='".$token."' where userId='".$id."'");
     if($result) return true; else return false;
   }
 
   //checks wether the login is viable
   public static function checkLogin($token, $uId, $con){
-    return mysqli_num_rows(mysqli_query($con, "SELECT * from users WHERE token='".$token."' AND userId='".$uId."'"));
+    return mysqli_num_rows(mysqli_query($con, "SELECT * from ".USERBASE." WHERE token='".$token."' AND userId='".$uId."'"));
   }
 
   //gets userrow from database if token matches one from the database
   //returns false otherwise
   public static function getDataSql($data, $con){
-    $result = mysqli_query($con, "select * from users where token='".$data."'");
+    $result = mysqli_query($con, "select * from ".USERBASE." where token='".$data."'");
     if($result == false) return false;
     while ($row = mysqli_fetch_object($result)) {
       return $row;
@@ -51,7 +67,7 @@ class Api {
   public static function logInSql($uData, $con){
     $uMail = $uData['uMail'];
     $uPass = hash('sha256', $uData['uPass']);
-    $result = mysqli_query($con, "select * from users where userEmail='".$uMail."'");
+    $result = mysqli_query($con, "select * from ".USERBASE." where userEmail='".$uMail."'");
     if($result == false) return false;
     while ($row = mysqli_fetch_object($result)) {
       if($row->userPass == $uPass) return $row; else return false;
@@ -60,7 +76,7 @@ class Api {
 
   public static function logOutSql($uData, $con){
     $uId = $uData['userId'];
-    $result = mysqli_query($con, "update users set token='' where userId='".$uId."'");
+    $result = mysqli_query($con, "update ".USERBASE." set token='' where userId='".$uId."'");
     if($result == false) return false; else return true;
   }
 }
@@ -69,29 +85,26 @@ class Api {
 
 class Points {
   public static function addPoints($amount, $uId, $con){
-    $result = mysqli_query($con, "update users set userPoints = userPoints + '".$amount."' where userId='".$uId."'");
+    $result = mysqli_query($con, "update ".USERBASE." set userPoints = userPoints + '".$amount."' where userId='".$uId."'");
   }
 
   public static function setPoints($amount, $uId, $con){
-    $result = mysqli_query($con, "update users set userPoints = '".$amount."' where userId='".$uId."'");
+    $result = mysqli_query($con, "update ".USERBASE." set userPoints = '".$amount."' where userId='".$uId."'");
   }
 
-
-  //TODO: Make this work
   public static function getPoints($uid, $con){
-    $result = mysqli_query($con, "select userPoints from users where userId='".$uId."'");
-    $assoc = mysqli_fetch_object($result);
-    echo $assoc['userId'];
-    return $assoc['userId'];
+    $result = mysqli_query($con, "select userPoints from ".USERBASE." where userId='".$uid."'");
+    $assoc = mysqli_fetch_array($result);
+    echo $assoc[0];
   }
 
   public static function subPoints($amount, $uId, $con){
-    $result = mysqli_query($con, "update users set userPoints = userPoints - '".$amount."' where userId='".$uId."'");
+    $result = mysqli_query($con, "update ".USERBASE." set userPoints = userPoints - '".$amount."' where userId='".$uId."'");
   }
 
   public static function addToTotal($uId, $con){
-    $result = mysqli_query($con, "update users set userTotal = userPoints + userTotal where userId='".$uId."'");
-    $result = mysqli_query($con, "update users set userPoints = 0 where userId='".$uId."'");
+    $result = mysqli_query($con, "update ".USERBASE." set userTotal = userPoints + userTotal where userId='".$uId."'");
+    $result = mysqli_query($con, "update ".USERBASE." set userPoints = 0 where userId='".$uId."'");
   }
 }
 
@@ -112,12 +125,12 @@ class Project {
   //HACK: TODO: Fix all of the code below and finish up project creation system
   public static function create($uId, $arr, $con){
     $data = array_to_object($arr);
-    $result = mysqli_query($con, "SELECT * FROM projects");
+    $result = mysqli_query($con, "SELECT * FROM ".PRJBASE."");
     $num = mysqli_num_rows($result);
     $num++;
     $array = array($uId);
     $idarray = json_encode($array);
-    $query = mysqli_query($con, "INSERT INTO projects VALUES (
+    $query = mysqli_query($con, "INSERT INTO ".PRJBASE." VALUES (
         '$num',
         '$data->pTitle',
         '$data->pContent',
@@ -140,34 +153,34 @@ class Project {
 
   }
   public static function delete($id, $prId, $con){
-    $query = mysqli_query($con, "select leader from projects where id=$prId");
+    $query = mysqli_query($con, "select leader from ".PRJBASE." where id=$prId");
     $leader = mysqli_fetch_array($query);
     $leader = $leader['leader'];
-    $query = mysqli_query($con, "select userStatus from users where userId=$id");
+    $query = mysqli_query($con, "select userStatus from ".USERBASE." where userId=$id");
     $status = mysqli_fetch_array($query);
     $status = $status['userStatus'];
     $allowed = false;
     if($uId == $leader) $allowed = true;
     if($status == 1) $allowed = true;
     if($allowed){
-      $result = mysqli_query($con, "update projects set status='2' where id='".$prId."'");
+      $result = mysqli_query($con, "update ".PRJBASE." set status='2' where id='".$prId."'");
       echo $result;
     }else{
       echo "ERROR: User not allowed to delete project!";
     }
   }
   public static function edit($uId, $id, $con){
-    $query = mysqli_query($con, "select leader from projects where id=$id");
+    $query = mysqli_query($con, "select leader from ".PRJBASE." where id=$id");
     $leader = mysqli_fetch_array($query);
     $leader = $leader['leader'];
-    $query = mysqli_query($con, "select userStatus from users where userId=$uId");
+    $query = mysqli_query($con, "select userStatus from ".USERBASE." where userId=$uId");
     $status = mysqli_fetch_array($query);
     $status = $status['userStatus'];
     $allowed = false;
     if($uId == $leader) $allowed = true;
     if($status == 1) $allowed = true;
     if($allowed){
-    $query = mysqli_query($con, "select * from projects where id=$id");
+    $query = mysqli_query($con, "select * from ".PRJBASE." where id=$id");
     $project = mysqli_fetch_array($query);
     return json_encode($project);
       //TODO: create user edit system!
@@ -185,7 +198,7 @@ class Project {
     $pLocation = $pData['pLocation'];
     $pMax = $pData['pMax'];
 
-    $query = mysqli_query($con, "UPDATE projects SET
+    $query = mysqli_query($con, "UPDATE ".PRJBASE." SET
     title='$pTitle',
     content='$pContent',
     date='$pDate',
@@ -196,14 +209,16 @@ class Project {
     WHERE id=$prId");
     return json_encode($pTitle);
   }
-  public static function get($id, $con){
-
+  public static function view($id, $con){
+    $query = mysqli_query($con, "select * from ".PRJBASE." where id=$id");
+    $project = mysqli_fetch_array($query);
+    return json_encode($project);
   }
 
   //returns true if user joined project
   public static function checkJoin($uId, $id, $con){
     $double = false;
-    $query = mysqli_query($con, "select members from projects where id=$id");
+    $query = mysqli_query($con, "select members from ".PRJBASE." where id=$id");
     $array = mysqli_fetch_array($query);
     $array = $array['members'];
     $decoded = json_decode($array, true);
@@ -214,11 +229,11 @@ class Project {
   }
 
   public static function checkFull($id, $con){
-    $query = mysqli_query($con, "select members from projects where id=$id");
+    $query = mysqli_query($con, "select members from ".PRJBASE." where id=$id");
     $array = mysqli_fetch_array($query);
     $array = $array['members'];
     $decoded = json_decode($array, true);
-    $query = mysqli_query($con, "select max from projects where id=$id");
+    $query = mysqli_query($con, "select max from ".PRJBASE." where id=$id");
     $array = mysqli_fetch_array($query);
     $max = $array['max'];
     $amount = count($decoded);
@@ -226,17 +241,17 @@ class Project {
   }
 
   public static function canEdit($uId, $id, $con){
-    $array = mysqli_fetch_array(mysqli_query($con, "select userStatus from users where userId=$uId"));
+    $array = mysqli_fetch_array(mysqli_query($con, "select userStatus from ".USERBASE." where userId=$uId"));
     $status = $array['userStatus'];
     if($status) return true;
-    $array = mysqli_fetch_array(mysqli_query($con, "select leader from projects where id=$id"));
+    $array = mysqli_fetch_array(mysqli_query($con, "select leader from ".PRJBASE." where id=$id"));
     $leader = $array['leader'];
     if($leader == $uId) return true; else return false;
   }
 
-  //IDEA: maybe make users join/leave by userId?
+  //IDEA: maybe make ".USERBASE." join/leave by userId?
   public static function join($uId, $id, $con){
-    $query = mysqli_query($con, "select members from projects where id=$id");
+    $query = mysqli_query($con, "select members from ".PRJBASE." where id=$id");
     $array = mysqli_fetch_array($query);
     $array = $array['members'];
     $decoded = json_decode($array, true);
@@ -246,7 +261,7 @@ class Project {
     if(!$double){
       array_push($decoded,$uId);
       $serialized_array = json_encode($decoded);
-      $result = mysqli_query($con, "update projects set members='$serialized_array' where id='".$id."'");
+      $result = mysqli_query($con, "update ".PRJBASE." set members='$serialized_array' where id='".$id."'");
       echo "SUCCESS: Sucessfully joined the project!";
     }else{
       echo "ERROR: Already joined the project!";
@@ -254,10 +269,10 @@ class Project {
   }
 
   public static function leave($uId, $id, $con){
-    $query = mysqli_query($con, "select leader from projects where id=$id");
+    $query = mysqli_query($con, "select leader from ".PRJBASE." where id=$id");
     $leader = mysqli_fetch_array($query);
     if($leader['leader'] != $uId){
-      $query = mysqli_query($con, "select members from projects where id=$id");
+      $query = mysqli_query($con, "select members from ".PRJBASE." where id=$id");
       $array = mysqli_fetch_array($query);
       $array = $array['members'];
       $decoded = json_decode($array, true);
@@ -267,7 +282,7 @@ class Project {
       if($lId){
         unset($decoded[$lId]);
         $serialized_array = json_encode($decoded);
-        $result = mysqli_query($con, "update projects set members='$serialized_array' where id='".$id."'");
+        $result = mysqli_query($con, "update ".PRJBASE." set members='$serialized_array' where id='".$id."'");
         echo "SUCCESS: Successfully left the project!";
       }else{
         echo "ERROR: You havent joined the project yet!";
@@ -311,6 +326,9 @@ if(isset($_POST['action']) || $val != null){
     case 'editproject':
       echo Project::edit($_POST['id'],$_POST['prId'],$con);
     break;
+    case 'viewproject':
+      echo Project::view($_POST['prId'],$con);
+    break;
     case 'deleteproject':
       echo Project::delete($_POST['id'],$_POST['prId'],$con);
     break;
@@ -319,6 +337,15 @@ if(isset($_POST['action']) || $val != null){
     break;
     case 'checklogin':
       echo Api::checkLogin($_POST['token'],$_POST['uId'],$con);
+    break;
+    case 'getnames':
+      echo Api::getNames($_POST['ids'],$con);
+    break;
+    case 'getname':
+      echo Api::getName($_POST['id'],$con);
+    break;
+    case 'getpoints':
+      echo Points::getPoints($_POST['uId'],$con);
     break;
     default:
       return false;

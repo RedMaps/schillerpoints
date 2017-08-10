@@ -45,6 +45,10 @@ body{
 .btn-up {
   margin-top: -45px;
 }
+
+.modalTitle{
+    margin-bottom: -40px;
+}
 }
 
 .absolute{
@@ -86,16 +90,29 @@ body{
   bottom: -15px;
 }
 
-.modalTitle{
-    margin-bottom: -40px;
-}
-
 .x-button{
   padding: 0rem;
 }
 
 .badge{
-  
+
+}
+
+.collapsible-body{
+  border: none;
+}
+
+.collapsible-header{
+  border: none;
+}
+
+.loginModal{
+  max-width: 400px;
+  max-height: 500px;
+}
+
+.impressumModal{
+  max-height: 90% !important;
 }
 
 [type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after{
@@ -107,11 +124,11 @@ input[type=range]{
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
-    background: white;
+  background: white;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-    background: white;
+  background: white;
 }
 
 header{

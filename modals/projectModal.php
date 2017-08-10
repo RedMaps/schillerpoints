@@ -1,42 +1,63 @@
 <div id="projectModal" class="modal full modal-fixed-footer blue-grey white-text projectModal">
   <div class="modal-content">
 
-    <h4 class="modalTitle pTitle project">Title</h4>
     <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
+    <h4 id="vTitle"></h4>
 
-    <br><br>
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Leiter des Projekts">
+      <div class="valign-wrapper" id="vLeader">
+        Julian
+      </div>
+    </div>
 
-    <p>location: somewhere</p>
-    <p>time: sometime</p>
-    <p>duration: 2 hours</p>
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Ort">
+      <div class="valign-wrapper" id="vLocation">
+        Laer
+      </div>
+    </div>
 
-    <ul class="collection">
-      <li class="collection-item avatar grey darken-2">
-        <i class="material-icons circle green">place</i>
-        <span class="title">Location</span>
-        <p>Schiller</p>
-      </li>
-      <li class="collection-item avatar grey darken-2">
-        <i class="material-icons circle blue">access_time</i>
-        <span class="title">Time</span>
-        <p>20:34</p>
-      </li>
-      <li class="collection-item avatar grey darken-2">
-        <i class="material-icons circle green">insert_chart</i>
-        <span class="title">Duration</span>
-        <p>~2 Hours</p>
-      </li>
-      <li class="collection-item avatar grey darken-2">
-        <i class="material-icons circle red">play_arrow</i>
-        <span class="title">Date</span>
-        <p>12.23.1203</p>
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Datum">
+      <div class="valign-wrapper" id="vDate">
+        01.11.2017
+      </div>
+    </div>
+
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Uhrzeit">
+      <div class="valign-wrapper" id="vTime">
+        12:20
+      </div>
+    </div>
+
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Dauer">
+      <div class="valign-wrapper" id="vDuration">
+        2h
+      </div>
+    </div>
+
+    <div class="chip white-text grey darken-3 tooltipped" data-tooltip="Teilnehmer / Max. Teilnehmer">
+      <div class="valign-wrapper" id="vMax">
+        7/20
+      </div>
+    </div>
+
+    <h5 class="">Details:</h5>
+
+    <p id="vDescription">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+    <br>
+
+    <ul class="collapsible popout" data-collapsible="accordion">
+      <li>
+        <div class="collapsible-header blue-grey darken-3"><i class="material-icons">group</i>Teilnehmer<span class="new badge vMax" data-badge-caption="">0</span></div>
+        <div class="collapsible-body blue-grey lighten-1 center-align name-chips">
+          <div class="chip white-text grey darken-3">Julian</div>
+        </div>
       </li>
     </ul>
-
 
   </div>
   <div class="modal-footer blue-grey white-text darken-1">
     <!-- TODO: MAKE THIS WORK -->
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green white-text" onclick="join()">Beitreten</a>
+    <!-- <a id="joinView" class="modal-action modal-close waves-effect waves-green btn-flat green white-text">Beitreten</a> -->
   </div>
 </div>

@@ -1,5 +1,8 @@
 init();
 
+//TODO: Make this work
+//var url="https://localhost";
+
 function init(){
 	if($('.active_projects').length || $('.pending_projects').length) loadProjects();
 }
@@ -43,7 +46,7 @@ function error(text){
 	Materialize.toast(text, 3000, 'red');
 }
 function success(text){
-	Materialize.toast(text, 3000, 'green');
+	Materialize.toast(text, 3000, 'green accent-4');
 }
 function msg(text){
 	Materialize.toast(text, 3000, 'blue-grey');
@@ -67,7 +70,7 @@ function genToken(id){
   console.log("new token: " + newtoken);
   $.ajax({
             type: "POST",
-            url: "api.php",
+            url: "http://localhost/api/api.php",
             data: {
               action: "settoken",
               token: newtoken,
@@ -90,7 +93,7 @@ function checkLogin(){
 	var uId = localStorage.getItem("userid");
 	return $.ajax({
             type: "POST",
-            url: "api.php",
+            url: "http://localhost/api/api.php",
             data: {
               action: "checklogin",
               token: token,
@@ -103,6 +106,12 @@ function checkLogin(){
 								return false;
 							}else{
 								loginstatus = true;
+								$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Log Out');
+								$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+								$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
+								$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+								//getPoints(localStorage.getItem("userid"));
+
 								return true;
 							}
 						},
@@ -117,7 +126,7 @@ function getData(){
   var localtoken = localStorage.token;
   $.ajax({
             type: "POST",
-            url: "api.php",
+            url: "http://localhost/api/api.php",
             data: {
               action: "comparetoken",
               token: localtoken
@@ -152,7 +161,7 @@ function logIn(){
 	var lData = getLoginData();
 	$.ajax({
             type: "POST",
-            url: "api.php",
+            url: "http://localhost/api/api.php",
             data: {
               action: "login",
               uData: lData
@@ -166,6 +175,13 @@ function logIn(){
 										updateSite(data);
 										localStorage.setItem("loginstatus", true);
 										genToken(data.userId);
+										loadProjects();
+										$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Log Out');
+										$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+										$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
+										$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+										//getPoints(data.userId);
+										success("logged in sucessfully!");
                 },
             error: function(results){
                     console.log(results);
@@ -177,7 +193,7 @@ function logIn(){
 function logOut(){
 	$.ajax({
             type: "POST",
-            url: "api.php",
+            url: "http://localhost/api/api.php",
             data: {
               action: "logout",
               uData: data
@@ -196,35 +212,28 @@ function logOut(){
 	localStorage.removeItem('token');
 }
 
-// TODO: also test through all other systems!
-// TODO: add project view modal!
 // TODO: create backend maybe
 // TODO: add money view somewhere
-// TODO: add main screen + load points
 // TODO: create some kind of documentation
 // TODO: comment everything
-// TODO: give users better feedback
-// TODO: add translation function
+// !TODO: add translation function
 // TODO: add profiles maybe
 // TODO: add color change or dark / light theme
-// TODO: add tabs for own projects / finished projects
+// !TODO: add tabs for own projects / finished projects
 // TODO: make lists work?
 // TODO: maybe put something right or left to projects on desktop version
 // TODO: make database more adaptable
 // TODO: create deploy version of project
-// TODO: add point system (update every half year) -> collect points in total score
-// TODO: make timetable thing work properly and show extra text
-// TODO: migrate project for q1
+// !TODO: make timetable thing work properly and show extra text
+// !TODO: migrate project for q1
 // TODO: add user options (mobile view)
-// TODO: implement external cronjobs
-// TODO: add project finished system
+// !TODO: implement external cronjobs
 // TODO: add forum for school related things
-// TODO: add password reset system
+// !TODO: add password reset system
 // TODO: add notification system (app?)
 // TODO: add poll / voting system
-// TODO: add expire date
-// TODO: add login to current page
 // TODO: add salt n' pepper maybe
+// TODO: check for all details filled in
 // TODO: make todo list even longer
 
 //replaces certain tags on the site with login details
@@ -234,6 +243,8 @@ function updateSite(data){
 		var rep;
 		if($('.uName').length){ rep = $(".uName").html().replaceAll("{uName}",data.userName);
 		$(".uName").html(rep); }
+		if($('.uNameMobile').length){ rep = $(".uNameMobile").html().replaceAll("{uName}",data.userName);
+		$(".uNameMobile").html(rep); }
 		if($('.uMail').length){ rep = $(".uMail").html().replaceAll("{uMail}",data.userEmail);
 		$(".uMail").html(rep); }
 		if($('.uPoints').length){ rep = $(".uPoints").html().replaceAll("{uPoints}",data.userPoints);
@@ -334,13 +345,13 @@ function getTest(){
 function createProject() {
 	var elements = getProjectElements();
 	checkLogin();
-	if(!localStorage.getItem("loginstatus")){
+	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
 	}else{
 		console.log(elements);
 		$.ajax({
 							type: "POST",
-							url: "api.php",
+							url: "http://localhost/api/api.php",
 							data: {
 								action: "createproject",
 								pData: elements,
@@ -360,12 +371,13 @@ function createProject() {
 //sends userid to the php api to make the use join a given project
 function join(prId) {
 	checkLogin();
-	if(!localStorage.getItem("loginstatus")){
+	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
+		error("Not logged in!");
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "api.php",
+							url: "http://localhost/api/api.php",
 							data: {
 								action: "joinproject",
 								id: localStorage.getItem("userid"),
@@ -385,12 +397,12 @@ function join(prId) {
 
 function leave(prId) {
 	checkLogin();
-	if(!localStorage.getItem("loginstatus")){
+	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "api.php",
+							url: "http://localhost/api/api.php",
 							data: {
 								action: "leaveproject",
 								id: localStorage.getItem("userid"),
@@ -410,12 +422,12 @@ function leave(prId) {
 
 function edit(prId) {
 	checkLogin();
-	if(!localStorage.getItem("loginstatus")){
+	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "api.php",
+							url: "http://localhost/api/api.php",
 							data: {
 								action: "editproject",
 								id: localStorage.getItem("userid"),
@@ -433,6 +445,25 @@ function edit(prId) {
 	}
 }
 
+function view(prId) {
+		$.ajax({
+							type: "POST",
+							url: "http://localhost/api/api.php",
+							data: {
+								action: "viewproject",
+								prId: prId
+							},
+							success: function(results){
+											console.log(results);
+											resultHandler(results);
+											openPrjWin(results);
+									},
+							error: function(results){
+											console.log(results);
+							}
+		});
+}
+
 function openEditWin(res){
 	res = JSON.parse(res);
 	var date = new Date(res.date);
@@ -448,19 +479,83 @@ function openEditWin(res){
 	$("#description").val(res.content);
 	$("#max").val(res.max);
 	$("#submitEdit").attr('onclick', 'submitEdit(' + res.id + ')');
+	$("#deleteEdit").attr('onclick', 'deleteProject(' + res.id + '); $(".modal").modal("close");');
 	$("#editWin").modal("open");
+}
+
+function getNames(ids){
+	$.ajax({
+						type: "POST",
+						url: "http://localhost/api/api.php",
+						data: {
+							action: "getnames",
+							ids: ids
+						},
+						success: function(results){
+										array = JSON.parse(results);
+										var list = "";
+										for(var i=0; i < array.length; i++){
+											list = list + '<div class="chip white-text grey darken-3">' + array[i] + '</div>';
+										}
+										$(".name-chips").html(list);
+										resultHandler(results);
+								},
+						error: function(results){
+										console.log(results);
+						}
+	});
+}
+
+function getName(id){
+	$.ajax({
+						type: "POST",
+						url: "http://localhost/api/api.php",
+						data: {
+							action: "getname",
+							id: id
+						},
+						success: function(results){
+										resultHandler(results);
+										name = JSON.parse(results);
+										$("#vLeader").html('<i class="material-icons">person</i>&nbsp;' + name);
+								},
+						error: function(results){
+										console.log(results);
+						}
+	});
+}
+
+function openPrjWin(res){
+	res = JSON.parse(res);
+	var date = new Date(res.date);
+	var datede = date.toLocaleDateString('de-DE');
+	var dateus = date.toLocaleDateString('en-US');
+	var memberdecode = JSON.parse(res.members)
+	$("#joinView").attr('onclick', 'join(' + res.id + ')');
+	$("#vTitle").html(res.title);
+	$("#vLocation").html('<i class="material-icons">room</i>&nbsp;' + res.location);
+	$("#vDate").html('<i class="material-icons">today</i>&nbsp;' + datede);
+	$("#vTime").html('<i class="material-icons">schedule</i>&nbsp;' + res.time);
+	$("#vDuration").html('<i class="material-icons">timer</i>&nbsp;' + res.duration);
+	$("#vDescription").html(res.content);
+	$("#vMax").html('<i class="material-icons">group</i>&nbsp;' + memberdecode.length + " / " + res.max);
+	$(".vMax").html(memberdecode.length);
+	getNames(memberdecode);
+	getName(res.leader);
+	//TODO: make users appear in chips
+	$("#projectModal").modal("open");
 }
 
 function submitEdit(prId){
 	var pData = getEditElements();
 	console.log(pData);
 	checkLogin();
-	if(!localStorage.getItem("loginstatus")){
+	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "api.php",
+							url: "http://localhost/api/api.php",
 							data: {
 								action: "submitedit",
 								id: localStorage.getItem("userid"),
@@ -480,14 +575,10 @@ function submitEdit(prId){
 }
 
 function loadProjects(){
-	checkLogin();
-	if(!localStorage.getItem("loginstatus")){
-
-	}else{
 	if(log)console.log("ajax active!");
 	$.ajax({
 				type: "POST",
-				url: "projects.php",
+				url: "http://localhost/api/projects.php",
 				data: {
 					type: "active",
 					id: localStorage.getItem("userid")
@@ -503,7 +594,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "projects.php",
+				url: "http://localhost/api/projects.php",
 				data: {
 					type: "pending",
 					id: localStorage.getItem("userid")
@@ -519,7 +610,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "projects.php",
+				url: "http://localhost/api/projects.php",
 				data: {
 					type: "finished",
 					id: localStorage.getItem("userid")
@@ -535,7 +626,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "projects.php",
+				url: "http://localhost/api/projects.php",
 				data: {
 					type: "removed",
 					id: localStorage.getItem("userid")
@@ -549,7 +640,6 @@ function loadProjects(){
 						console.log(message);
 				}
 	})
-	}
 }
 
 function addProject(){
@@ -559,7 +649,7 @@ function addProject(){
 function deleteProject(prId){
 	$.ajax({
 						type: "POST",
-						url: "api.php",
+						url: "http://localhost/api/api.php",
 						data: {
 							action: "deleteproject",
 							id: localStorage.getItem("userid"),
@@ -568,6 +658,7 @@ function deleteProject(prId){
 						success: function(results){
 										console.log(results);
 										resultHandler(results);
+										loadProjects();
 								},
 						error: function(results){
 										console.log(results);
@@ -578,7 +669,7 @@ function deleteProject(prId){
 function loadData(){
 	$.ajax({
 				type: "POST",
-				url: "api.php",
+				url: "http://localhost/api/api.php",
 				data: {
 					action: "loaddata"
 				},
