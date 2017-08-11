@@ -1,12 +1,10 @@
 <?php
-//require_once 'Mobile_Detect.php';
-//include 'nameParser.php';
 include 'api.php';
 
 $uId = $_POST['id'];
 
 function active($con, $uId){
-  $result = mysqli_query($con, "SELECT * FROM projects WHERE status='1' ORDER BY date");
+  $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='1' ORDER BY date");
   $num_rows = mysqli_num_rows($result);
   $i = 0;
 
@@ -16,7 +14,7 @@ function active($con, $uId){
   };
 }
 function pending($con, $uId){
-  $result = mysqli_query($con, "SELECT * FROM projects WHERE status='0' ORDER BY date");
+  $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='0' ORDER BY date");
   $num_rows = mysqli_num_rows($result);
   $i = 0;
 
@@ -26,7 +24,7 @@ function pending($con, $uId){
   };
 }
 function finished($con, $uId){
-  $result = mysqli_query($con, "SELECT * FROM projects WHERE status='3' ORDER BY date");
+  $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='3' ORDER BY date");
   $num_rows = mysqli_num_rows($result);
   $i = 0;
 
@@ -36,7 +34,7 @@ function finished($con, $uId){
   };
 }
 function removed($con, $uId){
-  $result = mysqli_query($con, "SELECT * FROM projects WHERE status='2' ORDER BY date");
+  $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='2' ORDER BY date");
   $num_rows = mysqli_num_rows($result);
   $i = 0;
 

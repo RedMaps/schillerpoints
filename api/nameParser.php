@@ -11,7 +11,7 @@ function nameParser($name){
 
 function checkJoin($uId, $id, $con){
   $d = false;
-  $query = mysqli_query($con, "select members from projects where id=$id");
+  $query = mysqli_query($con, "select members from ".PRJBASE." where id=$id");
   $array = mysqli_fetch_array($query);
   $array = $array['members'];
   $decoded = json_decode($array, true);
@@ -19,10 +19,6 @@ function checkJoin($uId, $id, $con){
     if($decoded[$i] == $uId) $d = true;
   }
   if($d) return true;
-}
-
-function isAdmin(){
-
 }
 
 ?>

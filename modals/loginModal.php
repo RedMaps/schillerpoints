@@ -29,7 +29,7 @@
   </div>
 
   <div class="modal-footer blue-grey darken-1 white-text">
-    <a href="projekte" class="waves-effect waves-light white black-text btn">forgot password</a>
+    <!-- <a href="projekte" class="waves-effect waves-light white black-text btn">forgot password</a> -->
     <a href="#!" class="modal-action modal-close waves-effect waves-black btn-flat white-text green accent-4" onclick="logIn()">LogIn</a>
   </div>
 </div>

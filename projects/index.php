@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="../css/materialize.css"  media="screen","projection"/>
-  <link type="text/css" rel="stylesheet" href="index.css"  media="screen,projection"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <?php include '../api/head.php'; ?>
 </head>
 <?php include '../api/api.php'; ?>
 <?php include '../api/navbar.php'; ?>

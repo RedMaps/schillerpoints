@@ -7,7 +7,7 @@
     <div class="row">
 
       <?php
-      $scoreboard = mysqli_query($con, "SELECT userName, userPoints FROM users ORDER BY userPoints DESC LIMIT 10");
+      $scoreboard = mysqli_query($con, "SELECT userName, userPoints FROM ".USERBASE." ORDER BY userPoints DESC LIMIT 10");
 
       echo '
       <table>

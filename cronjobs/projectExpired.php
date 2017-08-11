@@ -10,9 +10,6 @@
 <?php
   include "../api/dbconnect.php";
 
-  define("USERBASE","users");
-  define("PRJBASE","projects");
-
   $now = new DateTime();
 
   $result = mysqli_query($con, "select * from ".PRJBASE);
