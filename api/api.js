@@ -67,7 +67,7 @@ function genToken(id){
   console.log("new token: " + newtoken);
   $.ajax({
             type: "POST",
-            url: "/api/api.php",
+            url: "/new/api/api.php",
             data: {
               action: "settoken",
               token: newtoken,
@@ -90,7 +90,7 @@ function checkLogin(){
 	var uId = localStorage.getItem("userid");
 	return $.ajax({
             type: "POST",
-            url: "/api/api.php",
+            url: "/new/api/api.php",
             data: {
               action: "checklogin",
               token: token,
@@ -123,7 +123,7 @@ function getData(){
   var localtoken = localStorage.token;
   $.ajax({
             type: "POST",
-            url: "/api/api.php",
+            url: "/new/api/api.php",
             data: {
               action: "comparetoken",
               token: localtoken
@@ -158,7 +158,7 @@ function logIn(){
 	var lData = getLoginData();
 	$.ajax({
             type: "POST",
-            url: "/api/api.php",
+            url: "/new/api/api.php",
             data: {
               action: "login",
               uData: lData
@@ -190,7 +190,7 @@ function logIn(){
 function logOut(){
 	$.ajax({
             type: "POST",
-            url: "/api/api.php",
+            url: "/new/api/api.php",
             data: {
               action: "logout",
               uData: data
@@ -348,7 +348,7 @@ function createProject() {
 		console.log(elements);
 		$.ajax({
 							type: "POST",
-							url: "/api/api.php",
+							url: "/new/api/api.php",
 							data: {
 								action: "createproject",
 								pData: elements,
@@ -374,7 +374,7 @@ function join(prId) {
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "/api/api.php",
+							url: "/new/api/api.php",
 							data: {
 								action: "joinproject",
 								id: localStorage.getItem("userid"),
@@ -399,7 +399,7 @@ function leave(prId) {
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "/api/api.php",
+							url: "/new/api/api.php",
 							data: {
 								action: "leaveproject",
 								id: localStorage.getItem("userid"),
@@ -424,7 +424,7 @@ function edit(prId) {
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "/api/api.php",
+							url: "/new/api/api.php",
 							data: {
 								action: "editproject",
 								id: localStorage.getItem("userid"),
@@ -445,7 +445,7 @@ function edit(prId) {
 function view(prId) {
 		$.ajax({
 							type: "POST",
-							url: "/api/api.php",
+							url: "/new/api/api.php",
 							data: {
 								action: "viewproject",
 								prId: prId
@@ -483,7 +483,7 @@ function openEditWin(res){
 function getNames(ids){
 	$.ajax({
 						type: "POST",
-						url: "/api/api.php",
+						url: "/new/api/api.php",
 						data: {
 							action: "getnames",
 							ids: ids
@@ -506,7 +506,7 @@ function getNames(ids){
 function getName(id){
 	$.ajax({
 						type: "POST",
-						url: "/api/api.php",
+						url: "/new/api/api.php",
 						data: {
 							action: "getname",
 							id: id
@@ -552,7 +552,7 @@ function submitEdit(prId){
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "/api/api.php",
+							url: "/new/api/api.php",
 							data: {
 								action: "submitedit",
 								id: localStorage.getItem("userid"),
@@ -576,7 +576,7 @@ function loadProjects(){
 	if(localStorage.getItem("userid") == null) localStorage.setItem("userid", 0);
 	$.ajax({
 				type: "POST",
-				url: "/api/projects.php",
+				url: "/new/api/projects.php",
 				data: {
 					type: "active",
 					id: localStorage.getItem("userid")
@@ -592,7 +592,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "/api/projects.php",
+				url: "/new/api/projects.php",
 				data: {
 					type: "pending",
 					id: localStorage.getItem("userid")
@@ -608,7 +608,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "/api/projects.php",
+				url: "/new/api/projects.php",
 				data: {
 					type: "finished",
 					id: localStorage.getItem("userid")
@@ -624,7 +624,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "/api/projects.php",
+				url: "/new/api/projects.php",
 				data: {
 					type: "removed",
 					id: localStorage.getItem("userid")
@@ -647,7 +647,7 @@ function addProject(){
 function deleteProject(prId){
 	$.ajax({
 						type: "POST",
-						url: "/api/api.php",
+						url: "/new/api/api.php",
 						data: {
 							action: "deleteproject",
 							id: localStorage.getItem("userid"),
@@ -667,7 +667,7 @@ function deleteProject(prId){
 function loadData(){
 	$.ajax({
 				type: "POST",
-				url: "/api/api.php",
+				url: "/new/api/api.php",
 				data: {
 					action: "loaddata"
 				},

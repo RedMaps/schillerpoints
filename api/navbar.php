@@ -39,7 +39,7 @@ function getProjectCount($con){
       <a href="#!email"><span class="white-text email uMail" id="umail">{uMail}</span></a>
     </div></li>
     <li><a href="<?php echo url(); ?>" class="white-text"><i class="material-icons white-text">home</i> Startseite</a></li>
-    <li><a href="#" class="white-text"><i class="material-icons white-text">view_list</i> Projekte <b><span class="new badge vMax" data-badge-caption=""><?php echo getProjectCount($con); ?></span></b></a></li>
+    <li><a href="<?php echo url(); ?>/projects" class="white-text"><i class="material-icons white-text">view_list</i> Projekte <b><span class="new badge vMax" data-badge-caption=""><?php echo getProjectCount($con); ?></span></b></a></li>
     <li><a onclick="$('.scoreModal').modal('open')" class="white-text"><i class="material-icons white-text">format_list_numbered</i> Bestenliste</a></li>
     <li><a href="<?php echo url(); ?>/vertretung" class="white-text"><i class="material-icons white-text">people_outline</i> Vertretungsplan</a></li>
     <div class="background green accent-4">
