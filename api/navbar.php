@@ -2,15 +2,6 @@
 function getProjectCount($con){
   return mysqli_num_rows(mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status=1"));
 }
-function url(){
-  $suffix = null;
-  if($_SERVER['SERVER_NAME'] != "localhost") $suffix = "/new";
-  return sprintf(
-    "%s://%s%s",
-    isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
-    $_SERVER['SERVER_NAME'], $suffix
-  );
-}
  ?>
 <header class="nav-down">
   <div class='navbar-fixed'>
