@@ -26,6 +26,15 @@
 
   </div>
 
+  <?php
+    include "../modals/editModal.php";
+    include "../modals/addModal.php";
+    include "../modals/loginModal.php";
+    include "../modals/projectModal.php";
+    include "../modals/impressumModal.php";
+    include "../modals/pointModal.php";
+    include "../modals/scoreModal.php";
+   ?>
 
   <div class="col l2 m0 s0"></div>
   </div>

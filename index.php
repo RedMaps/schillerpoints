@@ -28,7 +28,7 @@
   <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.5.6/dist/progressbar.js"></script>
   <script type="text/javascript" src="../js/materialize.js"></script>
   <script src="api/api.js"></script>
-  <!-- <script src="api/initializer.js"></script> -->
+  <script src="api/initializer.js"></script>
   <script src="index.js"></script>
   <script src="api/progress.js"></script>
 </body>

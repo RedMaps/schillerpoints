@@ -107,6 +107,7 @@ function checkLogin(){
 								$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
 								$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
 								$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+								console.log("fired");
 								//getPoints(localStorage.getItem("userid"));
 
 								return true;
@@ -147,11 +148,30 @@ function getData(){
 function getLoginData(){
 	var uMail = $('.iMail').val();
 	var uPass = $('.iPass').val();
-	console.log("user Email: " + uMail);
-	return {
-        uMail: uMail,
-        uPass: uPass
-    };
+	console.log(typeof uMail);
+	if(uMail == '' && uPass == ''){
+		error("Please enter your E-Mail and Password!");
+		console.log("error!");
+		return;
+	}else if(uMail == ''){
+		error("Please enter your E-Mail!");
+		console.log("error!");
+		return;
+	}else if(uPass == ''){
+		error("Please enter your Password!");
+		console.log("error!");
+		return;
+	} else {
+		expr = /@/;  // no quotes here
+		if(expr.test(uMail)){
+			return {
+      	uMail: uMail,
+      	uPass: uPass
+    	}
+		}else{
+			error("Your E-Mail must contain an @ symbol!");
+		}
+	}
 }
 
 function logIn(){
@@ -173,6 +193,7 @@ function logIn(){
 										localStorage.setItem("loginstatus", true);
 										genToken(data.userId);
 										loadProjects();
+										$(".loginModal").modal("close");
 										$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Log Out');
 										$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
 										$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
@@ -238,11 +259,11 @@ function updateSite(data){
 	//HACK: this setlogin thing doesnt work correctly yet...
 	if($('.setlogin').val()){
 		var rep;
-		if($('.uName').length){ rep = $(".uName").html().replaceAll("{uName}",data.userName);
+		if($('.uName').length){ rep = $(".uName").html().replaceAll("Guest",data.userName);
 		$(".uName").html(rep); }
-		if($('.uNameMobile').length){ rep = $(".uNameMobile").html().replaceAll("{uName}",data.userName);
+		if($('.uNameMobile').length){ rep = $(".uNameMobile").html().replaceAll("Guest",data.userName);
 		$(".uNameMobile").html(rep); }
-		if($('.uMail').length){ rep = $(".uMail").html().replaceAll("{uMail}",data.userEmail);
+		if($('.uMail').length){ rep = $(".uMail").html().replaceAll("guest@schillerpoints.de",data.userEmail);
 		$(".uMail").html(rep); }
 		if($('.uPoints').length){ rep = $(".uPoints").html().replaceAll("{uPoints}",data.userPoints);
 		$(".uPoints").html(rep); }
@@ -259,9 +280,11 @@ function updateSite(data){
 //resets the login details back to the state it was before
 function resetSite(){
 	if($('.setlogin').val()){
-		rep = $(".uName").html().replaceAll(data.userName,"{uName}");
+		rep = $(".uName").html().replaceAll(data.userName,"Guest");
 		$(".uName").html(rep);
-		rep = $(".uMail").html().replaceAll(data.userEmail,"{uMail}");
+		rep = $(".uNameMobile").html().replaceAll(data.userName,"Guest");
+		$(".uNameMobile").html(rep);
+		rep = $(".uMail").html().replaceAll(data.userEmail,"guest@schillerpoints.de");
 		$(".uMail").html(rep);
 		rep = $(".uPoints").html().replaceAll(data.userPoints,"{uPoints}");
 		$(".uPoints").html(rep);
@@ -477,7 +500,9 @@ function openEditWin(res){
 	$("#max").val(res.max);
 	$("#submitEdit").attr('onclick', 'submitEdit(' + res.id + ')');
 	$("#deleteEdit").attr('onclick', 'deleteProject(' + res.id + '); $(".modal").modal("close");');
+	$('#description').trigger('autoresize');
 	$("#editWin").modal("open");
+	$('#description').trigger('autoresize');
 }
 
 function getNames(ids){
@@ -710,7 +735,7 @@ function logTime(){
 	log = true;
 }
 
-//TODO: Add all other project system related things
+checkLogin();
 
 //only try to compare tokens when token exists in local storage
 if (localStorage.getItem('token') !== null) getData();

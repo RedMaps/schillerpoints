@@ -68,10 +68,14 @@ class Api {
     $uMail = $uData['uMail'];
     $uPass = hash('sha256', $uData['uPass']);
     $result = mysqli_query($con, "select * from ".USERBASE." where userEmail='".$uMail."'");
-    if($result == false) return false;
-    while ($row = mysqli_fetch_object($result)) {
-      if($row->userPass == $uPass) return $row; else return false;
+    if($result == false){
+      echo "ERROR: E-Mail or password incorrect!";
+    }else{
+      while ($row = mysqli_fetch_object($result)) {
+        if($row->userPass == $uPass) return $row;
+      }
     }
+    echo "ERROR: E-Mail or password incorrect!";
   }
 
   public static function logOutSql($uData, $con){

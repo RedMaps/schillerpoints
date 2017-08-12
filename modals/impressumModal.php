@@ -32,7 +32,7 @@
     <h4>Newsletterdaten</h4> <p>Wenn Sie den auf der Webseite angebotenen Newsletter beziehen möchten, benötigen wir von Ihnen eine E-Mail-Adresse sowie Informationen, welche uns die überprüfung gestatten, dass Sie der Inhaber der angegebenen E-Mail-Adresse sind und mit dem Empfang des Newsletters einverstanden sind. Weitere Daten werden nicht erhoben. Diese Daten verwenden wir ausschließlich für den Versand der angeforderten Informationen und geben sie nicht an Dritte weiter.</p> <p>Die erteilte Einwilligung zur Speicherung der Daten, der E-Mail-Adresse sowie deren Nutzung zum Versand des Newsletters können Sie jederzeit widerrufen , etwa über den „Austragen“-Link im Newsletter.</p><p> </p>
 
   </div>
-  <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+  <div class="modal-footer blue-grey darken-3">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat white-text">Close</a>
   </div>
 </div>

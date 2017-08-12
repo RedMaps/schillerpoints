@@ -50,7 +50,7 @@
       <li>
         <div class="collapsible-header blue-grey darken-3"><i class="material-icons">group</i>Teilnehmer<span class="new badge vMax" data-badge-caption="">0</span></div>
         <div class="collapsible-body blue-grey lighten-1 center-align name-chips">
-          <div class="chip white-text grey darken-3">Julian</div>
+          <div class="chip white-text grey darken-3">ERROR</div>
         </div>
       </li>
     </ul>

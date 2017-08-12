@@ -43,3 +43,8 @@
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+.impressumModal{
+  background: #455A64;
+  color: white;
+}
