@@ -39,7 +39,7 @@ function getPoints(uId){
                 useGrouping : true,
                 separator : ',',
                 decimal : '.',
-                prefix : 'Deine Punkte: ',
+                prefix : 'Your Points: ',
                 suffix : ' / 20'
               };
 

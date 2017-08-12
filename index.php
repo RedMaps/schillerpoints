@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php include 'api/head.php'; ?>
+  <?php include 'parts/head.php'; ?>
 </head>
 <?php include 'api/api.php'; ?>
-<?php include 'api/navbar.php'; ?>
+<?php include 'parts/navbar.php'; ?>
 <body>
   <input type="hidden" name="setlogin" class="setlogin" value="true">
   <script src="js/countup.js"></script>
 
   <center>
     <div class="progress" id="progress"></div>
-    <h4 id="count" class="marg">Deine Punkte: 0 / 20</h4>
+    <h4 id="count" class="marg">Your Points: 0 / 20</h4>
     <a href="/new/projects/" class="btn btn-large white black-text projectbtn">to the projects</a>
   </center>
 
@@ -30,6 +30,6 @@
   <script src="api/api.js"></script>
   <script src="api/initializer.js"></script>
   <script src="index.js"></script>
-  <script src="api/progress.js"></script>
+  <script src="js/progress.js"></script>
 </body>
 </html>

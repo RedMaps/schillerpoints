@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php include '../api/head.php'; ?>
+  <?php include '../parts/head.php'; ?>
 </head>
 <?php include '../api/api.php'; ?>
-<?php include '../api/navbar.php'; ?>
+<?php include '../parts/navbar.php'; ?>
 <body>
   <input type="hidden" name="setlogin" class="setlogin" value="true">
 

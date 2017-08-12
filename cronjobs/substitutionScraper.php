@@ -26,26 +26,31 @@ mysqli_query($con, 'TRUNCATE TABLE `info_fri`');
 
 for($i=0; $i < count($modt_mon); $i++){
   $text = $modt_mon[$i];
+  $text = preg_replace("/<\/?(td).*?>/", "", $text);
     $f = $i+1;
   mysqli_query($con, "INSERT INTO info_mon(id, text) VALUES('$f','$text')");
 }
 for($i=0; $i < count($modt_tue); $i++){
   $text = $modt_tue[$i];
+  $text = preg_replace("/<\/?(td).*?>/", "", $text);
     $f = $i+1;
   mysqli_query($con, "INSERT INTO info_tue(id, text) VALUES('$f','$text')");
 }
 for($i=0; $i < count($modt_wed); $i++){
   $text = $modt_wed[$i];
+  $text = preg_replace("/<\/?(td).*?>/", "", $text);
     $f = $i+1;
   mysqli_query($con, "INSERT INTO info_wed(id, text) VALUES('$f','$text')");
 }
 for($i=0; $i < count($modt_thu); $i++){
   $text = $modt_thu[$i];
+  $text = preg_replace("/<\/?(td).*?>/", "", $text);
     $f = $i+1;
   mysqli_query($con, "INSERT INTO info_thu(id, text) VALUES('$f','$text')");
 }
 for($i=0; $i < count($modt_fri); $i++){
   $text = $modt_fri[$i];
+  $text = preg_replace("/<\/?(td).*?>/", "", $text);
     $f = $i+1;
   mysqli_query($con, "INSERT INTO info_fri(id, text) VALUES('$f','$text')");
 }
