@@ -20,7 +20,7 @@ function getPoints(uId){
 
 	$.ajax({
             type: "POST",
-            url: "http://localhost/api/api.php",
+            url: "/new/api/api.php",
             data: {
               action: "getpoints",
               uId: uId
