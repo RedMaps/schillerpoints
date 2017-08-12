@@ -1,0 +1,6 @@
+{
+    "require": {
+        "fabpot/goutte": "^3.2",
+        "paquettg/php-html-parser": "^1.7"
+    }
+}

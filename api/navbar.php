@@ -13,7 +13,7 @@ function getProjectCount($con){
           <li><a href="<?php echo url(); ?>">Startseite</a></li>
           <li><a href="<?php echo url(); ?>/projects">Projekte<span class="badge white-text"><span class="new badge vMax" data-badge-caption=""><?php echo getProjectCount($con); ?></span></span></a></li>
           <li><a onclick="$('.scoreModal').modal('open')">Bestenliste</a></li>
-          <li><a href="<?php echo url(); ?>/vertretung">Vertretungsplan</a></li>
+          <li><a href="<?php echo url(); ?>/substitution">Vertretungsplan</a></li>
           <li><a id="dropdown" class="uName uname_drop dropdown-button" href="#!" data-activates="dropdown-list">{uName}<i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
       </div>
@@ -41,7 +41,7 @@ function getProjectCount($con){
     <li><a href="<?php echo url(); ?>" class="white-text"><i class="material-icons white-text">home</i> Startseite</a></li>
     <li><a href="<?php echo url(); ?>/projects" class="white-text"><i class="material-icons white-text">view_list</i> Projekte <b><span class="new badge vMax" data-badge-caption=""><?php echo getProjectCount($con); ?></span></b></a></li>
     <li><a onclick="$('.scoreModal').modal('open')" class="white-text"><i class="material-icons white-text">format_list_numbered</i> Bestenliste</a></li>
-    <li><a href="<?php echo url(); ?>/vertretung" class="white-text"><i class="material-icons white-text">people_outline</i> Vertretungsplan</a></li>
+    <li><a href="<?php echo url(); ?>/substitution" class="white-text"><i class="material-icons white-text">people_outline</i> Vertretungsplan</a></li>
     <div class="background green accent-4">
       <li><a class="subheader white-text z-depth-2">Nutzer Optionen</a></li>
     </div>
