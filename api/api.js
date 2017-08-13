@@ -1,7 +1,7 @@
 init();
 
 function init(){
-	if($('.active_projects').length || $('.pending_projects').length) loadProjects();
+	if($('.active_projects').length || $('.pending_projects').length || $('.removed_projects').length || $('.finished_projects').length) loadProjects();
 }
 
 $(".del-checkbox").change(function() {
@@ -107,7 +107,6 @@ function checkLogin(){
 								$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
 								$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
 								$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
-								console.log("fired");
 								//getPoints(localStorage.getItem("userid"));
 
 								return true;
@@ -240,9 +239,8 @@ function logOut(){
 // !TODO: add tabs for own projects / finished projects
 // TODO: make lists work?
 // TODO: maybe put something right or left to projects on desktop version
-// TODO: make database more adaptable
 // TODO: create deploy version of project
-// !TODO: make timetable thing work properly and show extra text
+// TODO: make substitution table search work
 // !TODO: migrate project for q1
 // TODO: add user options (mobile view)
 // !TODO: implement external cronjobs
@@ -562,6 +560,12 @@ function openPrjWin(res){
 	$("#vDescription").html(res.content);
 	$("#vMax").html('<i class="material-icons">group</i>&nbsp;' + memberdecode.length + " / " + res.max);
 	$(".vMax").html(memberdecode.length);
+	$(".vProfit").addClass("hidden");
+	$("#vProfit").html('<i class="material-icons">euro_symbol</i>&nbsp;' + res.profit + "€");
+	if(res.status == '3'){
+		console.log("hidden");
+		$(".vProfit").removeClass("hidden");
+	}
 	getNames(memberdecode);
 	getName(res.leader);
 	//TODO: make users appear in chips
@@ -704,6 +708,36 @@ function loadData(){
 						console.log(message);
 				}
 	})
+}
+
+function active(){
+	$('.prj').removeClass('your_projects');
+	$('.prj').removeClass('finished_projects');
+	$('.prj').addClass('active_projects');
+	loadProjects();
+	$('.active').addClass('disabled');
+	$('.finished').removeClass('disabled');
+	$('.your').removeClass('disabled');
+}
+
+function finished(){
+	$('.prj').removeClass('active_projects');
+	$('.prj').removeClass('your_projects');
+	$('.prj').addClass('finished_projects');
+	loadProjects();
+	$('.finished').addClass('disabled');
+	$('.active').removeClass('disabled');
+	$('.your').removeClass('disabled');
+}
+
+function your(){
+	$('.prj').removeClass('active_projects');
+	$('.prj').removeClass('finished_projects');
+	$('.prj').addClass('your_projects');
+	loadProjects();
+	$('.your').addClass('disabled');
+	$('.finished').removeClass('disabled');
+	$('.active').removeClass('disabled');
 }
 
 function tooltipload(){

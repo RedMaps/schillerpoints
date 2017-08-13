@@ -1,34 +1,34 @@
 <div id="projectModal" class="modal full modal-fixed-footer blue-grey white-text projectModal">
   <div class="modal-content">
 
-    <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
+    <h4 class="right modal-close x-button btn-flat white-text vTitle"><i class="material-icons">close</i></h4>
     <h4 id="vTitle"></h4>
 
-    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Leiter des Projekts">
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped vLeader" data-tooltip="Leiter des Projekts">
       <div class="valign-wrapper" id="vLeader">
         Julian
       </div>
     </div>
 
-    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Ort">
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped vLocation" data-tooltip="Ort">
       <div class="valign-wrapper" id="vLocation">
         Laer
       </div>
     </div>
 
-    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Datum">
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped vDate" data-tooltip="Datum">
       <div class="valign-wrapper" id="vDate">
         01.11.2017
       </div>
     </div>
 
-    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Uhrzeit">
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped vTime" data-tooltip="Uhrzeit">
       <div class="valign-wrapper" id="vTime">
         12:20
       </div>
     </div>
 
-    <div class="chip white-text grey darken-3 z-depth-1 tooltipped" data-tooltip="Dauer">
+    <div class="chip white-text grey darken-3 z-depth-1 tooltipped vDuration" data-tooltip="Dauer">
       <div class="valign-wrapper" id="vDuration">
         2h
       </div>
@@ -37,6 +37,12 @@
     <div class="chip white-text grey darken-3 tooltipped" data-tooltip="Teilnehmer / Max. Teilnehmer">
       <div class="valign-wrapper" id="vMax">
         7/20
+      </div>
+    </div>
+
+    <div class="chip white-text cyan tooltipped hidden vProfit" data-tooltip="Profit">
+      <div class="valign-wrapper" id="vProfit">
+        85€
       </div>
     </div>
 

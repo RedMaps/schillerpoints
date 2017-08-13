@@ -8,7 +8,15 @@
 <body>
   <input type="hidden" name="setlogin" class="setlogin" value="true">
 
-  <div class="active_projects"></div>
+  <center>
+    <a class="waves-effect waves-light btn green accent-4 lef active disabled" onclick="active();">Active Projects</a>
+    <a class="waves-effect waves-light btn green accent-4 mid finished" onclick="finished();">Finished Projects</a>
+    <a class="waves-effect waves-light btn green accent-4 rig your" onclick="your();">Your Projects</a>
+  </center>
+
+  <br>
+
+  <div class="prj active_projects"></div>
 
   <a onclick="addProject()" class="btn-floating halfway-fab waves-effect waves-light blue-grey addbtn z-depth-4 tooltipped btn-down" data-position="left" data-tooltip="suggest project"><i class="material-icons">add</i></a>
 

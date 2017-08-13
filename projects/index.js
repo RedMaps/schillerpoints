@@ -25,8 +25,8 @@ var btn = $('.btn-down');
 
 $window.on('scroll', function(){
   var scrollTop = $window.scrollTop();
-  nav.toggleClass('hidden', scrollTop > prev);
-  btn.toggleClass('hidden', scrollTop > prev);
+  nav.toggleClass('hidd', scrollTop > prev);
+  btn.toggleClass('hidd', scrollTop > prev);
   prev = scrollTop;
 });
 

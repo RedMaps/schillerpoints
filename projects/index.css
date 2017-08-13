@@ -15,6 +15,33 @@ body{
 }
 
 @media only screen and (max-width: 500px) {
+
+  .navbar{
+    position: fixed;
+    -webkit-transition: transform 1.5s ease;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .navbar.hidd{
+    -webkit-transform: translateY(-90%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .btn-down{
+    position: fixed;
+    -webkit-transition: transform 1.5s ease;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .btn-down.hidden{
+    -webkit-transform: translateY(-100%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
 .modal.full{
   width: 90%;
   max-height: 95%;
@@ -129,30 +156,4 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 input[type=range]::-webkit-slider-runnable-track {
   background: white;
-}
-
-.navbar{
-  position: fixed;
-  -webkit-transition: transform 1.5s ease;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.navbar.hidden{
-  -webkit-transform: translateY(-90%);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.btn-down{
-  position: fixed;
-  -webkit-transition: transform 1.5s ease;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.btn-down.hidden{
-  -webkit-transform: translateY(-100%);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }

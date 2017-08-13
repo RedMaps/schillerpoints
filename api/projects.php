@@ -3,16 +3,6 @@ include 'api.php';
 
 $uId = $_POST['id'];
 
-function active($con, $uId){
-  $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='1' ORDER BY date");
-  $num_rows = mysqli_num_rows($result);
-  $i = 0;
-
-  while($data = mysqli_fetch_assoc($result)){
-    $i++;
-    include "card.php";
-  };
-}
 function pending($con, $uId){
   $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='0' ORDER BY date");
   $num_rows = mysqli_num_rows($result);
@@ -23,8 +13,8 @@ function pending($con, $uId){
     include "card.php";
   };
 }
-function finished($con, $uId){
-  $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='3' ORDER BY date");
+function active($con, $uId){
+  $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='1' ORDER BY date");
   $num_rows = mysqli_num_rows($result);
   $i = 0;
 
@@ -35,6 +25,16 @@ function finished($con, $uId){
 }
 function removed($con, $uId){
   $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='2' ORDER BY date");
+  $num_rows = mysqli_num_rows($result);
+  $i = 0;
+
+  while($data = mysqli_fetch_assoc($result)){
+    $i++;
+    include "card.php";
+  };
+}
+function finished($con, $uId){
+  $result = mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status='3' ORDER BY date DESC");
   $num_rows = mysqli_num_rows($result);
   $i = 0;
 

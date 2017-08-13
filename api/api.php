@@ -174,15 +174,20 @@ class Project {
     }
   }
   public static function edit($uId, $id, $con){
-    $query = mysqli_query($con, "select leader from ".PRJBASE." where id=$id");
-    $leader = mysqli_fetch_array($query);
-    $leader = $leader['leader'];
-    $query = mysqli_query($con, "select userStatus from ".USERBASE." where userId=$uId");
-    $status = mysqli_fetch_array($query);
-    $status = $status['userStatus'];
+    $query = mysqli_query($con, "select * from ".PRJBASE." where id=$id");
+    $results = mysqli_fetch_array($query);
+    $leader = $results['leader'];
+    $query = mysqli_query($con, "select * from ".USERBASE." where userId=$uId");
+    $array = mysqli_fetch_array($query);
+    $userstatus = $array['userStatus'];
+    $status = $results['status'];
+    if($status != 1 && $userstatus != 1){
+      echo "ERROR: Only admins can edit this project!";
+      return false;
+    }
     $allowed = false;
     if($uId == $leader) $allowed = true;
-    if($status == 1) $allowed = true;
+    if($userstatus == 1) $allowed = true;
     if($allowed){
     $query = mysqli_query($con, "select * from ".PRJBASE." where id=$id");
     $project = mysqli_fetch_array($query);
@@ -253,10 +258,14 @@ class Project {
     if($leader == $uId) return true; else return false;
   }
 
-  //IDEA: maybe make ".USERBASE." join/leave by userId?
   public static function join($uId, $id, $con){
     $query = mysqli_query($con, "select members from ".PRJBASE." where id=$id");
     $array = mysqli_fetch_array($query);
+    $status = $array['status'];
+    if($status != 1){
+      echo "ERROR: You can only join active projects!";
+      return false;
+    }
     $array = $array['members'];
     $decoded = json_decode($array, true);
     for($i = 0; $i < count($decoded); $i++){
@@ -273,12 +282,15 @@ class Project {
   }
 
   public static function leave($uId, $id, $con){
-    $query = mysqli_query($con, "select leader from ".PRJBASE." where id=$id");
-    $leader = mysqli_fetch_array($query);
-    if($leader['leader'] != $uId){
-      $query = mysqli_query($con, "select members from ".PRJBASE." where id=$id");
-      $array = mysqli_fetch_array($query);
-      $array = $array['members'];
+    $query = mysqli_query($con, "select * from ".PRJBASE." where id=$id");
+    $results = mysqli_fetch_array($query);
+    $status = $results['status'];
+    if($status != 1){
+      echo "ERROR: You can only leave active projects!";
+      return false;
+    }
+    if($results['leader'] != $uId){
+      $results = $results['members'];
       $decoded = json_decode($array, true);
       for($i = 0; $i < count($decoded); $i++){
         if($decoded[$i] == $uId) $lId = $i;

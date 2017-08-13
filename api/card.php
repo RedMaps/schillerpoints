@@ -3,9 +3,11 @@
   <div class="col s12 m6 l4">
     <div class="card blue-grey darken-1">
       <div class="card-content white-text">
-        <span class="new badge" data-badge-caption=""><?php
-          $date = new DateTime($data['date'] . $data['time']);
-          $now = new DateTime();
+        <?php
+        $date = new DateTime($data['date'] . $data['time']);
+        $now = new DateTime();
+         ?>
+        <span class="new badge <?php if($now->diff($date)->format('%r')) echo 'red darken-1'; ?>" data-badge-caption=""><?php
           echo $now->diff($date)->format("%r %a Days left");
           ?></span>
         <span class="card-title"><?php echo $data['title']; ?></span>
