@@ -18,6 +18,19 @@ $('.timepicker').pickatime({
   aftershow: function(){} //Function for after opening timepicker
 });
 
+var prev = 0;
+var $window = $(window);
+var nav = $('.navbar');
+var btn = $('.btn-down');
+
+$window.on('scroll', function(){
+  var scrollTop = $window.scrollTop();
+  nav.toggleClass('hidden', scrollTop > prev);
+  btn.toggleClass('hidden', scrollTop > prev);
+  prev = scrollTop;
+});
+
+
 //HACK: DEACTIVATED FOR UNKNOWN TIME
 
  // // Hide Header on on scroll down

@@ -38,13 +38,13 @@ body{
   margin-top: -56px;
 }
 
-.addbtn{
+/*.addbtn{
   transition: margin-top 0.2s ease-in-out;
-}
-
+}*/
+/*
 .btn-up {
   margin-top: -45px;
-}
+}*/
 
 .modalTitle{
     margin-bottom: -40px;
@@ -131,7 +131,28 @@ input[type=range]::-webkit-slider-runnable-track {
   background: white;
 }
 
-header{
-  transition: margin-top 0.2s ease;
+.navbar{
+  position: fixed;
+  -webkit-transition: transform 1.5s ease;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.navbar.hidden{
+  -webkit-transform: translateY(-90%);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.btn-down{
+  position: fixed;
+  -webkit-transition: transform 1.5s ease;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.btn-down.hidden{
+  -webkit-transform: translateY(-100%);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }

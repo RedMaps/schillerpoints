@@ -44,7 +44,7 @@ function getPoints(uId){
               };
 
               var count = new CountUp("count", 0, results, 0, 2.2, options);
-              count.start();
+              count.start(animate);
 
             points = results * 0.05;
             if(points > 1) points = 1;
@@ -56,4 +56,11 @@ function getPoints(uId){
               console.log(results);
             }
   });
+}
+
+function animate(){
+  $(".mark").addClass("tada");
+  setTimeout(function(){
+    $(".mark").addClass("imageRotateHorizontal");
+  }, 1000);
 }

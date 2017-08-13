@@ -11,6 +11,7 @@
 
   <center>
     <div class="progress" id="progress"></div>
+    <img class="mark animated" src="pics/mark.png">
     <h4 id="count" class="marg">Your Points: 0 / 20</h4>
     <a href="/new/projects/" class="btn btn-large white black-text projectbtn">to the projects</a>
   </center>

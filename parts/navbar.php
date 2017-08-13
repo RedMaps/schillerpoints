@@ -3,9 +3,9 @@ function getProjectCount($con){
   return mysqli_num_rows(mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE status=1"));
 }
  ?>
-<header class="nav-down">
+<header>
   <div class='navbar-fixed'>
-    <nav>
+    <nav class="navbar">
       <div class="nav-wrapper green accent-4">
         <a href="<?php echo url(); ?>" class="brand-logo">&nbsp;&nbsp;S-Points</a>
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>

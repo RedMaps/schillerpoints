@@ -1,0 +1,20 @@
+body{
+  height: 8000px;
+}
+
+.nav{
+  padding: 20px;
+  position: fixed;
+  -webkit-transition: transform 1s ease-in-out;
+  width: 100%;
+  bottom: 0px;
+}
+
+.nav.hidden{
+  -webkit-transform: translateY(-100%);
+}
+
+/*p{
+  margin: 0;
+  padding: 20px;
+}*/

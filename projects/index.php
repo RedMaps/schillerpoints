@@ -22,6 +22,8 @@
     include "../modals/scoreModal.php";
    ?>
 
+  <div class="nav">Scroll to show/hide this bar!</div>
+
   <script type="text/javascript" src="../js/materialize.js"></script>
   <script src="../api/api.js"></script>
   <script src="../api/initializer.js"></script>
