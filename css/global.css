@@ -85,3 +85,11 @@
     box-shadow: none;
   }
 }
+
+.percentage{
+  float: right;
+}
+
+.options{
+  float: left;
+}

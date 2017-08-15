@@ -236,7 +236,6 @@ function logOut(){
 // !TODO: add translation function
 // TODO: add profiles maybe
 // TODO: add color change or dark / light theme
-// !TODO: add tabs for own projects / finished projects
 // TODO: make lists work?
 // TODO: maybe put something right or left to projects on desktop version
 // TODO: create deploy version of project
@@ -247,7 +246,6 @@ function logOut(){
 // TODO: add forum for school related things
 // !TODO: add password reset system
 // TODO: add notification system (app?)
-// TODO: add poll / voting system
 // TODO: add salt n' pepper maybe
 // TODO: check for all details filled in
 // TODO: make todo list even longer
@@ -667,6 +665,22 @@ function loadProjects(){
 						console.log(message);
 				}
 	})
+	$.ajax({
+				type: "POST",
+				url: "/new/api/projects.php",
+				data: {
+					type: "your",
+					id: localStorage.getItem("userid")
+				},
+				success: function(results){
+						resultHandler(results);
+						$(".your_projects").html(results);
+						$('.tooltipped').tooltip({delay: 50});
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
 }
 
 function addProject(){
@@ -739,6 +753,74 @@ function your(){
 	$('.finished').removeClass('disabled');
 	$('.active').removeClass('disabled');
 }
+
+function loadPoll(id){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "getpolldata",
+					id: id
+				},
+				success: function(results){
+						resultHandler(results);
+						res = JSON.parse(results);
+						$(".qTitle").html(res.question);
+						options = JSON.parse(res.options);
+						var opt = "";
+						for(var i=0;i<options.length;i++){
+							opt = opt + '<p><input class="with-gap checks" name="checks" type="radio" id="check'+i+'" /><label for="check'+i+'" class="white-text options">'+options[i]+'</label></p><div class="hidden per percent'+i+'">error</div><div class="bar'+i+' bar"><div class="determinate width'+i+'"></div></div>';
+						}
+						console.log(opt);
+						$(".polls").html(opt);
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
+function progressPoll(){
+	for(var j=0;j<$(".checks").length;j++){
+		if($("#check"+j).prop('checked')){
+			$.ajax({
+						type: "POST",
+						url: "/new/api/api.php",
+						data: {
+							action: "progresspoll",
+							check: j,
+							id: 1
+						},
+						success: function(results){
+								console.log(results);
+								resultHandler(results);
+								res = JSON.parse(results);
+								var total = 0;
+								for(var i = 0; i<res.length; i++){
+									total += res[i];
+								}
+								for(var i = 0; i<res.length; i++){
+									$(".width" + i).width(percentage(res[i],total) + "%");
+									$(".percent" + i).text(Math.round(percentage(res[i],total)*100)/100 + "%");
+								}
+								$(".per").addClass("percentage");
+								$(".per").removeClass("hidden");
+								$(".bar").addClass("progress");
+								$(".with-gap").attr("disabled","disabled");
+								$(".confirm-button").remove();
+							},
+						error: function(message){
+								console.log(message);
+						}
+			})
+		}
+	}
+}
+
+function percentage(num, num2){
+  return (num/num2)*100;
+}
+
 
 function tooltipload(){
 	clearInterval(l);

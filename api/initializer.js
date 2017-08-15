@@ -5,6 +5,8 @@
 
   $(document).ready(function(){
     console.log("document ready fired!");
+    $("#pollModal").modal("open");
+    loadPoll(1);
     $('.dropdown-button').dropdown({
           inDuration: 300,
           outDuration: 225,
@@ -26,7 +28,6 @@
       startingTop: '4%', // Starting top style attribute
       endingTop: '10%', // Ending top style attribute
       ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-        alert("Ready");
         console.log(modal, trigger);
       },
       complete: function() {

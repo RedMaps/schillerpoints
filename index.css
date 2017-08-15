@@ -10,7 +10,7 @@ html{
   margin-top: 50px;
 }
 
-.progress {
+.progress_round {
   margin-top: 100px;
   margin-bottom: 20px;
   height: 200px;
@@ -20,7 +20,7 @@ html{
   overflow: hidden;
 }
 
-.progress > svg {
+.progress_round > svg {
   height: 100%;
   width: 100%
   display: block;

@@ -24,3 +24,4 @@
 
 	define("USERBASE","users");
 	define("PRJBASE","projects");
+	define("POLLBASE","polls");

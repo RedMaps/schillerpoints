@@ -8,6 +8,25 @@ class Console {
   }
 }
 
+class Poll {
+  public static function getPollData($id, $con){
+    $query = mysqli_query($con, "SELECT * FROM polls WHERE id='".$id."'");
+    $poll = mysqli_fetch_array($query);
+    echo json_encode($poll);
+  }
+
+  public static function progressPoll($id, $check, $con){
+    $result = mysqli_query($con, "SELECT * FROM ".POLLBASE." WHERE id='".$id."'");
+    $res = mysqli_fetch_array($result);
+    $array = json_decode($res['results']);
+    $val = $array[$check] + 1;
+    $spliced = array_splice($array,$check,1,$val);
+    $new_array = json_encode($array);
+    $query = mysqli_query($con, "UPDATE ".POLLBASE." SET results='".$new_array."' WHERE id='".$id."'");
+    echo $new_array;
+  }
+}
+
 class Api {
   //gets data by a certain given condition
   public static function getDataBy($condition, $data, $returns, $con){
@@ -259,10 +278,10 @@ class Project {
   }
 
   public static function join($uId, $id, $con){
-    $query = mysqli_query($con, "select members from ".PRJBASE." where id=$id");
+    $query = mysqli_query($con, "select * from ".PRJBASE." where id=$id");
     $array = mysqli_fetch_array($query);
     $status = $array['status'];
-    if($status != 1){
+    if($status != '1'){
       echo "ERROR: You can only join active projects!";
       return false;
     }
@@ -290,9 +309,9 @@ class Project {
       return false;
     }
     if($results['leader'] != $uId){
-      $results = $results['members'];
+      $array = $results['members'];
       $decoded = json_decode($array, true);
-      for($i = 0; $i < count($decoded); $i++){
+      for($i=0;$i<count($decoded);$i++){
         if($decoded[$i] == $uId) $lId = $i;
       }
       if($lId){
@@ -362,6 +381,12 @@ if(isset($_POST['action']) || $val != null){
     break;
     case 'getpoints':
       echo Points::getPoints($_POST['uId'],$con);
+    break;
+    case 'getpolldata':
+      echo Poll::getPollData($_POST['id'],$con);
+    break;
+    case 'progresspoll':
+      echo Poll::progressPoll($_POST['id'],$_POST['check'],$con);
     break;
     default:
       return false;

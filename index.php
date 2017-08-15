@@ -1,3 +1,8 @@
+<?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +15,7 @@
   <script src="js/countup.js"></script>
 
   <center>
-    <div class="progress" id="progress"></div>
+    <div class="progress_round" id="progress_round"></div>
     <img class="mark animated" src="pics/mark.png">
     <h4 id="count" class="marg">Your Points: 0 / 20</h4>
     <a href="/new/projects/" class="btn btn-large white black-text projectbtn">to the projects</a>
@@ -23,6 +28,8 @@
     include "modals/projectModal.php";
     include "modals/impressumModal.php";
     include "modals/pointModal.php";
+    include "modals/pollModal.php";
+    include "modals/resultsModal.php";
     include "modals/scoreModal.php";
    ?>
 

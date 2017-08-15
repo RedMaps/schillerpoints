@@ -1,4 +1,4 @@
-var circle = new ProgressBar.Circle('#progress', {
+var circle = new ProgressBar.Circle('#progress_round', {
     strokeWidth: 2,
     color: '#FFFFFF',
     duration: 2000,
