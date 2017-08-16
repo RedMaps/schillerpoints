@@ -10,6 +10,7 @@ function url(){
 }
 ?>
 
+<title>Schillerpoints</title>
 <script src="<?php echo url(); ?>/js/jquery-3.2.1.min.js"></script>
 <link type="text/css" rel="stylesheet" href="<?php echo url(); ?>/css/materialize.css"  media="screen","projection"/>
 <link rel="stylesheet" href="<?php echo url(); ?>/css/global.css">

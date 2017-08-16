@@ -45,6 +45,17 @@ class Api {
     }
   }
 
+  public static function changePass($id, $oldpass, $newpass, $con){
+    $result = mysqli_query($con, "SELECT * FROM ".USERBASE." WHERE userId='".$id."'");
+    $array = mysqli_fetch_array($result);
+    if($array['userPass'] == hash('sha256', $oldpass)){
+      $result = mysqli_query($con, "UPDATE ".USERBASE." SET userPass='".hash('sha256', $newpass)."' WHERE userId='".$id."'");
+      echo "SUCCESS: Successfully changed your password!";
+    }else{
+      echo "ERROR: Your password isn't correct!";
+    }
+  }
+
   public static function getNames($ids, $con){
     $array = array();
     for($i = 0; $i < count($ids); $i++){
@@ -378,6 +389,9 @@ if(isset($_POST['action']) || $val != null){
     break;
     case 'getname':
       echo Api::getName($_POST['id'],$con);
+    break;
+    case 'changepass':
+      echo Api::changePass($_POST['id'],$_POST['oldpass'],$_POST['newpass'],$con);
     break;
     case 'getpoints':
       echo Points::getPoints($_POST['uId'],$con);

@@ -57,6 +57,6 @@
   </div>
 
   <div class="modal-footer blue-grey white-text darken-1">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green white-text" onclick="createProject()">Submit</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green accent-4 white-text" onclick="createProject()">Submit</a>
   </div>
 </div>

@@ -2,6 +2,7 @@
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+include_once("../parts/analyticstracking.php");
  ?>
 <!DOCTYPE html>
 <html>
@@ -32,10 +33,11 @@ header("Pragma: no-cache");
     include "../modals/projectModal.php";
     include "../modals/impressumModal.php";
     include "../modals/pointModal.php";
+    include "../modals/pollModal.php";
+    include "../modals/resultsModal.php";
+    include "../modals/changePassModal.php";
     include "../modals/scoreModal.php";
    ?>
-
-  <div class="nav">Scroll to show/hide this bar!</div>
 
   <script type="text/javascript" src="../js/materialize.js"></script>
   <script src="../api/api.js"></script>

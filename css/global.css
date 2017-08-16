@@ -58,6 +58,18 @@
   padding: 0 1rem;
 }
 
+.money_desktop{
+  visibility: hidden;
+}
+
+@media only screen and (min-width: 993px) {
+  .money_desktop{
+    visibility: visible;
+    float: left;
+    margin-left: 150px;
+  }
+}
+
 @media only screen and (min-width: 600px) {
   .lef{
     border-radius: 2px 0 0 2px;
@@ -91,5 +103,9 @@
 }
 
 .options{
-  float: left;
+  float: right;
+}
+
+.money{
+  margin: 0;
 }

@@ -2,6 +2,10 @@ body{
   background: #282C34;
 }
 
+html{
+  color: white;
+}
+
 .addbtn{
     position: fixed !important;
     bottom: 20px !important;
@@ -74,7 +78,7 @@ body{
 }*/
 
 .modalTitle{
-    margin-bottom: -40px;
+    /*margin-bottom: -40px;*/
 }
 }
 

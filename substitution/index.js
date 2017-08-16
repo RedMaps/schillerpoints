@@ -12,5 +12,23 @@ $('.modal').modal({
   },
   complete: function() {
    } // Callback for Modal close
+});
+
+loadSubTable();
+
+function loadSubTable(){
+  $.ajax({
+        type: "POST",
+        url: "loadsubtable.php",
+        data: {
+          action: "loadsubtable"
+        },
+        success: function(results){
+          console.log(results);
+            $(".loadsubtable").html(results);
+          },
+        error: function(message){
+            console.log(message);
+        }
+  })
 }
-);

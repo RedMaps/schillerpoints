@@ -41,12 +41,19 @@ String.prototype.replaceAll = function(s1, s2) {
 
 function error(text){
 	Materialize.toast(text, 3000, 'red');
+	console.error(text);
 }
 function success(text){
 	Materialize.toast(text, 3000, 'green accent-4');
+	console.log(text);
 }
 function msg(text){
 	Materialize.toast(text, 3000, 'blue-grey');
+	console.info(text);
+}
+function info(text){
+	Materialize.toast(text, 3000, 'blue-grey');
+	console.info(text);
 }
 
 function resultHandler(res){
@@ -817,16 +824,45 @@ function progressPoll(){
 	}
 }
 
+function changePass(){
+	var oldpass = $("#oldpass").val();
+	var newpass = $("#newpass").val();
+	var reppass = $("#reppass").val();
+	if(newpass != reppass){
+		error("Please correctly repeat your new password!");
+	}else{
+		$.ajax({
+					type: "POST",
+					url: "/new/api/api.php",
+					data: {
+						action: "changepass",
+						id: localStorage.getItem("userid"),
+						oldpass: oldpass,
+						newpass: newpass
+					},
+					success: function(results){
+							resultHandler(results);
+							if(results == "SUCCESS: Successfully changed your password!"){
+								$("#changePassModal").modal("close");
+							}
+						},
+					error: function(message){
+							console.log(message);
+					}
+		})
+	}
+}
+
 function percentage(num, num2){
   return (num/num2)*100;
 }
 
 
-function tooltipload(){
-	clearInterval(l);
-	console.log("test");
-	$('.tooltipped').tooltip();
-}
+// function tooltipload(){
+// 	clearInterval(l);
+// 	console.log("test");
+// 	$('.tooltipped').tooltip();
+// }
 
 //Debug functions
 
