@@ -102,10 +102,20 @@
   float: right;
 }
 
-.options{
+/*.options{
   float: right;
-}
+}*/
 
 .money{
   margin: 0;
+}
+
+.notification_bell{
+  margin-right: 15px;
+}
+
+.notificationModal{
+  background: #455A64;
+  color: white;
+  max-height: 90% !important;
 }

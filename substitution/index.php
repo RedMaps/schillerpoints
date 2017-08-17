@@ -22,7 +22,7 @@ include_once("../parts/analyticstracking.php");
     <div class="nav-wrapper z-depth-2">
      <form id="search">
          <div class="input-field">
-           <input id="searchfield" type="search" onkeyup="sortTable('id','ASC')" placeholder="Suchbegriff eingeben ..." required>
+           <input id="searchfield" type="search" onkeyup="searchSubTable()" placeholder="Suchbegriff eingeben ..." required>
            <label class="label-icon" for="search"><i class="material-icons">search</i></label><i class="material-icons white-text inf">info</i>
          </div>
      </form>
@@ -39,6 +39,7 @@ include_once("../parts/analyticstracking.php");
     include "../modals/projectModal.php";
     include "../modals/impressumModal.php";
     include "../modals/pointModal.php";
+    include "modals/notificationModal.php";
     include "../modals/scoreModal.php";
    ?>
 

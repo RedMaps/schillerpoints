@@ -6,7 +6,7 @@
     <h6>(This is just a test)</h6>
     <br>
 
-    <div class="row polls"></div>
+    <!-- <div class="row polls"></div> -->
 
   </div>
 

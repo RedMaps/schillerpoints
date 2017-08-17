@@ -761,7 +761,7 @@ function your(){
 	$('.active').removeClass('disabled');
 }
 
-function loadPoll(id){
+function loadPoll(id, nr){
 	$.ajax({
 				type: "POST",
 				url: "/new/api/api.php",
@@ -772,14 +772,14 @@ function loadPoll(id){
 				success: function(results){
 						resultHandler(results);
 						res = JSON.parse(results);
-						$(".qTitle").html(res.question);
+						$(".qTitle" + nr).html(res.question);
 						options = JSON.parse(res.options);
 						var opt = "";
 						for(var i=0;i<options.length;i++){
-							opt = opt + '<p><input class="with-gap checks" name="checks" type="radio" id="check'+i+'" /><label for="check'+i+'" class="white-text options">'+options[i]+'</label></p><div class="hidden per percent'+i+'">error</div><div class="bar'+i+' bar"><div class="determinate width'+i+'"></div></div>';
+							opt = opt + '<p><input class="'+nr+'with-gap with-gap '+nr+'checks" name="checks" type="radio" id="'+nr+'check'+i+'" /><label for="'+nr+'check'+i+'" class="white-text options">'+options[i]+'</label></p><div class="hidden '+nr+'per '+nr+'percent'+i+'">error</div><div class="'+nr+'bar bar'+i+' bar"><div class="determinate '+nr+'width'+i+'"></div></div>';
 						}
 						console.log(opt);
-						$(".polls").html(opt);
+						$(".polls" + nr).html(opt);
 					},
 				error: function(message){
 						console.log(message);
@@ -787,16 +787,16 @@ function loadPoll(id){
 	})
 }
 
-function progressPoll(){
-	for(var j=0;j<$(".checks").length;j++){
-		if($("#check"+j).prop('checked')){
+function progressPoll(nr, id){
+	for(var j=0;j<$("."+nr+"checks").length;j++){
+		if($("#"+nr+"check"+j).prop('checked')){
 			$.ajax({
 						type: "POST",
 						url: "/new/api/api.php",
 						data: {
 							action: "progresspoll",
 							check: j,
-							id: 1
+							id: id
 						},
 						success: function(results){
 								console.log(results);
@@ -807,14 +807,14 @@ function progressPoll(){
 									total += res[i];
 								}
 								for(var i = 0; i<res.length; i++){
-									$(".width" + i).width(percentage(res[i],total) + "%");
-									$(".percent" + i).text(Math.round(percentage(res[i],total)*100)/100 + "%");
+									$("."+nr+"width"+i).width(percentage(res[i],total) + "%");
+									$("."+nr+"percent"+i).text(Math.round(percentage(res[i],total)*100)/100 + "%");
 								}
-								$(".per").addClass("percentage");
-								$(".per").removeClass("hidden");
-								$(".bar").addClass("progress");
-								$(".with-gap").attr("disabled","disabled");
-								$(".confirm-button").remove();
+								$("."+nr+"per").addClass("percentage");
+								$("."+nr+"per").removeClass("hidden");
+								$("."+nr+"bar").addClass("progress");
+								$("."+nr+"with-gap").attr("disabled","disabled");
+								$("."+nr+"confirm-button").remove();
 							},
 						error: function(message){
 								console.log(message);

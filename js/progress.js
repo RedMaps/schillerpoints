@@ -44,7 +44,11 @@ function getPoints(uId){
               };
 
               var count = new CountUp("count", 0, results, 0, 2.2, options);
-              count.start(animate);
+              if(results >= 20){
+                count.start(animate);
+              }else{
+                count.start();
+              }
 
             points = results * 0.05;
             if(points > 1) points = 1;

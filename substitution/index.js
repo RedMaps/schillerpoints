@@ -24,7 +24,28 @@ function loadSubTable(){
           action: "loadsubtable"
         },
         success: function(results){
-          console.log(results);
+            $(".loadsubtable").html(results);
+          },
+        error: function(message){
+            console.log(message);
+        }
+  })
+}
+
+function searchSubTable(){
+
+  var search = $("#searchfield");
+  search = search.focus();
+  search = search.val();
+
+  $.ajax({
+        type: "POST",
+        url: "loadsubtable.php",
+        data: {
+          action: "search",
+          search: search
+        },
+        success: function(results){
             $(".loadsubtable").html(results);
           },
         error: function(message){

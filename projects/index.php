@@ -36,6 +36,7 @@ include_once("../parts/analyticstracking.php");
     include "../modals/pollModal.php";
     include "../modals/resultsModal.php";
     include "../modals/changePassModal.php";
+    include "../modals/notificationModal.php";
     include "../modals/scoreModal.php";
    ?>
 

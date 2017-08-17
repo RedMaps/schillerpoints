@@ -2,7 +2,7 @@
 
 include_once("../api/dbconnect.php");
 
-if($_POST['action'] == "loadsubtable"){
+if($_POST['action'] == "loadsubtable" || $_POST['action'] == "search"){
 
   for($j = 1; $j < 5; $j++){
 
@@ -12,7 +12,8 @@ if($_POST['action'] == "loadsubtable"){
     if($j == 4){ $table_day = "substitution_thu"; $day = "Donnerstag"; $info = "info_thu"; }
     if($j == 5){ $table_day = "substitution_fri"; $day = "Freitag"; $info = "info_fri"; }
 
-    $query = mysqli_query($con, "SELECT * FROM " . $table_day);
+    if($_POST['action'] == "loadsubtable"){ $query = mysqli_query($con, "SELECT * FROM " . $table_day); }
+    if($_POST['action'] == "search"){ $query = mysqli_query($con, "SELECT * FROM " . $table_day . " WHERE klasse LIKE '%".$_POST['search']."%'"); }
 
     while ($result = mysqli_fetch_array($query, MYSQLI_BOTH)){
         $results[] = $result;
@@ -75,6 +76,7 @@ if($_POST['action'] == "loadsubtable"){
     </table><br><br>';
 
 
+    }
   }
 
 ?>
