@@ -206,6 +206,8 @@ function logIn(){
 										$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
 										//getPoints(data.userId);
 										success("logged in sucessfully!");
+										loadNotifications();
+										loadBadge();
                 },
             error: function(results){
                     console.log(results);
@@ -761,6 +763,8 @@ function your(){
 	$('.active').removeClass('disabled');
 }
 
+//TODO: MAKE THIS WORK!
+
 function loadPoll(id, nr){
 	$.ajax({
 				type: "POST",
@@ -777,6 +781,8 @@ function loadPoll(id, nr){
 						var opt = "";
 						for(var i=0;i<options.length;i++){
 							opt = opt + '<p><input class="'+nr+'with-gap with-gap '+nr+'checks" name="checks" type="radio" id="'+nr+'check'+i+'" /><label for="'+nr+'check'+i+'" class="white-text options">'+options[i]+'</label></p><div class="hidden '+nr+'per '+nr+'percent'+i+'">error</div><div class="'+nr+'bar bar'+i+' bar"><div class="determinate '+nr+'width'+i+'"></div></div>';
+							inArray(id,i);
+							console.log(id + ":" + i);
 						}
 						console.log(opt);
 						$(".polls" + nr).html(opt);
@@ -787,9 +793,28 @@ function loadPoll(id, nr){
 	})
 }
 
+function inArray(id, nr){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "inarray",
+					uId: localStorage.getItem("userid"),
+					id: id
+				},
+				success: function(results){
+						console.log(results);
+						resultHandler(results);
+						$("#"+id+"check"+nr).attr("disabled", "disabled");
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
 function progressPoll(nr, id){
 	for(var j=0;j<$("."+nr+"checks").length;j++){
-		console.log("tet");
 		if($("#"+nr+"check"+j).prop('checked')){
 			$.ajax({
 						type: "POST",
@@ -797,7 +822,8 @@ function progressPoll(nr, id){
 						data: {
 							action: "progresspoll",
 							check: j,
-							id: id
+							id: id,
+							uId: localStorage.getItem("userid")
 						},
 						success: function(results){
 								console.log(results);
@@ -854,8 +880,6 @@ function changePass(){
 	}
 }
 
-loadNotifications();
-
 function loadNotifications(){
 	$.ajax({
 				type: "POST",
@@ -888,11 +912,37 @@ function seen(nId){
 				success: function(results){
 						console.log(results);
 						resultHandler(results);
+						loadNotifications();
+						loadBadge();
 					},
 				error: function(message){
 						console.log(message);
 				}
 	})
+}
+
+function loadBadge(){
+	if(localStorage.getItem("userid") != '0'){
+		$.ajax({
+					type: "POST",
+					url: "/new/api/api.php",
+					data: {
+						action: "countnotifications",
+						id: localStorage.getItem("userid")
+					},
+					success: function(results){
+							console.log(results);
+							resultHandler(results);
+							$('.notification-badge').html(results);
+						},
+					error: function(message){
+							console.log(message);
+					}
+		})
+	}else{
+		$('.notification-badge').remove();
+		$('.notification_bell').html("notifications_none");
+	}
 }
 
 function percentage(num, num2){

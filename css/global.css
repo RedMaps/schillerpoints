@@ -106,6 +106,16 @@
   float: right;
 }*/
 
+.notification-badge{
+  background-color: #ff5252;
+  border-radius: 50%;
+  position: relative;
+  right: -43px;
+  top: 15px;
+  line-height: 5px;
+  padding: 4px;
+}
+
 .money{
   margin: 0;
 }

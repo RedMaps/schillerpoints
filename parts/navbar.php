@@ -14,7 +14,7 @@ function getMoney($con){
       <div class="nav-wrapper green accent-4">
         <a href="<?php echo url(); ?>" class="brand-logo">&nbsp;&nbsp;S-Points</a>
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-        <a onclick="$('.notificationModal').modal('open');"><i class="material-icons right notification_bell">notifications_none</i></a>
+        <a onclick="$('.notificationModal').modal('open');"><i class="material-icons right notification_bell">notifications</i><small class="notification-badge right">0</small></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="<?php echo url(); ?>">Startseite</a></li>
           <li><a href="<?php echo url(); ?>/projects">Projekte<span class="badge white-text"><span class="new badge vMax" data-badge-caption=""><?php echo getProjectCount($con); ?></span></span></a></li>

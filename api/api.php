@@ -15,9 +15,14 @@ class Poll {
     echo json_encode($poll);
   }
 
-  public static function progressPoll($id, $check, $con){
+  public static function progressPoll($id, $check, $uId, $con){
     $result = mysqli_query($con, "SELECT * FROM ".POLLBASE." WHERE id='".$id."'");
     $res = mysqli_fetch_array($result);
+    $test = $res['usedby'];
+    $used = json_decode($test, true);
+    array_push($used, $uId . ":" . $check);
+    $used_new = json_encode($used);
+    $query = mysqli_query($con, "UPDATE ".POLLBASE." SET usedby='".$used_new."' WHERE id='".$id."'");
     $array = json_decode($res['results']);
     $val = $array[$check] + 1;
     $spliced = array_splice($array,$check,1,$val);
@@ -25,51 +30,81 @@ class Poll {
     $query = mysqli_query($con, "UPDATE ".POLLBASE." SET results='".$new_array."' WHERE id='".$id."'");
     echo $new_array;
   }
+
+  public static function inArray($id, $uId, $con){
+    $result = mysqli_query($con, "SELECT * FROM ".POLLBASE." WHERE id='".$id."'");
+    $res = mysqli_fetch_array($result);
+    $usedby = $res['usedby'];
+    $used = json_decode($usedby, true);
+    $array = preg_grep("/^$uId*(?=(:))/", $used);
+    $array = $array[0];
+    preg_match("/([^:]*)$/", $array, $reg);
+    echo $reg[0];
+  }
 }
 
 $p = 0;
 
 class Notifications {
   public static function load($id, $con){
+    if($id != '0'){
+      $result = mysqli_query($con, "SELECT * FROM notifications WHERE status='1' ORDER BY priority DESC");
+      while ($row = mysqli_fetch_array($result)) {
+        $seen = mysqli_fetch_array(mysqli_query($con, "SELECT seenby FROM notifications WHERE id='".$row['id']."'"));
+        $seen = json_decode($seen[0]);
+        if(!in_array($id, $seen)){
+          switch ($row['type']) {
+            case 'text':
+            echo '<div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title">'.$row['title'].'</span>
+                      <p>'.$row['text'].'</p>
+                    </div>';
+                    if($row['dismissable'] == '1'){
+                      echo '<div class="card-action">
+                        <a onclick="seen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4">Seen</a>
+                      </div>';
+                    }
+                  echo '</div>';
+              break;
+            case 'poll':
+              $p = $p + 1;
+              echo '<div class="card blue-grey darken-1 notifi">
+                <div class="card-content white-text">
+                  <span class="card-title qTitle'.$p.'">Umfrage</span>
+
+                  <div class="row polls'.$p.'"></div>
+
+                </div>
+                <div class="card-action">';
+                  if($row['dismissable'] == '1'){
+                    echo '<a onclick="seen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4" >Seen</a>';
+                  }
+                  echo '<a class="modal-action waves-effect waves-black btn-flat white-text green accent-4 '.$p.'confirm-button" onclick="progressPoll('.$p.','.$row['parameters'].')">Confirm</a>
+                </div>
+              </div><script>loadPoll('.$row['parameters'].','.$p.');</script>';
+              break;
+
+            default:
+              echo "ERROR: notification type not found!";
+              break;
+          }
+        }
+      }
+    }
+  }
+
+  public static function count($id, $con){
+    $count = 0;
     $result = mysqli_query($con, "SELECT * FROM notifications WHERE status='1' ORDER BY priority DESC");
     while ($row = mysqli_fetch_array($result)) {
       $seen = mysqli_fetch_array(mysqli_query($con, "SELECT seenby FROM notifications WHERE id='".$row['id']."'"));
       $seen = json_decode($seen[0]);
       if(!in_array($id, $seen)){
-        switch ($row['type']) {
-          case 'text':
-          echo '<div class="card blue-grey darken-1">
-                  <div class="card-content white-text">
-                    <span class="card-title">'.$row['title'].'</span>
-                    <p>'.$row['text'].'</p>
-                  </div>
-                  <div class="card-action">
-                    <a href="#">Mark as seen</a>
-                  </div>
-                </div>';
-            break;
-          case 'poll':
-            $p = $p + 1;
-            echo '<div class="card blue-grey darken-1 notifi">
-              <div class="card-content white-text">
-                <span class="card-title qTitle'.$p.'">Umfrage</span>
-
-                <div class="row polls'.$p.'"></div>
-
-              </div>
-              <div class="card-action">
-                <a href="#" class="modal-action waves-effect waves-black btn-flat white-text accent-4 modal-close">Close</a>
-                <a href="#" class="modal-action waves-effect waves-black btn-flat white-text green accent-4 1confirm-button" onclick="progressPoll('.$p.','.$row['parameters'].')">Confirm</a>
-              </div>
-            </div><script>loadPoll('.$row['parameters'].','.$p.');</script>';
-            break;
-
-          default:
-            echo "ERROR: notification type not found!";
-            break;
-        }
+        $count++;
       }
     }
+    echo $count;
   }
 
   public static function seen($id, $nId, $con){
@@ -454,13 +489,19 @@ if(isset($_POST['action']) || $val != null){
       echo Poll::getPollData($_POST['id'],$con);
     break;
     case 'progresspoll':
-      echo Poll::progressPoll($_POST['id'],$_POST['check'],$con);
+      echo Poll::progressPoll($_POST['id'],$_POST['check'], $_POST['uId'], $con);
+    break;
+    case 'inarray':
+      echo Poll::inArray($_POST['id'], $_POST['uId'], $con);
     break;
     case 'loadnotifications':
       echo Notifications::load($_POST['id'],$con);
     break;
     case 'seennotification':
       echo Notifications::seen($_POST['id'],$_POST['nId'],$con);
+    break;
+    case 'countnotifications':
+      echo Notifications::count($_POST['id'],$con);
     break;
     default:
       return false;
