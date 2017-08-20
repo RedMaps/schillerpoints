@@ -27,6 +27,60 @@ class Poll {
   }
 }
 
+$p = 0;
+
+class Notifications {
+  public static function load($id, $con){
+    $result = mysqli_query($con, "SELECT * FROM notifications WHERE status='1' ORDER BY priority DESC");
+    while ($row = mysqli_fetch_array($result)) {
+      $seen = mysqli_fetch_array(mysqli_query($con, "SELECT seenby FROM notifications WHERE id='".$row['id']."'"));
+      $seen = json_decode($seen[0]);
+      if(!in_array($id, $seen)){
+        switch ($row['type']) {
+          case 'text':
+          echo '<div class="card blue-grey darken-1">
+                  <div class="card-content white-text">
+                    <span class="card-title">'.$row['title'].'</span>
+                    <p>'.$row['text'].'</p>
+                  </div>
+                  <div class="card-action">
+                    <a href="#">Mark as seen</a>
+                  </div>
+                </div>';
+            break;
+          case 'poll':
+            $p = $p + 1;
+            echo '<div class="card blue-grey darken-1 notifi">
+              <div class="card-content white-text">
+                <span class="card-title qTitle'.$p.'">Umfrage</span>
+
+                <div class="row polls'.$p.'"></div>
+
+              </div>
+              <div class="card-action">
+                <a href="#" class="modal-action waves-effect waves-black btn-flat white-text accent-4 modal-close">Close</a>
+                <a href="#" class="modal-action waves-effect waves-black btn-flat white-text green accent-4 1confirm-button" onclick="progressPoll('.$p.','.$row['parameters'].')">Confirm</a>
+              </div>
+            </div><script>loadPoll('.$row['parameters'].','.$p.');</script>';
+            break;
+
+          default:
+            echo "ERROR: notification type not found!";
+            break;
+        }
+      }
+    }
+  }
+
+  public static function seen($id, $nId, $con){
+    $seen = mysqli_fetch_array(mysqli_query($con, "SELECT seenby FROM notifications WHERE id='".$nId."'"));
+    $seen = json_decode($seen[0]);
+    array_push($seen, $id);
+    $new_seen = json_encode($seen);
+    $result = mysqli_query($con, "UPDATE notifications SET seenby='".$new_seen."' WHERE id='".$nId."'");
+  }
+}
+
 class Api {
   //gets data by a certain given condition
   public static function getDataBy($condition, $data, $returns, $con){
@@ -401,6 +455,12 @@ if(isset($_POST['action']) || $val != null){
     break;
     case 'progresspoll':
       echo Poll::progressPoll($_POST['id'],$_POST['check'],$con);
+    break;
+    case 'loadnotifications':
+      echo Notifications::load($_POST['id'],$con);
+    break;
+    case 'seennotification':
+      echo Notifications::seen($_POST['id'],$_POST['nId'],$con);
     break;
     default:
       return false;

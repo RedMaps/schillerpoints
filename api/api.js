@@ -789,6 +789,7 @@ function loadPoll(id, nr){
 
 function progressPoll(nr, id){
 	for(var j=0;j<$("."+nr+"checks").length;j++){
+		console.log("tet");
 		if($("#"+nr+"check"+j).prop('checked')){
 			$.ajax({
 						type: "POST",
@@ -851,6 +852,47 @@ function changePass(){
 					}
 		})
 	}
+}
+
+loadNotifications();
+
+function loadNotifications(){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "loadnotifications",
+					id: localStorage.getItem("userid")
+				},
+				success: function(results){
+						console.log(results);
+						resultHandler(results);
+						$(".notifications").html(results);
+						loadPoll(2,1);
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
+function seen(nId){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "seennotification",
+					id: localStorage.getItem("userid"),
+					nId: nId
+				},
+				success: function(results){
+						console.log(results);
+						resultHandler(results);
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
 }
 
 function percentage(num, num2){

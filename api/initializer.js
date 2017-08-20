@@ -6,8 +6,6 @@
   $(document).ready(function(){
     console.log("document ready fired!");
     // $(".pollModal").modal("open");
-    loadPoll(1,1);
-    loadPoll(2,2);
     $('.dropdown-button').dropdown({
           inDuration: 300,
           outDuration: 225,
