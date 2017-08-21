@@ -249,6 +249,7 @@ function logIn(){
 										//getPoints(data.userId);
 										success("logged in sucessfully!");
 										loadNotifications();
+										loadMyNotifications();
 										loadBadge();
                 },
             error: function(results){
@@ -280,6 +281,7 @@ function logOut(){
 	localStorage.removeItem('token');
 }
 
+// !TODO: Create personal notification creation function for easy access
 // TODO: create backend maybe
 // TODO: add money view somewhere
 // TODO: create some kind of documentation
@@ -290,13 +292,11 @@ function logOut(){
 // TODO: make lists work?
 // TODO: maybe put something right or left to projects on desktop version
 // TODO: create deploy version of project
-// TODO: make substitution table search work
 // !TODO: migrate project for q1
 // TODO: add user options (mobile view)
 // !TODO: implement external cronjobs
 // TODO: add forum for school related things
 // !TODO: add password reset system
-// TODO: add notification system (app?)
 // TODO: add salt n' pepper maybe
 // TODO: check for all details filled in
 // TODO: make todo list even longer
