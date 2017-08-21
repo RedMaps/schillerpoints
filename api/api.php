@@ -39,7 +39,7 @@ class Poll {
     $array = preg_grep("/^$uId*(?=(:))/", $used);
     $array = $array[0];
     preg_match("/([^:]*)$/", $array, $reg);
-    echo $reg[0];
+    print_r($reg[1]);
   }
 }
 

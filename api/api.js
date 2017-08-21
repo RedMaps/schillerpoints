@@ -91,6 +91,16 @@ function genToken(id){
   return newtoken;
 }
 
+function executeFunctionByName(functionName, context, args) {
+  var args = [].slice.call(arguments).splice(2);
+  var namespaces = functionName.split(".");
+  var func = namespaces.pop();
+  for(var i = 0; i < namespaces.length; i++) {
+    context = context[namespaces[i]];
+  }
+  return context[func].apply(context, args);
+}
+
 //checks if the user id logged in and deletes all login variables if that is not the case
 function checkLogin(){
 	var token = localStorage.getItem("token");
@@ -124,6 +134,38 @@ function checkLogin(){
             }
   });
 }
+
+function checkLoginExec(func, args){
+	var token = localStorage.getItem("token");
+	var uId = localStorage.getItem("userid");
+	$.ajax({
+	    type: "POST",
+	    url: "/new/api/api.php",
+	    data: {
+	      action: "checklogin",
+	      token: token,
+				uId: uId
+	    },
+	    success: function(results){
+				if(results == 0){
+					logOut();
+					loginstatus = false;
+					executeFunctionByName(func,window,results==0);
+				}else{
+					loginstatus = true;
+					$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Log Out');
+					$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+					$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
+					$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+					executeFunctionByName(func,window,results==0);
+				}
+			},
+	    error: function(results){
+	      console.log(results);
+	    }
+  });
+}
+
 
 //gets the locally stored token and sends it to the php api where it is compared to the token stored in the database
 function getData(){
@@ -754,13 +796,22 @@ function finished(){
 }
 
 function your(){
-	$('.prj').removeClass('active_projects');
-	$('.prj').removeClass('finished_projects');
-	$('.prj').addClass('your_projects');
-	loadProjects();
-	$('.your').addClass('disabled');
-	$('.finished').removeClass('disabled');
-	$('.active').removeClass('disabled');
+	checkLoginExec("your_projects");
+}
+
+function your_projects(ret){
+	if(ret){
+		console.log("not logged in!");
+		info("Log in to see your projects!");
+	}else{
+		$('.prj').removeClass('active_projects');
+		$('.prj').removeClass('finished_projects');
+		$('.prj').addClass('your_projects');
+		loadProjects();
+		$('.your').addClass('disabled');
+		$('.finished').removeClass('disabled');
+		$('.active').removeClass('disabled');
+	}
 }
 
 //TODO: MAKE THIS WORK!
@@ -780,12 +831,10 @@ function loadPoll(id, nr){
 						options = JSON.parse(res.options);
 						var opt = "";
 						for(var i=0;i<options.length;i++){
-							opt = opt + '<p><input class="'+nr+'with-gap with-gap '+nr+'checks" name="checks" type="radio" id="'+nr+'check'+i+'" /><label for="'+nr+'check'+i+'" class="white-text options">'+options[i]+'</label></p><div class="hidden '+nr+'per '+nr+'percent'+i+'">error</div><div class="'+nr+'bar bar'+i+' bar"><div class="determinate '+nr+'width'+i+'"></div></div>';
-							inArray(id,i);
-							console.log(id + ":" + i);
+							opt = opt + '<p><input class="'+nr+'with-gap with-gap '+nr+'checks" name="'+nr+'checks" type="radio" id="'+nr+'check'+i+'" /><label for="'+nr+'check'+i+'" class="white-text options">'+options[i]+'</label></p><div class="hidden '+nr+'per '+nr+'percent'+i+'">error</div><div class="'+nr+'bar bar'+i+' bar"><div class="determinate '+nr+'width'+i+'"></div></div>';
 						}
-						console.log(opt);
 						$(".polls" + nr).html(opt);
+						inArray(id, nr);
 					},
 				error: function(message){
 						console.log(message);
@@ -803,14 +852,51 @@ function inArray(id, nr){
 					id: id
 				},
 				success: function(results){
-						console.log(results);
 						resultHandler(results);
-						$("#"+id+"check"+nr).attr("disabled", "disabled");
+						if(isNumber(results)){
+							$("#"+nr+"check"+results).prop("checked", true);
+							$('[id^="'+nr+'check"]').attr("disabled", "disabled");
+							loadBars(nr, id);
+						}
 					},
 				error: function(message){
 						console.log(message);
 				}
 	})
+}
+
+function loadBars(nr, id){
+	for(var j=0;j<$("."+nr+"checks").length;j++){
+		$.ajax({
+					type: "POST",
+					url: "/new/api/api.php",
+					data: {
+						action: "getpolldata",
+						id: id
+					},
+					success: function(results){
+							resultHandler(results);
+							res = JSON.parse(results);
+							res = JSON.parse(res.results);
+							var total = 0;
+							for(var i = 0; i<res.length; i++){
+								total += res[i];
+							}
+							for(var i = 0; i<res.length; i++){
+								$("."+nr+"width"+i).width(percentage(res[i],total) + "%");
+								$("."+nr+"percent"+i).text(Math.round(percentage(res[i],total)*100)/100 + "%");
+							}
+							$("."+nr+"per").addClass("percentage");
+							$("."+nr+"per").removeClass("hidden");
+							$("."+nr+"bar").addClass("progress");
+							$("."+nr+"with-gap").attr("disabled","disabled");
+							$("."+nr+"confirm-button").remove();
+						},
+					error: function(message){
+							console.log(message);
+					}
+		})
+	}
 }
 
 function progressPoll(nr, id){
@@ -889,15 +975,22 @@ function loadNotifications(){
 					id: localStorage.getItem("userid")
 				},
 				success: function(results){
-						console.log(results);
 						resultHandler(results);
 						$(".notifications").html(results);
-						loadPoll(2,1);
 					},
 				error: function(message){
 						console.log(message);
 				}
 	})
+}
+
+function notify(){
+	if(localStorage.getItem("loginstatus") != "true"){
+		console.log("not logged in!");
+		info("Log in to see your notifications!");
+	}else{
+		$('.notificationModal').modal('open');
+	}
 }
 
 function seen(nId){
@@ -931,7 +1024,6 @@ function loadBadge(){
 						id: localStorage.getItem("userid")
 					},
 					success: function(results){
-							console.log(results);
 							resultHandler(results);
 							$('.notification-badge').html(results);
 						},
@@ -943,6 +1035,10 @@ function loadBadge(){
 		$('.notification-badge').remove();
 		$('.notification_bell').html("notifications_none");
 	}
+}
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 function percentage(num, num2){

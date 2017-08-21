@@ -2,7 +2,7 @@
   <div class="modal-content white-text">
 
     <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
-    <h5 class="qTitle"></h5>
+    <!-- <h5 class="qTitle"></h5> -->
     <h6>(This is just a test)</h6>
     <br>
 
