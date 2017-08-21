@@ -128,4 +128,17 @@
   background: #455A64;
   color: white;
   max-height: 90% !important;
+  min-height: 90% !important;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+  color: white !important;
+}
+
+.tabs .tab a{
+  color: rgb(195, 195, 195) !important;
+}
+
+.indicator{
+  background-color: white !important;
 }

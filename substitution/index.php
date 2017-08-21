@@ -39,7 +39,10 @@ include_once("../parts/analyticstracking.php");
     include "../modals/projectModal.php";
     include "../modals/impressumModal.php";
     include "../modals/pointModal.php";
-    include "modals/notificationModal.php";
+    include "../modals/pollModal.php";
+    include "../modals/resultsModal.php";
+    include "../modals/changePassModal.php";
+    include "../modals/notificationModal.php";
     include "../modals/scoreModal.php";
    ?>
 
@@ -48,6 +51,7 @@ include_once("../parts/analyticstracking.php");
 
   <script type="text/javascript" src="../js/materialize.js"></script>
   <script src="../api/api.js"></script>
+  <script src="../api/initializer.js"></script>
   <script src="index.js"></script>
 </body>
 </html>

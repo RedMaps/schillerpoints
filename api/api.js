@@ -984,6 +984,24 @@ function loadNotifications(){
 	})
 }
 
+function loadMyNotifications(){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "loadmynotifications",
+					id: localStorage.getItem("userid")
+				},
+				success: function(results){
+						resultHandler(results);
+						$(".mynotifications").html(results);
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
 function notify(){
 	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
@@ -1014,8 +1032,31 @@ function seen(nId){
 	})
 }
 
+function myseen(nId){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "seenmynotification",
+					id: localStorage.getItem("userid"),
+					nId: nId
+				},
+				success: function(results){
+						console.log(results);
+						resultHandler(results);
+						loadMyNotifications();
+						loadBadge();
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
 function loadBadge(){
 	if(localStorage.getItem("userid") != '0'){
+		$('.notification_bell').html("notifications");
+		$('.notification-badge').removeClass("hidden");
 		$.ajax({
 					type: "POST",
 					url: "/new/api/api.php",
@@ -1032,7 +1073,7 @@ function loadBadge(){
 					}
 		})
 	}else{
-		$('.notification-badge').remove();
+		$('.notification-badge').addClass("hidden");
 		$('.notification_bell').html("notifications_none");
 	}
 }

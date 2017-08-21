@@ -6,7 +6,9 @@
   $(document).ready(function(){
     console.log("document ready fired!");
     loadNotifications();
+    loadMyNotifications();
     loadBadge();
+
     // $(".pollModal").modal("open");
     $('.dropdown-button').dropdown({
           inDuration: 300,
@@ -30,6 +32,7 @@
       endingTop: '10%', // Ending top style attribute
       ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
         console.log(modal, trigger);
+        $('ul.tabs').tabs();
       },
       complete: function() {
        } // Callback for Modal close
