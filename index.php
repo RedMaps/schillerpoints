@@ -9,8 +9,9 @@ include_once("parts/analyticstracking.php");
 <head>
   <?php include 'parts/head.php'; ?>
 </head>
-<?php include 'api/api.php'; ?>
-<?php include 'parts/navbar.php'; ?>
+<?php include 'api/api.php';
+include 'parts/navbar.php';
+// include 'api/post.php'; ?>
 <body>
   <input type="hidden" name="setlogin" class="setlogin" value="true">
   <script src="js/countup.js"></script>
@@ -32,6 +33,7 @@ include_once("parts/analyticstracking.php");
     include "modals/pollModal.php";
     include "modals/resultsModal.php";
     include "modals/changePassModal.php";
+    include "modals/passResetModal.php";
     include "modals/notificationModal.php";
     include "modals/scoreModal.php";
    ?>

@@ -26,3 +26,5 @@
 	define("PRJBASE","projects");
 	define("POLLBASE","polls");
 	define("MONEYBASE","money");
+
+	date_default_timezone_set('Europe/Berlin');

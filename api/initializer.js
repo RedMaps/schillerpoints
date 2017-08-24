@@ -8,6 +8,7 @@
     loadNotifications();
     loadMyNotifications();
     loadBadge();
+    post();
 
     // $(".pollModal").modal("open");
     $('.dropdown-button').dropdown({

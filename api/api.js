@@ -60,6 +60,7 @@ function resultHandler(res){
 	if(res.substring(0,5) == "ERROR") error(res.slice(7));
 	if(res.substring(0,7) == "SUCCESS") success(res.slice(9));
 	if(res.substring(0,3) == "MSG") msg(res.slice(5));
+	if(res.substring(0,4) == "INFO") info(res.slice(5));
 }
 
 if(localStorage.getItem("loginstatus") === null) localStorage.setItem("loginstatus",false);
@@ -966,6 +967,33 @@ function changePass(){
 	}
 }
 
+function addPersonalNotify(title, text, status, priority, dismissable, user){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "addpersonalnotify",
+					title: title,
+					text: text,
+					status: status,
+					priority: priority,
+					dismissable: dismissable,
+					user: user
+				},
+				success: function(results){
+						console.log(results);
+						resultHandler(results);
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
+function addNotify(){
+
+}
+
 function loadNotifications(){
 	$.ajax({
 				type: "POST",
@@ -1086,6 +1114,78 @@ function percentage(num, num2){
   return (num/num2)*100;
 }
 
+function passReset(email){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "passreset",
+					email: email
+				},
+				success: function(results){
+						console.log(results);
+						resultHandler(results);
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
+function post(){
+	var string = window.location.search.substr(1)
+	var parts = string.split("=");
+	var parts = parts[1];
+	$.ajax({
+				type: "GET",
+				url: "/new/api/post.php",
+				data: {
+					reset: parts
+				},
+				success: function(results){
+						resultHandler(results);
+						if(results[0] == "{"){
+							res = JSON.parse(results);
+							if(res != null){
+								$(".passResetModal").modal("open");
+								$(".reset").attr('onclick', 'resetPass(' + res.userId + ")");
+							}
+						}
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
+function resetPass(id){
+	var newpass = $("#passres").val();
+	var reppass = $("#passresrep").val();
+	if(newpass != reppass){
+		error("Please correctly repeat your new password!");
+	}else{
+		$.ajax({
+					type: "POST",
+					url: "/new/api/api.php",
+					data: {
+						action: "resetpass",
+						newpass: newpass,
+						id: id
+					},
+					success: function(results){
+						console.log(results);
+							resultHandler(results);
+							if(results == "SUCCESS: sucessfully reset your password!"){
+								$("#passResetModal").modal("close");
+								window.history.pushState("pushState", "Schillerpoints", "/new/");
+							}
+						},
+					error: function(message){
+							console.log(message);
+					}
+		})
+	}
+}
 
 // function tooltipload(){
 // 	clearInterval(l);

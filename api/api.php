@@ -46,6 +46,14 @@ class Poll {
 $p = 0;
 
 class Notifications {
+
+  public static function addPersonal($title, $text, $status, $priority, $dismissable, $user, $con){
+    $id = mysqli_num_rows(mysqli_query($con, "SELECT * FROM mynotifications"));
+    $id++;
+    $date = date("Y-m-d H:i:s");
+    mysqli_query($con, "INSERT INTO mynotifications (id, title, text, status, priority, dismissable, user, date, seenby, dismissedby, type) VALUES ('$id', '$title', '$text', '$status', '$priority', '$dismissable', '$user', '$date', '[]', '[]', 'text')");
+  }
+
   public static function load($id, $con){
     if($id != '0'){
       $result = mysqli_query($con, "SELECT * FROM notifications WHERE status='1' ORDER BY priority DESC");
@@ -177,6 +185,33 @@ class Notifications {
 }
 
 class Api {
+
+  public static function passReset($email, $con){
+    $num = mysqli_num_rows(mysqli_query($con, "SELECT * FROM ".USERBASE." WHERE userEmail='".$email."'"));
+    if($num > 0){
+      preg_match("/^./", $email, $first);
+      preg_match("/([^@]+$)/", $email, $second);
+      $pre = $first[0].$second[0][0];
+      $uni = uniqid($pre, true);
+      mysqli_query($con, "UPDATE ".USERBASE." SET reset='".$uni."' WHERE userEmail='".$email."'");
+      include("../email/passReset.php");
+    }else{
+      echo "ERROR: Couldnt find E-mail in database!";
+    }
+  }
+
+  public static function resetPass($id, $newpass, $con){
+    $num = mysqli_num_rows(mysqli_query($con, "SELECT * FROM ".USERBASE." WHERE userId='".$id."'"));
+    if($num > 0){
+      $sha = hash('sha256', $newpass);
+      mysqli_query($con, "UPDATE ".USERBASE." SET reset='' WHERE userId='".$id."'");
+      mysqli_query($con, "UPDATE ".USERBASE." SET userPass='".$sha."' WHERE userId='".$id."'");
+      echo "SUCCESS: sucessfully reset your password!";
+    }else{
+      echo "ERROR: Couldnt find user in database!";
+    }
+  }
+
   //gets data by a certain given condition
   public static function getDataBy($condition, $data, $returns, $con){
     switch ($condition) {
@@ -542,6 +577,9 @@ class Project {
       case 'changepass':
       echo Api::changePass($_POST['id'],$_POST['oldpass'],$_POST['newpass'],$con);
       break;
+      case 'resetpass':
+      echo Api::resetPass($_POST['id'],$_POST['newpass'],$con);
+      break;
       case 'getpoints':
       echo Points::getPoints($_POST['uId'],$con);
       break;
@@ -568,6 +606,12 @@ class Project {
       break;
       case 'countnotifications':
       echo Notifications::count($_POST['id'],$con);
+      break;
+      case 'addpersonalnotify':
+      echo Notifications::addPersonal($_POST['title'], $_POST['text'], $_POST['status'], $_POST['priority'], $_POST['dismissable'], $_POST['user'], $con);
+      break;
+      case 'passreset':
+      echo Api::passReset($_POST['email'], $con);
       break;
       default:
       return false;
