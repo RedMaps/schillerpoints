@@ -1187,6 +1187,30 @@ function resetPass(id){
 	}
 }
 
+
+function loadPoint(id){
+	$.ajax({
+				type: "POST",
+				url: "/new/api/api.php",
+				data: {
+					action: "getpointdata",
+					id: id
+				},
+				success: function(results){
+						resultHandler(results);
+						res = JSON.parse(results);
+						var members = "";
+						for(var i=0;i<res.length;i++){
+							members = members + '<p><input type="checkbox" class="filled-in" id="box'+i+'"/><label for="box'+i+'" class="white-text">'+res[i]+'</label></p>';
+						}
+						$(".user-checks").html(members);
+					},
+				error: function(message){
+						console.log(message);
+				}
+	})
+}
+
 // function tooltipload(){
 // 	clearInterval(l);
 // 	console.log("test");

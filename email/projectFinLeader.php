@@ -7,7 +7,6 @@
    Nutze den folgenden link um das Abschlussformular auszufüllen damit du und die anderen Teilnehmer ihre Punkte bekommen können!\n
    www.schillerpoints.de/new/projects?finished=";
   $subject = "=?utf-8?B?".base64_encode("Dein Projekt ist abgelaufen! - Schillerpoints")."?=";
-  $mail = "julian@karhof.net";
 
   mail($mail, $subject, $msg, $header);
 

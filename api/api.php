@@ -51,7 +51,7 @@ class Notifications {
     $id = mysqli_num_rows(mysqli_query($con, "SELECT * FROM mynotifications"));
     $id++;
     $date = date("Y-m-d H:i:s");
-    mysqli_query($con, "INSERT INTO mynotifications (id, title, text, status, priority, dismissable, user, date, seenby, dismissedby, type) VALUES ('$id', '$title', '$text', '$status', '$priority', '$dismissable', '$user', '$date', '[]', '[]', 'text')");
+    mysqli_query($con, "INSERT INTO mynotifications (`id`, `title`, `status`, `priority`, `dismissable`, `user`, `date`, `seenby`, `dismissedby`, `type`, `text`) VALUES ('$id', '$title', '$status', '$priority', '$dismissable', '$user', '$date', '[]', '[]', 'text', '$text')");
   }
 
   public static function load($id, $con){
@@ -185,6 +185,18 @@ class Notifications {
 }
 
 class Api {
+
+  public static function getPointData($id, $con){
+    $res = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE id='".$id."'"));
+    $users = $res['members'];
+    $members = json_decode($users);
+    $arr = array();
+    foreach ($members as &$val) {
+      $array = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM ".USERBASE." WHERE userId='".$val."'"));
+      array_push($arr, $array['userName']);
+    }
+    echo json_encode($arr);
+  }
 
   public static function passReset($email, $con){
     $num = mysqli_num_rows(mysqli_query($con, "SELECT * FROM ".USERBASE." WHERE userEmail='".$email."'"));
@@ -612,6 +624,9 @@ class Project {
       break;
       case 'passreset':
       echo Api::passReset($_POST['email'], $con);
+      break;
+      case 'getpointdata':
+      Api::getPointData($_POST['id'], $con);
       break;
       default:
       return false;

@@ -15,12 +15,7 @@
 
     <p>Which of the following persons were actively taking part in the project?</p>
 
-    <p><input type="checkbox" class="filled-in" id="box1"/><label for="box1" class="white-text">Julian</label></p>
-    <p><input type="checkbox" class="filled-in" id="box2"/><label for="box2" class="white-text">Amon</label></p>
-    <p><input type="checkbox" class="filled-in" id="box3"/><label for="box3" class="white-text">Guilia</label></p>
-    <p><input type="checkbox" class="filled-in" id="box4"/><label for="box4" class="white-text">Lukas</label></p>
-    <p><input type="checkbox" class="filled-in" id="box5"/><label for="box5" class="white-text">Christopher</label></p>
-    <p><input type="checkbox" class="filled-in" id="box6"/><label for="box6" class="white-text">Oskar</label></p>
+    <div class="user-checks"></div>
 
   </div>
 
