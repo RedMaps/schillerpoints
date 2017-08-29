@@ -122,6 +122,7 @@
 
 .notification_bell{
   margin-right: 15px;
+  cursor: pointer;
 }
 
 .notificationModal{

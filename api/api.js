@@ -1133,7 +1133,7 @@ function passReset(email){
 }
 
 function post(){
-	var string = window.location.search.substr(1)
+	var string = window.location.search.substr(1);
 	var parts = string.split("=");
 	var parts = parts[1];
 	$.ajax({
@@ -1201,13 +1201,42 @@ function loadPoint(id){
 						res = JSON.parse(results);
 						var members = "";
 						for(var i=0;i<res.length;i++){
-							members = members + '<p><input type="checkbox" class="filled-in" id="box'+i+'"/><label for="box'+i+'" class="white-text">'+res[i]+'</label></p>';
+							members = members + '<p><input type="checkbox" class="filled-in pointbox" id="box'+i+'"/><label for="box'+i+'" class="white-text">'+res[i]+'</label></p>';
 						}
 						$(".user-checks").html(members);
+						$(".distribute").attr('onclick', 'distribute('+ id +','+ res.length +')');
 					},
 				error: function(message){
 						console.log(message);
 				}
+	})
+}
+
+function distribute(id, members){
+	var money = $("#amount").val();
+	var selected = [];
+	for(var i = 0; i < members; i++){
+		if($("#box"+i+":checked").length == 1){
+			selected[i] = true;
+		}else{
+			selected[i] = false;
+		}
+	}
+	var sel = JSON.stringify(selected);
+	console.log(sel);
+	$.ajax({
+		type: "POST",
+		url: "/new/api/api.php",
+		data: {
+			action: "distribute",
+			id: id,
+			money: money,
+			selected: sel
+		},
+		success: function(results){
+			resultHandler(results);
+			console.log(results);
+		}
 	})
 }
 

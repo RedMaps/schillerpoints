@@ -5,7 +5,7 @@
   $header .= "Content-type: text/html; charset=utf-8";
   $msg = "Dein Projekt ist abgelaufen!\n\n
    Nutze den folgenden link um das Abschlussformular auszufüllen damit du und die anderen Teilnehmer ihre Punkte bekommen können!\n
-   www.schillerpoints.de/new/projects?finished=";
+   www.schillerpoints.de/new/projects?finished=".$code;
   $subject = "=?utf-8?B?".base64_encode("Dein Projekt ist abgelaufen! - Schillerpoints")."?=";
 
   mail($mail, $subject, $msg, $header);

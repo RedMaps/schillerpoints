@@ -47,3 +47,16 @@ include_once("../parts/analyticstracking.php");
   <script src="index.js"></script>
 </body>
 </html>
+
+<?php if(isset($_GET['finished']) && $_GET['finished'] != ""){
+   $fin = $_GET['finished'];
+   if(mysqli_num_rows(mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE pass='".$fin."'")) > 0){
+     $res = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE pass='".$fin."'"));
+     $id = $res['id'];
+     echo "<script>$('.pointModal').modal('open');
+     loadPoint($id);</script>";
+   }
+
+
+ }
+ ?>

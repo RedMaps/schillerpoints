@@ -30,6 +30,13 @@
       $mail = "";
       $mail = mysqli_fetch_array(mysqli_query($con, "SELECT userEmail FROM ".USERBASE." WHERE userId='".$row['leader']."'"));
       $mail = $mail[0];
+      $code = uniqid("finished", true);
+      mysqli_query($con, "UPDATE ".PRJBASE." SET pass='".$code."' WHERE id='".$row['id']."'");
+      $title = $row['title'];
+      $text = mysql_escape_string("Your project '$title' has expired!<br>To get you and the projects members their points, please  <a class='btn green' href='https://www.schillerpoints.de/new/projects?finished=".$code."'>click here</a>");
+
+      Notifications::addPersonal("Project Expired", $text, 1, 0, 1, json_encode(array($row['leader'])), $con);
+
       include "../email/projectFinLeader.php";
       $mails = mysqli_fetch_array(mysqli_query($con, "SELECT members FROM ".PRJBASE." WHERE id='".$row['id']."'"));
       $mails = json_decode($mails[0]);

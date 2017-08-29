@@ -20,6 +20,6 @@
   </div>
 
   <div class="modal-footer blue-grey darken-1 white-text">
-    <a href="#!" class="modal-action modal-close waves-effect waves-black btn-flat white-text green accent-4" onclick="logIn()">Confirm</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-black btn-flat white-text green accent-4 distribute" onclick="distribute()">Confirm</a>
   </div>
 </div>

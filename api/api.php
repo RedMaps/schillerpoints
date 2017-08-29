@@ -336,6 +336,30 @@ class Points {
     $result = mysqli_query($con, "update ".USERBASE." set userTotal = userPoints + userTotal where userId='".$uId."'");
     $result = mysqli_query($con, "update ".USERBASE." set userPoints = 0 where userId='".$uId."'");
   }
+
+  public static function distribute($id, $money, $selected, $con){
+    $res = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE id='".$id."'"));
+    $users = $res['members'];
+    $members = json_decode($users);
+    $sel = json_decode($selected);
+    $i = 0;
+    $checks = 0;
+    $present = [];
+    foreach($sel as &$val){
+      if($val == true){
+        array_push($present, $members[$i]);
+        $checks++;
+      }
+        $i++;
+    }
+    unset($i);
+    $points = round($money / $checks);
+    foreach($present as &$user){
+      mysqli_query($con, "UPDATE ".USERBASE." SET userPoints = userPoints + '".$points."' WHERE userId='".$user."'");
+    }
+    echo "SUCCESS: successfully distributed points between users!";
+    mysqli_query($con, "UPDATE ".PRJBASE." SET pass='' WHERE id='".$id."'");
+  }
 }
 
 function array_to_object($array) {
@@ -594,6 +618,9 @@ class Project {
       break;
       case 'getpoints':
       echo Points::getPoints($_POST['uId'],$con);
+      break;
+      case 'distribute':
+      echo Points::distribute($_POST['id'],$_POST['money'],$_POST['selected'],$con);
       break;
       case 'getpolldata':
       echo Poll::getPollData($_POST['id'],$con);
