@@ -10,8 +10,7 @@ include_once("parts/analyticstracking.php");
   <?php include 'parts/head.php'; ?>
 </head>
 <?php include 'api/api.php';
-include 'parts/navbar.php';
-// include 'api/post.php'; ?>
+include 'parts/navbar.php'; ?>
 <body>
   <input type="hidden" name="setlogin" class="setlogin" value="true">
   <script src="js/countup.js"></script>

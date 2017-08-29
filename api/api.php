@@ -376,12 +376,11 @@ function nameParser($name){
 }
 
 class Project {
-  //HACK: TODO: Fix all of the code below and finish up project creation system
   public static function create($uId, $arr, $con){
     $data = array_to_object($arr);
     $result = mysqli_query($con, "SELECT * FROM ".PRJBASE."");
     $num = mysqli_num_rows($result);
-    $num++;
+    $num = $num + 1;
     $array = array($uId);
     $idarray = json_encode($array);
     $query = mysqli_query($con, "INSERT INTO ".PRJBASE." VALUES (
@@ -396,10 +395,12 @@ class Project {
       '$data->pLocation',
       '0',
       '0',
-      '$data->pMax')");
+      '$data->pMax',
+      '')");
       //return id
-      return true;
+      echo "SUCCESS: sucessfully submitted project '$data->pTitle'";
     }
+
     public static function approve($id, $con){
 
     }
@@ -578,7 +579,7 @@ class Project {
       if(Api::logOutSql($_POST['uData'], $con)) echo "logged out sucessfully!"; else echo "error: logout failed!";
       break;
       case 'createproject':
-      if(Project::create($_POST['id'], $_POST['pData'], $con)) echo "project created successfully!"; else echo "error: error while trying to create project!";
+      Project::create($_POST['id'], $_POST['pData'], $con);
       break;
       case 'loaddata':
       echo(json_encode(Project::load()));

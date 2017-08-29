@@ -9,8 +9,8 @@ include_once("../parts/analyticstracking.php");
 <head>
   <?php include '../parts/head.php'; ?>
 </head>
-<?php include '../api/api.php'; ?>
-<?php include '../parts/navbar.php'; ?>
+<?php include '../api/api.php';
+ include '../parts/navbar.php'; ?>
 <body>
   <input type="hidden" name="setlogin" class="setlogin" value="true">
 
@@ -48,15 +48,4 @@ include_once("../parts/analyticstracking.php");
 </body>
 </html>
 
-<?php if(isset($_GET['finished']) && $_GET['finished'] != ""){
-   $fin = $_GET['finished'];
-   if(mysqli_num_rows(mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE pass='".$fin."'")) > 0){
-     $res = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM ".PRJBASE." WHERE pass='".$fin."'"));
-     $id = $res['id'];
-     echo "<script>$('.pointModal').modal('open');
-     loadPoint($id);</script>";
-   }
-
-
- }
- ?>
+<?php include "../api/post.php" ?>
