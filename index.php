@@ -34,6 +34,7 @@ include 'parts/navbar.php'; ?>
     include "modals/changePassModal.php";
     include "modals/passResetModal.php";
     include "modals/notificationModal.php";
+    include "modals/forgotPassModal.php";
     include "modals/scoreModal.php";
    ?>
 
@@ -45,3 +46,5 @@ include 'parts/navbar.php'; ?>
   <script src="js/progress.js"></script>
 </body>
 </html>
+
+<?php include "api/post.php" ?>

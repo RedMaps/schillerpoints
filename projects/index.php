@@ -38,6 +38,7 @@ include_once("../parts/analyticstracking.php");
     include "../modals/changePassModal.php";
     include "../modals/passResetModal.php";
     include "../modals/notificationModal.php";
+    include "../modals/forgotPassModal.php";
     include "../modals/scoreModal.php";
    ?>
 

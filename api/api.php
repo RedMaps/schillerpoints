@@ -37,9 +37,9 @@ class Poll {
     $usedby = $res['usedby'];
     $used = json_decode($usedby, true);
     $array = preg_grep("/^$uId*(?=(:))/", $used);
-    $array = $array[0];
-    preg_match("/([^:]*)$/", $array, $reg);
-    print_r($reg[1]);
+    if(count($array) > 0){
+        return 1;
+    }
   }
 }
 

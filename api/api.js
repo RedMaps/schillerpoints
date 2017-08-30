@@ -272,6 +272,7 @@ function logOut(){
 										console.log(results);
 										resultHandler(results);
 										loginStatus = false;
+
 										localStorage.setItem("loginstatus",false);
 										localStorage.setItem("userid", 0);
                 },
@@ -853,6 +854,7 @@ function inArray(id, nr){
 					id: id
 				},
 				success: function(results){
+					 console.log(results);
 						resultHandler(results);
 						if(isNumber(results)){
 							$("#"+nr+"check"+results).prop("checked", true);
@@ -1112,6 +1114,11 @@ function isNumber(n) {
 
 function percentage(num, num2){
   return (num/num2)*100;
+}
+
+function forgotPass(){
+	var email = $(".rmail").val();
+	passReset(email);
 }
 
 function passReset(email){
