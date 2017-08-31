@@ -6,43 +6,43 @@
 
     <div class="chip white-text grey darken-3 z-depth-1 tooltipped vLeader" data-tooltip="Leiter des Projekts">
       <div class="valign-wrapper" id="vLeader">
-        Julian
+        Leiter
       </div>
     </div>
 
     <div class="chip white-text grey darken-3 z-depth-1 tooltipped vLocation" data-tooltip="Ort">
       <div class="valign-wrapper" id="vLocation">
-        Laer
+        Ort
       </div>
     </div>
 
     <div class="chip white-text grey darken-3 z-depth-1 tooltipped vDate" data-tooltip="Datum">
       <div class="valign-wrapper" id="vDate">
-        01.11.2017
+        Datum
       </div>
     </div>
 
     <div class="chip white-text grey darken-3 z-depth-1 tooltipped vTime" data-tooltip="Uhrzeit">
       <div class="valign-wrapper" id="vTime">
-        12:20
+        Uhrzeit
       </div>
     </div>
 
     <div class="chip white-text grey darken-3 z-depth-1 tooltipped vDuration" data-tooltip="Dauer">
       <div class="valign-wrapper" id="vDuration">
-        2h
+        Dauer
       </div>
     </div>
 
     <div class="chip white-text grey darken-3 tooltipped" data-tooltip="Teilnehmer / Max. Teilnehmer">
       <div class="valign-wrapper" id="vMax">
-        7/20
+        Maximale Teilnehmer-Anzahl
       </div>
     </div>
 
     <div class="chip white-text cyan tooltipped hidden vProfit" data-tooltip="Profit">
       <div class="valign-wrapper" id="vProfit">
-        85€
+        Profit
       </div>
     </div>
 
@@ -62,8 +62,8 @@
     </ul>
 
   </div>
-  <div class="modal-footer blue-grey white-text darken-1">
+  <!-- <div class="modal-footer blue-grey white-text darken-1"> -->
     <!-- TODO: MAKE THIS WORK -->
     <!-- <a id="joinView" class="modal-action modal-close waves-effect waves-green btn-flat green white-text">Beitreten</a> -->
-  </div>
+  <!-- </div> -->
 </div>

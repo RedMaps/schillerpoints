@@ -2,7 +2,7 @@
   <div class="modal-content">
 
     <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
-    <h4 class="modalTitle">Scoreboard</h4>
+    <h4 class="modalTitle">Bestenliste</h4>
 
     <div class="row">
 

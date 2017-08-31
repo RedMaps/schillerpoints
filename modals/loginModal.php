@@ -2,7 +2,7 @@
   <div class="modal-content white-text">
 
     <h4 class="right modal-close x-button btn-flat white-text"><i class="material-icons">close</i></h4>
-    <h4 class="modalTitle">LOGIN</h4>
+    <h4 class="modalTitle">Anmelden</h4>
 
     <div class="row">
 
@@ -13,23 +13,15 @@
 
       <div class="input-field col l12 s12">
         <input placeholder="••••••••••" name="iPass" id="pass" type="password" class="iPass" data-length="50">
-        <label class="white-text" for="pass">Password</label>
+        <label class="white-text" for="pass">Passwort</label>
       </div>
-
 
     </div>
-
-    <!-- <div class="row">
-      <div class="input-field col l6 s12">
-        <input type="checkbox" id="checkbox" />
-        <label for="checkbox">Keep me signed in</label>
-      </div>
-    </div> -->
 
   </div>
 
   <div class="modal-footer blue-grey darken-1 white-text">
-    <a class="waves-effect waves-light white black-text btn" onclick="$('.forgotPassModal').modal('open');">forgot password</a>
-    <a class="modal-action waves-effect waves-black btn-flat white-text green accent-4" onclick="logIn()">LogIn</a>
+    <a class="waves-effect waves-light white black-text btn" onclick="$('.forgotPassModal').modal('open');">vergessen</a>
+    <a class="modal-action waves-effect waves-black btn-flat white-text green accent-4" onclick="logIn()">Anmelden</a>
   </div>
 </div>
