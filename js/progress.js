@@ -37,9 +37,9 @@ function getPoints(uId){
                 useEasing : true,
                 easingFn: easingFn,
                 useGrouping : true,
-                separator : ',',
-                decimal : '.',
-                prefix : 'Your Points: ',
+                separator : '.',
+                decimal : ',',
+                prefix : 'Deine Punkte: ',
                 suffix : ' / 20'
               };
 

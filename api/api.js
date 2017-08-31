@@ -947,7 +947,7 @@ function changePass(){
 					},
 					success: function(results){
 							resultHandler(results);
-							if(results == "SUCCESS: Successfully changed your password!"){ // REVIEW
+							if(results == "SUCCESS: Passwort erfolgreich geändert!"){
 								$("#changePassModal").modal("close");
 							}
 						},
@@ -1171,7 +1171,7 @@ function resetPass(id){
 					success: function(results){
 						console.log(results);
 							resultHandler(results);
-							if(results == "SUCCESS: sucessfully reset your password!"){ //REVIEW
+							if(results == "SUCCESS: Passwort erfolgreich zurückgesetzt!"){
 								$("#passResetModal").modal("close");
 								window.history.pushState("pushState", "Schillerpoints", "/new/");
 							}
