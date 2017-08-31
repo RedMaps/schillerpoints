@@ -18,6 +18,6 @@
   </div>
 
   <div class="modal-footer blue-grey darken-1 white-text">
-    <a class="modal-action waves-effect waves-black btn-flat white-text green accent-4" onclick="forgotPass()">Send E-Mail</a>
+    <a class="modal-action waves-effect waves-black btn-flat white-text green accent-4" onclick="forgotPass();">Send E-Mail</a>
   </div>
 </div>

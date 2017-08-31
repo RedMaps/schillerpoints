@@ -207,6 +207,7 @@ class Api {
       $uni = uniqid($pre, true);
       mysqli_query($con, "UPDATE ".USERBASE." SET reset='".$uni."' WHERE userEmail='".$email."'");
       include("../email/passReset.php");
+      echo "SUCCESS: Send you an E-Mail! Please also look in your &nbsp; Spam folder if you didnt get it.";
     }else{
       echo "ERROR: Couldnt find E-mail in database!";
     }
