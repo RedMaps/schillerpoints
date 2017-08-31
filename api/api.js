@@ -121,10 +121,10 @@ function checkLogin(){
 								return false;
 							}else{
 								loginstatus = true;
-								$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Log Out');
-								$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
-								$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
-								$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+								$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Abmelden');
+								$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("Erfolgreich abgemeldet!");');
+								$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Abmelden');
+								$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("Erfolgreich abgemeldet!");');
 								//getPoints(localStorage.getItem("userid"));
 
 								return true;
@@ -154,10 +154,10 @@ function checkLoginExec(func, args){
 					executeFunctionByName(func,window,results==0);
 				}else{
 					loginstatus = true;
-					$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Log Out');
-					$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
-					$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
-					$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+					$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Abmelden');
+					$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("Erfolgreich abgemeldet!");');
+					$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Abmelden');
+					$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("Erfolgreich abgemeldet!");');
 					executeFunctionByName(func,window,results==0);
 				}
 			},
@@ -199,15 +199,15 @@ function getLoginData(){
 	var uPass = $('.iPass').val();
 	console.log(typeof uMail);
 	if(uMail == '' && uPass == ''){
-		error("Please enter your E-Mail and Password!");
+		error("Bitte gib deine E-Mail und dein Passwort ein!");
 		console.log("error!");
 		return;
 	}else if(uMail == ''){
-		error("Please enter your E-Mail!");
+		error("Bitte gib deine E-Mail ein!");
 		console.log("error!");
 		return;
 	}else if(uPass == ''){
-		error("Please enter your Password!");
+		error("Bitte gib dein Passwort ein!");
 		console.log("error!");
 		return;
 	} else {
@@ -218,7 +218,7 @@ function getLoginData(){
       	uPass: uPass
     	}
 		}else{
-			error("Your E-Mail must contain an @ symbol!");
+			error("Deine E-Mail muss ein @ beinhalten!");
 		}
 	}
 }
@@ -243,10 +243,10 @@ function logIn(){
 										genToken(data.userId);
 										loadProjects();
 										$(".loginModal").modal("close");
-										$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Log Out');
-										$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
-										$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Log Out');
-										$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("logged out sucessfully!");');
+										$(".loginMobile").html('<i class="material-icons white-text">exit_to_app</i> Abmelden');
+										$(".loginMobile").attr('onclick', 'logOut(); location.reload(); success("Erfolgreich abgemeldet!");');
+										$(".loginDesktop").html('<i class="material-icons black-text">exit_to_app</i> Abmelden');
+										$(".loginDesktop").attr('onclick', 'logOut(); location.reload(); success("Erfolgreich abgemeldet!");');
 										//getPoints(data.userId);
 										success("logged in sucessfully!");
 										loadNotifications();
@@ -308,11 +308,11 @@ function updateSite(data){
 	//HACK: this setlogin thing doesnt work correctly yet...
 	if($('.setlogin').val()){
 		var rep;
-		if($('.uName').length){ rep = $(".uName").html().replaceAll("Guest",data.userName);
+		if($('.uName').length){ rep = $(".uName").html().replaceAll("Gast",data.userName);
 		$(".uName").html(rep); }
-		if($('.uNameMobile').length){ rep = $(".uNameMobile").html().replaceAll("Guest",data.userName);
+		if($('.uNameMobile').length){ rep = $(".uNameMobile").html().replaceAll("Gast",data.userName);
 		$(".uNameMobile").html(rep); }
-		if($('.uMail').length){ rep = $(".uMail").html().replaceAll("guest@schillerpoints.de",data.userEmail);
+		if($('.uMail').length){ rep = $(".uMail").html().replaceAll("gast@schillerpoints.de",data.userEmail);
 		$(".uMail").html(rep); }
 		if($('.uPoints').length){ rep = $(".uPoints").html().replaceAll("{uPoints}",data.userPoints);
 		$(".uPoints").html(rep); }
@@ -329,11 +329,11 @@ function updateSite(data){
 //resets the login details back to the state it was before
 function resetSite(){
 	if($('.setlogin').val()){
-		rep = $(".uName").html().replaceAll(data.userName,"Guest");
+		rep = $(".uName").html().replaceAll(data.userName,"Gast");
 		$(".uName").html(rep);
-		rep = $(".uNameMobile").html().replaceAll(data.userName,"Guest");
+		rep = $(".uNameMobile").html().replaceAll(data.userName,"Gast");
 		$(".uNameMobile").html(rep);
-		rep = $(".uMail").html().replaceAll(data.userEmail,"guest@schillerpoints.de");
+		rep = $(".uMail").html().replaceAll(data.userEmail,"gast@schillerpoints.de");
 		$(".uMail").html(rep);
 		rep = $(".uPoints").html().replaceAll(data.userPoints,"{uPoints}");
 		$(".uPoints").html(rep);
@@ -396,26 +396,13 @@ function getEditElements() {
 	 };
 }
 
-//returns an array for testing (outdated)
-function getTest(){
-	return {
-        pTitle: "pTitle",
-				pContent: "pContent",
-				pLeader: "32",
-				pDate: "",
-				pTime: "",
-				pDuration: 90,
-				pLocation: "pLocation",
-				pMax: 5
-  };
-}
-
 //gets the input data using the getProjectElements() function and sends it to the php api via ajax
 function createProject() {
 	var elements = getProjectElements();
 	checkLogin();
 	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
+		error("Du bist nicht angemeldet!");
 	}else{
 		console.log(elements);
 		$.ajax({
@@ -442,7 +429,7 @@ function join(prId) {
 	checkLogin();
 	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
-		error("Not logged in!");
+		error("Du bist nicht angemeldet!");
 	}else{
 		$.ajax({
 							type: "POST",
@@ -468,6 +455,7 @@ function leave(prId) {
 	checkLogin();
 	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
+		error("Du bist nicht angemeldet!");
 	}else{
 		$.ajax({
 							type: "POST",
@@ -493,6 +481,7 @@ function edit(prId) {
 	checkLogin();
 	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
+		error("Du bist nicht angemeldet!");
 	}else{
 		$.ajax({
 							type: "POST",
@@ -629,6 +618,7 @@ function submitEdit(prId){
 	checkLogin();
 	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
+		error("Du bist nicht angemeldet!");
 	}else{
 		$.ajax({
 							type: "POST",
@@ -804,7 +794,7 @@ function your(){
 function your_projects(ret){
 	if(ret){
 		console.log("not logged in!");
-		info("Log in to see your projects!");
+		info("Melde dich an um deine Projekte zu sehen!");
 	}else{
 		$('.prj').removeClass('active_projects');
 		$('.prj').removeClass('finished_projects');
@@ -944,7 +934,7 @@ function changePass(){
 	var newpass = $("#newpass").val();
 	var reppass = $("#reppass").val();
 	if(newpass != reppass){
-		error("Please correctly repeat your new password!");
+		error("Bitte wiederhole dein neues Passwort fehlerfrei");
 	}else{
 		$.ajax({
 					type: "POST",
@@ -957,7 +947,7 @@ function changePass(){
 					},
 					success: function(results){
 							resultHandler(results);
-							if(results == "SUCCESS: Successfully changed your password!"){
+							if(results == "SUCCESS: Successfully changed your password!"){ // REVIEW
 								$("#changePassModal").modal("close");
 							}
 						},
@@ -1034,7 +1024,7 @@ function loadMyNotifications(){
 function notify(){
 	if(localStorage.getItem("loginstatus") != "true"){
 		console.log("not logged in!");
-		info("Log in to see your notifications!");
+		info("Melde dich an um deine Benachrichtigungen zu sehen!");
 	}else{
 		$('.notificationModal').modal('open');
 	}
@@ -1168,7 +1158,7 @@ function resetPass(id){
 	var newpass = $("#passres").val();
 	var reppass = $("#passresrep").val();
 	if(newpass != reppass){
-		error("Please correctly repeat your new password!");
+		error("Bitte wiederhole dein neues Passwort fehlerfrei!");
 	}else{
 		$.ajax({
 					type: "POST",
@@ -1181,7 +1171,7 @@ function resetPass(id){
 					success: function(results){
 						console.log(results);
 							resultHandler(results);
-							if(results == "SUCCESS: sucessfully reset your password!"){
+							if(results == "SUCCESS: sucessfully reset your password!"){ //REVIEW
 								$("#passResetModal").modal("close");
 								window.history.pushState("pushState", "Schillerpoints", "/new/");
 							}
