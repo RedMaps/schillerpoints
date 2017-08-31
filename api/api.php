@@ -70,7 +70,7 @@ class Notifications {
             </div>';
             if($row['dismissable'] == '1'){
               echo '<div class="card-action">
-              <a onclick="seen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4">Seen</a>
+              <a onclick="seen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4">Gesehen</a>
               </div>';
             }
             echo '</div>';
@@ -86,15 +86,15 @@ class Notifications {
             </div>
             <div class="card-action">';
             if($row['dismissable'] == '1'){
-              echo '<a onclick="seen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4" >Seen</a>';
+              echo '<a onclick="seen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4" >Gesehen</a>';
             }
-            echo '<a class="modal-action waves-effect waves-black btn-flat white-text green accent-4 '.$p.'confirm-button" onclick="progressPoll('.$p.','.$row['parameters'].')">Confirm</a>
+            echo '<a class="modal-action waves-effect waves-black btn-flat white-text green accent-4 '.$p.'confirm-button" onclick="progressPoll('.$p.','.$row['parameters'].')">Bestätigen</a>
             </div>
             </div><script>loadPoll('.$row['parameters'].','.$p.');</script>';
             break;
 
             default:
-            echo "ERROR: notification type not found!";
+            echo "ERROR: Benachrichtigungs-Typ nicht gefunden!";
             break;
           }
         }
@@ -121,7 +121,7 @@ class Notifications {
               </div>';
               if($row['dismissable'] == '1'){
                 echo '<div class="card-action">
-                <a onclick="myseen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4">Seen</a>
+                <a onclick="myseen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4">Gesehen</a>
                 </div>';
               }
               echo '</div>';
@@ -137,15 +137,15 @@ class Notifications {
               </div>
               <div class="card-action">';
               if($row['dismissable'] == '1'){
-                echo '<a onclick="myseen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4">Seen</a>';
+                echo '<a onclick="myseen('.$row['id'].')" class="modal-action waves-effect waves-black btn-flat white-text accent-4">Gesehen</a>';
               }
-              echo '<a class="modal-action waves-effect waves-black btn-flat white-text green accent-4 '.$p.'confirm-button" onclick="progressPoll('.$p.','.$row['parameters'].')">Confirm</a>
+              echo '<a class="modal-action waves-effect waves-black btn-flat white-text green accent-4 '.$p.'confirm-button" onclick="progressPoll('.$p.','.$row['parameters'].')">Bestätigen</a>
               </div>
               </div><script>loadPoll('.$row['parameters'].','.$p.');</script>';
               break;
 
               default:
-              echo "ERROR: notification type not found!";
+              echo "ERROR: Benachrichtigungs-Typ nicht gefunden!";
               break;
             }
           }
@@ -209,7 +209,7 @@ class Api {
       include("../email/passReset.php");
       echo "SUCCESS: Send you an E-Mail! Please also look in your &nbsp; Spam folder if you didnt get it.";
     }else{
-      echo "ERROR: Couldnt find E-mail in database!";
+      echo "ERROR: E-Mail konnte nicht gefunden werden!";
     }
   }
 
@@ -219,9 +219,9 @@ class Api {
       $sha = hash('sha256', $newpass);
       mysqli_query($con, "UPDATE ".USERBASE." SET reset='' WHERE userId='".$id."'");
       mysqli_query($con, "UPDATE ".USERBASE." SET userPass='".$sha."' WHERE userId='".$id."'");
-      echo "SUCCESS: sucessfully reset your password!";
+      echo "SUCCESS: Passwort erfolgreich zurückgesetzt!";
     }else{
-      echo "ERROR: Couldnt find user in database!";
+      echo "ERROR: Nutzer wurde nicht gefunden!";
     }
   }
 
@@ -247,9 +247,9 @@ class Api {
     $array = mysqli_fetch_array($result);
     if($array['userPass'] == hash('sha256', $oldpass)){
       $result = mysqli_query($con, "UPDATE ".USERBASE." SET userPass='".hash('sha256', $newpass)."' WHERE userId='".$id."'");
-      echo "SUCCESS: Successfully changed your password!";
+      echo "SUCCESS: Passwort erfolgreich geändert!";
     }else{
-      echo "ERROR: Your password isn't correct!";
+      echo "ERROR: Passwort inkorrekt!";
     }
   }
 
@@ -296,13 +296,13 @@ class Api {
     $uPass = hash('sha256', $uData['uPass']);
     $result = mysqli_query($con, "select * from ".USERBASE." where userEmail='".$uMail."'");
     if($result == false){
-      echo "ERROR: E-Mail or password incorrect!";
+      echo "ERROR: E-Mail oder Passwort inkorrekt!";
     }else{
       while ($row = mysqli_fetch_object($result)) {
         if($row->userPass == $uPass) return $row;
       }
     }
-    echo "ERROR: E-Mail or password incorrect!";
+    echo "ERROR: E-Mail oder Passwort inkorrekt!";
   }
 
   public static function logOutSql($uData, $con){
@@ -358,7 +358,7 @@ class Points {
     foreach($present as &$user){
       mysqli_query($con, "UPDATE ".USERBASE." SET userPoints = userPoints + '".$points."' WHERE userId='".$user."'");
     }
-    echo "SUCCESS: successfully distributed points between users!";
+    echo "SUCCESS: Punkte erfolgreich verteilt!";
     mysqli_query($con, "UPDATE ".PRJBASE." SET pass='' WHERE id='".$id."'");
   }
 }
@@ -422,7 +422,7 @@ class Project {
         $result = mysqli_query($con, "update ".PRJBASE." set status='2' where id='".$prId."'");
         echo $result;
       }else{
-        echo "ERROR: User not allowed to delete project!";
+        echo "ERROR: Du hast nicht die Berechtigung dieses Projekt zu löschen!";
       }
     }
     public static function edit($uId, $id, $con){
@@ -434,7 +434,7 @@ class Project {
       $userstatus = $array['userStatus'];
       $status = $results['status'];
       if($status != 1 && $userstatus != 1){
-        echo "ERROR: Only admins can edit this project!";
+        echo "ERROR: Nur ein Admin kann dieses Projekt bearbeiten!";
         return false;
       }
       $allowed = false;
@@ -446,7 +446,7 @@ class Project {
         return json_encode($project);
         //TODO: create user edit system!
       }else{
-        echo "ERROR: User not allowed to edit project!";
+        echo "ERROR: Du hast nicht die Berechtigung dieses Projekt zu bearbeiten!";
       }
     }
     public static function submitEdit($id, $prId, $pData, $con){
@@ -515,7 +515,7 @@ class Project {
       $array = mysqli_fetch_array($query);
       $status = $array['status'];
       if($status != '1'){
-        echo "ERROR: You can only join active projects!";
+        echo "ERROR: Du kannst nur aktiven Projekten beitreten!";
         return false;
       }
       $array = $array['members'];
@@ -527,9 +527,9 @@ class Project {
         array_push($decoded,$uId);
         $serialized_array = json_encode($decoded);
         $result = mysqli_query($con, "update ".PRJBASE." set members='$serialized_array' where id='".$id."'");
-        echo "SUCCESS: Sucessfully joined the project!";
+        echo "SUCCESS: Projekt erfolgreich beigetreten!";
       }else{
-        echo "ERROR: Already joined the project!";
+        echo "ERROR: Du bist diesem Projekt bereits beigetreten!";
       }
     }
 
@@ -538,7 +538,7 @@ class Project {
       $results = mysqli_fetch_array($query);
       $status = $results['status'];
       if($status != 1){
-        echo "ERROR: You can only leave active projects!";
+        echo "ERROR: Du kannst nur aktive Projekte verlassen!";
         return false;
       }
       if($results['leader'] != $uId){
@@ -551,12 +551,12 @@ class Project {
           unset($decoded[$lId]);
           $serialized_array = json_encode($decoded);
           $result = mysqli_query($con, "update ".PRJBASE." set members='$serialized_array' where id='".$id."'");
-          echo "SUCCESS: Successfully left the project!";
+          echo "SUCCESS: Projekt erfolgreich verlassen!";
         }else{
-          echo "ERROR: You havent joined the project yet!";
+          echo "ERROR: Du bist diesem Projekt noch nicht beigetreten!";
         }
       }else{
-        echo "ERROR: Leader cannot leave the project!";
+        echo "ERROR: Der Leiter kann das Projekt nicht verlassen!";
       }
     }
   }
