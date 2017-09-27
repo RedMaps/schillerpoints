@@ -18,9 +18,13 @@ include 'parts/navbar.php'; ?>
   <center>
     <div class="progress_round" id="progress_round"></div>
     <img class="mark animated" src="pics/mark.png">
-    <h4 id="count" class="marg">Your Points: 0 / 20</h4>
-    <a href="/new/projects/" class="btn btn-large white black-text projectbtn">TO THE PROJECTS</a>
+    <h4 id="count" class="marg">Deine Punkte: 0 / 20</h4>
+    <a href="/projects/" class="btn btn-large white black-text projectbtn">ZU DEN PROJEKTEN</a>
   </center>
+
+  <br><br><br>
+
+  <div class="row"><div class="col s0 m3 l4"></div><div class="col s12 m6 l4"><div class="card dark"><div class="card-content white-text"><?php include "parts/ad.php"; ?></div></div></div><div class="col s0 m3 l4"></div></div>
 
   <?php
     include "modals/editModal.php";

@@ -4,7 +4,7 @@ include_once("../api/dbconnect.php");
 
 if($_POST['action'] == "loadsubtable" || $_POST['action'] == "search"){
 
-  for($j = 1; $j < 5; $j++){
+  for($j = 1; $j <= 5; $j++){
 
     if($j == 1){ $table_day = "substitution_mon"; $day = "Montag"; $info = "info_mon"; }
     if($j == 2){ $table_day = "substitution_tue"; $day = "Dienstag"; $info = "info_tue"; }
@@ -14,6 +14,8 @@ if($_POST['action'] == "loadsubtable" || $_POST['action'] == "search"){
 
     if($_POST['action'] == "loadsubtable"){ $query = mysqli_query($con, "SELECT * FROM " . $table_day); }
     if($_POST['action'] == "search"){ $query = mysqli_query($con, "SELECT * FROM " . $table_day . " WHERE klasse LIKE '%".$_POST['search']."%'"); }
+
+    if($j > 1) unset($results);
 
     while ($result = mysqli_fetch_array($query, MYSQLI_BOTH)){
         $results[] = $result;
@@ -27,7 +29,9 @@ if($_POST['action'] == "loadsubtable" || $_POST['action'] == "search"){
         $infos[] = $result;
     }
 
-    echo '<div class="day-display z-depth-2 white-text">Infos zu '.$day.'</div>';
+    if($infos != null){
+      echo '<div class="day-display z-depth-2 white-text">Infos zu '.$day.'</div>';
+    }
 
     echo '
     <table class="striped centered z-depth-2">
@@ -62,7 +66,7 @@ if($_POST['action'] == "loadsubtable" || $_POST['action'] == "search"){
           echo '
             <tr>
               <td>'. $results[$i][1] .'</td>
-              <td>'. $results[$i][2] .'</td>
+              <td>'. date('d.m',strtotime($results[$i][2])) .'</td>
               <td>'. $results[$i][3] .'</td>
               <td>'. $results[$i][4] .'</td>
               <td>'. $results[$i][5] .'</td>

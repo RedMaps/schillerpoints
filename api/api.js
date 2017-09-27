@@ -75,7 +75,7 @@ function genToken(id){
   console.log("new token: " + newtoken);
   $.ajax({
             type: "POST",
-            url: "/new/api/api.php",
+            url: "/api/api.php",
             data: {
               action: "settoken",
               token: newtoken,
@@ -108,7 +108,7 @@ function checkLogin(){
 	var uId = localStorage.getItem("userid");
 	return $.ajax({
             type: "POST",
-            url: "/new/api/api.php",
+            url: "/api/api.php",
             data: {
               action: "checklogin",
               token: token,
@@ -141,7 +141,7 @@ function checkLoginExec(func, args){
 	var uId = localStorage.getItem("userid");
 	$.ajax({
 	    type: "POST",
-	    url: "/new/api/api.php",
+	    url: "/api/api.php",
 	    data: {
 	      action: "checklogin",
 	      token: token,
@@ -173,7 +173,7 @@ function getData(){
   var localtoken = localStorage.token;
   $.ajax({
             type: "POST",
-            url: "/new/api/api.php",
+            url: "/api/api.php",
             data: {
               action: "comparetoken",
               token: localtoken
@@ -227,7 +227,7 @@ function logIn(){
 	var lData = getLoginData();
 	$.ajax({
             type: "POST",
-            url: "/new/api/api.php",
+            url: "/api/api.php",
             data: {
               action: "login",
               uData: lData
@@ -263,7 +263,7 @@ function logIn(){
 function logOut(){
 	$.ajax({
             type: "POST",
-            url: "/new/api/api.php",
+            url: "/api/api.php",
             data: {
               action: "logout",
               uData: data
@@ -353,7 +353,7 @@ function updatejoin(){
 //gets the input from the user concerning the project submitting process and returns it in array format
 function getProjectElements() {
 	var pTitle = $(".pTitle.add").val();
-	var pContent = $(".pContent.add").val();
+	var pContent = $("#pdescription").materialnote('code');
 	var pLeader = $(".pLeader.add").val();
 	var pDate = $('.datepicker.add').pickadate('picker').get('highlight', 'yyyy-mm-dd');
 	var pTime = $(".pTime.add").val();
@@ -376,7 +376,7 @@ function getProjectElements() {
 //gets the input from the user concerning the project editing process and returns it in array format
 function getEditElements() {
 	var pTitle = $(".pTitle.edit").val();
-	var pContent = $(".pContent.edit").val();
+	var pContent = $("#description").materialnote('code');
 	var pLeader = $(".pLeader.edit").val();
 	var pDate = $('.pDate.edit').pickadate('picker').get('highlight', 'yyyy/mm/dd');
 	var pTime = $(".pTime.edit").val();
@@ -407,7 +407,7 @@ function createProject() {
 		console.log(elements);
 		$.ajax({
 							type: "POST",
-							url: "/new/api/api.php",
+							url: "/api/api.php",
 							data: {
 								action: "createproject",
 								pData: elements,
@@ -433,7 +433,7 @@ function join(prId) {
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "/new/api/api.php",
+							url: "/api/api.php",
 							data: {
 								action: "joinproject",
 								id: localStorage.getItem("userid"),
@@ -459,7 +459,7 @@ function leave(prId) {
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "/new/api/api.php",
+							url: "/api/api.php",
 							data: {
 								action: "leaveproject",
 								id: localStorage.getItem("userid"),
@@ -485,7 +485,7 @@ function edit(prId) {
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "/new/api/api.php",
+							url: "/api/api.php",
 							data: {
 								action: "editproject",
 								id: localStorage.getItem("userid"),
@@ -506,7 +506,7 @@ function edit(prId) {
 function view(prId) {
 		$.ajax({
 							type: "POST",
-							url: "/new/api/api.php",
+							url: "/api/api.php",
 							data: {
 								action: "viewproject",
 								prId: prId
@@ -522,6 +522,12 @@ function view(prId) {
 		});
 }
 
+function strip(html){
+	var tmp = document.createElement("DIV");
+	tmp.innerHTML = html;
+	return tmp.textContent || tmp.innerText;
+}
+
 function openEditWin(res){
 	res = JSON.parse(res);
 	var date = new Date(res.date);
@@ -534,19 +540,20 @@ function openEditWin(res){
 	$("#date").pickadate('set').set('select', date);
 	$("#time").val(res.time);
 	$("#duration").val(res.duration);
-	$("#description").val(res.content);
+	$('#description').materialnote('code', res.content);
+	// $("#description").val(res.content);
 	$("#max").val(res.max);
 	$("#submitEdit").attr('onclick', 'submitEdit(' + res.id + ')');
 	$("#deleteEdit").attr('onclick', 'deleteProject(' + res.id + '); $(".modal").modal("close");');
-	$('#description').trigger('autoresize');
+	// $('#description').trigger('autoresize');
 	$("#editWin").modal("open");
-	$('#description').trigger('autoresize');
+	// $('#description').trigger('autoresize');
 }
 
 function getNames(ids){
 	$.ajax({
 						type: "POST",
-						url: "/new/api/api.php",
+						url: "/api/api.php",
 						data: {
 							action: "getnames",
 							ids: ids
@@ -569,7 +576,7 @@ function getNames(ids){
 function getName(id){
 	$.ajax({
 						type: "POST",
-						url: "/new/api/api.php",
+						url: "/api/api.php",
 						data: {
 							action: "getname",
 							id: id
@@ -622,7 +629,7 @@ function submitEdit(prId){
 	}else{
 		$.ajax({
 							type: "POST",
-							url: "/new/api/api.php",
+							url: "/api/api.php",
 							data: {
 								action: "submitedit",
 								id: localStorage.getItem("userid"),
@@ -646,7 +653,7 @@ function loadProjects(){
 	if(localStorage.getItem("userid") == null) localStorage.setItem("userid", 0);
 	$.ajax({
 				type: "POST",
-				url: "/new/api/projects.php",
+				url: "/api/projects.php",
 				data: {
 					type: "active",
 					id: localStorage.getItem("userid")
@@ -654,7 +661,7 @@ function loadProjects(){
 				success: function(results){
 						resultHandler(results);
 						$(".active_projects").html(results);
-						$('.tooltipped').tooltip({delay: 50});
+						// $('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -662,7 +669,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "/new/api/projects.php",
+				url: "/api/projects.php",
 				data: {
 					type: "pending",
 					id: localStorage.getItem("userid")
@@ -670,7 +677,7 @@ function loadProjects(){
 				success: function(results){
 						resultHandler(results);
 						$(".pending_projects").html(results);
-						$('.tooltipped').tooltip({delay: 50});
+						// $('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -678,7 +685,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "/new/api/projects.php",
+				url: "/api/projects.php",
 				data: {
 					type: "finished",
 					id: localStorage.getItem("userid")
@@ -686,7 +693,7 @@ function loadProjects(){
 				success: function(results){
 						resultHandler(results);
 						$(".finished_projects").html(results);
-						$('.tooltipped').tooltip({delay: 50});
+						// $('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -694,7 +701,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "/new/api/projects.php",
+				url: "/api/projects.php",
 				data: {
 					type: "removed",
 					id: localStorage.getItem("userid")
@@ -702,7 +709,7 @@ function loadProjects(){
 				success: function(results){
 						resultHandler(results);
 						$(".removed_projects").html(results);
-						$('.tooltipped').tooltip({delay: 50});
+						// $('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -710,7 +717,7 @@ function loadProjects(){
 	})
 	$.ajax({
 				type: "POST",
-				url: "/new/api/projects.php",
+				url: "/api/projects.php",
 				data: {
 					type: "your",
 					id: localStorage.getItem("userid")
@@ -718,7 +725,7 @@ function loadProjects(){
 				success: function(results){
 						resultHandler(results);
 						$(".your_projects").html(results);
-						$('.tooltipped').tooltip({delay: 50});
+						// $('.tooltipped').tooltip({delay: 50});
 					},
 				error: function(message){
 						console.log(message);
@@ -733,7 +740,7 @@ function addProject(){
 function deleteProject(prId){
 	$.ajax({
 						type: "POST",
-						url: "/new/api/api.php",
+						url: "/api/api.php",
 						data: {
 							action: "deleteproject",
 							id: localStorage.getItem("userid"),
@@ -753,7 +760,7 @@ function deleteProject(prId){
 function loadData(){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "loaddata"
 				},
@@ -811,7 +818,7 @@ function your_projects(ret){
 function loadPoll(id, nr){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "getpolldata",
 					id: id
@@ -837,7 +844,7 @@ function loadPoll(id, nr){
 function inArray(id, nr){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "inarray",
 					uId: localStorage.getItem("userid"),
@@ -861,7 +868,7 @@ function loadBars(nr, id){
 	for(var j=0;j<$("."+nr+"checks").length;j++){
 		$.ajax({
 					type: "POST",
-					url: "/new/api/api.php",
+					url: "/api/api.php",
 					data: {
 						action: "getpolldata",
 						id: id
@@ -896,7 +903,7 @@ function progressPoll(nr, id){
 		if($("#"+nr+"check"+j).prop('checked')){
 			$.ajax({
 						type: "POST",
-						url: "/new/api/api.php",
+						url: "/api/api.php",
 						data: {
 							action: "progresspoll",
 							check: j,
@@ -938,7 +945,7 @@ function changePass(){
 	}else{
 		$.ajax({
 					type: "POST",
-					url: "/new/api/api.php",
+					url: "/api/api.php",
 					data: {
 						action: "changepass",
 						id: localStorage.getItem("userid"),
@@ -961,7 +968,7 @@ function changePass(){
 function addPersonalNotify(title, text, status, priority, dismissable, user){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "addpersonalnotify",
 					title: title,
@@ -988,7 +995,7 @@ function addNotify(){
 function loadNotifications(){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "loadnotifications",
 					id: localStorage.getItem("userid")
@@ -1006,7 +1013,7 @@ function loadNotifications(){
 function loadMyNotifications(){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "loadmynotifications",
 					id: localStorage.getItem("userid")
@@ -1033,7 +1040,7 @@ function notify(){
 function seen(nId){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "seennotification",
 					id: localStorage.getItem("userid"),
@@ -1054,7 +1061,7 @@ function seen(nId){
 function myseen(nId){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "seenmynotification",
 					id: localStorage.getItem("userid"),
@@ -1078,7 +1085,7 @@ function loadBadge(){
 		$('.notification-badge').removeClass("hidden");
 		$.ajax({
 					type: "POST",
-					url: "/new/api/api.php",
+					url: "/api/api.php",
 					data: {
 						action: "countnotifications",
 						id: localStorage.getItem("userid")
@@ -1113,7 +1120,7 @@ function forgotPass(){
 function passReset(email){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "passreset",
 					email: email
@@ -1134,7 +1141,7 @@ function post(){
 	var parts = parts[1];
 	$.ajax({
 				type: "GET",
-				url: "/new/api/post.php",
+				url: "/api/post.php",
 				data: {
 					reset: parts
 				},
@@ -1162,7 +1169,7 @@ function resetPass(id){
 	}else{
 		$.ajax({
 					type: "POST",
-					url: "/new/api/api.php",
+					url: "/api/api.php",
 					data: {
 						action: "resetpass",
 						newpass: newpass,
@@ -1173,7 +1180,7 @@ function resetPass(id){
 							resultHandler(results);
 							if(results == "SUCCESS: Passwort erfolgreich zurückgesetzt!"){
 								$("#passResetModal").modal("close");
-								window.history.pushState("pushState", "Schillerpoints", "/new/");
+								window.history.pushState("pushState", "Schillerpoints", "/");
 							}
 						},
 					error: function(message){
@@ -1187,7 +1194,7 @@ function resetPass(id){
 function loadPoint(id){
 	$.ajax({
 				type: "POST",
-				url: "/new/api/api.php",
+				url: "/api/api.php",
 				data: {
 					action: "getpointdata",
 					id: id
@@ -1222,7 +1229,7 @@ function distribute(id, members){
 	console.log(sel);
 	$.ajax({
 		type: "POST",
-		url: "/new/api/api.php",
+		url: "/api/api.php",
 		data: {
 			action: "distribute",
 			id: id,
@@ -1259,7 +1266,7 @@ function interval(i){
 	t = setInterval(loadProjects,i);
 }
 function once(){
-	l = setInterval(tooltipload,2000);
+	// l = setInterval(tooltipload,2000);
 }
 function logTime(){
 	log = true;

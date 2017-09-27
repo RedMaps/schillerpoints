@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 .loginModal{
   max-width: 400px;
   max-height: 500px;
@@ -5,6 +7,14 @@
 
 .impressumModal{
   max-height: 90% !important;
+}
+
+.note-editor.note-frame .note-editing-area .note-editable{
+  margin-top: 39px !important;
+}
+
+.note-editor.note-frame.codeview .note-editing-area .note-codable{
+  margin-top: 39px !important;
 }
 
 @font-face {
@@ -142,4 +152,23 @@
 
 .indicator{
   background-color: white !important;
+}
+
+li {
+    list-style-type: disc !important;
+    margin-left: 30px !important;
+}
+
+nav ul li{
+  list-style-type: none !important;
+  margin-left: 0 !important;
+}
+
+ul:not(.browser-default) li{
+  list-style-type: none !important;
+  margin-left: 0 !important;
+}
+
+.dark{
+  background-color: #05b34d !important;
 }

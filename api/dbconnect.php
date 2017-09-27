@@ -4,10 +4,10 @@
 	error_reporting( ~E_DEPRECATED & ~E_NOTICE );
 	// but I strongly suggest you to use PDO or MySQLi.
 
-	define('DBHOST', 'localhost');
-	define('DBUSER', 'root');
-	define('DBPASS', '');
-	define('DBNAME', 'schillerpoints_de');
+	define('DBHOST', 'schillerpoints.de.mysql');
+	define('DBUSER', 'schillerpoints_de_q1');
+	define('DBPASS', 'KJLhkk02');
+	define('DBNAME', 'schillerpoints_de_q1');
 
 	$con = mysqli_connect(DBHOST,DBUSER,DBPASS);
 	$dbcon = mysqli_select_db($con, DBNAME) or die(mysqli_error($con));
@@ -22,9 +22,9 @@
 		die("Database Connection failed : " . mysql_error());
 	}
 
-	define("USERBASE","users");
-	define("PRJBASE","projects");
+	date_default_timezone_set('Europe/Berlin');
+
+	define("USERBASE","users_new");
+	define("PRJBASE","projects_new");
 	define("POLLBASE","polls");
 	define("MONEYBASE","money");
-
-	date_default_timezone_set('Europe/Berlin');

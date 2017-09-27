@@ -13,6 +13,7 @@ include_once("../parts/analyticstracking.php");
 <?php include '../api/api.php'; ?>
 <?php include '../parts/navbar.php'; ?>
 <body>
+
   <input type="hidden" name="setlogin" class="setlogin" value="true">
 
   <div class="row">
@@ -29,6 +30,8 @@ include_once("../parts/analyticstracking.php");
    </div>
 
    <div class="loadsubtable"></div>
+
+   <div class="row"><div class="col s0 m2 l2"></div><div class="col s12 m8 l8"><div class="card blue-grey darken-2"><div class="card-content white-text"><?php include "../parts/ad.php"; ?></div></div></div><div class="col s0 m2 l2"></div></div>
 
   </div>
 

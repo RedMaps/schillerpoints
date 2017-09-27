@@ -40,8 +40,9 @@
     <div class="row">
 
       <div class="input-field col s12">
-        <textarea placeholder="" name="pContent" id="description" class="materialize-textarea pContent add" data-length="500"></textarea>
-        <label for="description" class="grey-text text-lighten-2">Beschreibung</label>
+        <!-- <textarea placeholder="" name="pContent" id="description" class="materialize-textarea pContent add" data-length="500"></textarea>
+        <label for="description" class="grey-text text-lighten-2">Beschreibung</label> -->
+        <div placeholder="" id="pdescription" class="pContent edit" name="pContent"></div>
       </div>
 
       <div class="input-field col s12">

@@ -15,16 +15,22 @@ include_once("../parts/analyticstracking.php");
   <input type="hidden" name="setlogin" class="setlogin" value="true">
 
   <center>
-    <a class="waves-effect waves-light btn green accent-4 lef active disabled" onclick="active();">Active Projects</a>
-    <a class="waves-effect waves-light btn green accent-4 mid finished" onclick="finished();">Finished Projects</a>
-    <a class="waves-effect waves-light btn green accent-4 rig your" onclick="your();">Your Projects</a>
+    <a class="waves-effect waves-light btn green accent-4 lef active disabled" onclick="active();">Aktive Projekte</a>
+    <a class="waves-effect waves-light btn green accent-4 mid finished" onclick="finished();">Beendete Projekte</a>
+    <a class="waves-effect waves-light btn green accent-4 rig your" onclick="your();">Deine Projekte</a>
   </center>
+
+  <br>
+
+  <!-- <div class="row"><div class="col s0 m3 l4"></div><div class="col s12 m6 l4"><div class="card blue-grey darken-1"><div class="card-content white-text"><?php //include "../parts/ad.php"; ?></div></div></div><div class="col s0 m3 l4"></div></div> -->
 
   <br>
 
   <div class="prj active_projects"></div>
 
-  <a onclick="addProject()" class="btn-floating halfway-fab waves-effect waves-light blue-grey addbtn z-depth-4 tooltipped btn-down" data-position="left" data-tooltip="suggest project"><i class="material-icons">add</i></a>
+  <div class="row"><div class="col s0 m3 l4"></div><div class="col s12 m6 l4"><div class="card blue-grey darken-1"><div class="card-content white-text"><?php include "../parts/ad.php"; ?></div></div></div><div class="col s0 m3 l4"></div></div>
+
+  <a onclick="addProject()" class="btn-floating halfway-fab waves-effect waves-light blue-grey addbtn z-depth-4 tooltipped btn-down" data-position="left" data-tooltip="projekt vorschlagen"><i class="material-icons">add</i></a>
 
   <?php
     include "../modals/editModal.php";

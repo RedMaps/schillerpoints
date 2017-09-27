@@ -9,6 +9,23 @@
     loadMyNotifications();
     loadBadge();
     post();
+    $(".tooltipped").off("mouseenter mouseleave");
+
+    $('#description').materialnote({
+      lang: 'de-DE',
+      toolbar: [
+        // [groupName, [list of button]]
+        ['style', ['bold', 'italic', 'underline', 'clear', 'ul', 'ol', 'fullscreen']],
+      ],
+    });
+
+    $('#pdescription').materialnote({
+      lang: 'de-DE',
+      toolbar: [
+        // [groupName, [list of button]]
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+      ],
+    });
 
     // $(".pollModal").modal("open");
     $('.dropdown-button').dropdown({
@@ -51,7 +68,7 @@ $(".del-checkbox").change(function() {
     }
 });
 
-$('.tooltipped').tooltip();
+// $('.tooltipped').tooltip();
 
 $(".button-collapse").sideNav();
 

@@ -8,15 +8,44 @@ setlocale(LC_TIME, "de_DE");
 
 $dom = new Dom;
 // $dom->loadFromUrl('http://www.schillergymnasium-muenster.de/rarw78tg/38o7fgn7/'.date('W', strtotime("+2 days")).'/w/w00000.htm');
-$dom->loadFromUrl('http://www.schillergymnasium-muenster.de/rarw78tg/38o7fgn7/33/w/w00000.htm');
+$dom->loadFromUrl('http://www.schillergymnasium-muenster.de/rarw78tg/38o7fgn7/'.date('W', strtotime("+3 days")).'/w/w00000.htm');
 
 $info = $dom->find("table");
 
-$modt_mon = $info[0]->find("td");
-$modt_tue = $info[2]->find("td");
-$modt_wed = $info[4]->find("td");
-$modt_thu = $info[6]->find("td");
-$modt_fri = $info[8]->find("td");
+$i = 0;
+
+$test_mon = $info[$i]->find("th");
+if(strip_tags($test_mon) == "Nachrichten zum Tag"){
+  $modt_mon = $info[$i]->find("td");
+  $i = $i + 2;
+}else{
+  $i = $i + 1;
+}
+$test_tue = $info[$i]->find("th");
+if(strip_tags($test_tue) == "Nachrichten zum Tag"){
+  $modt_tue = $info[$i]->find("td");
+  $i = $i + 2;
+}else{
+  $i = $i + 1;
+}
+$test_wed = $info[$i]->find("th");
+if(strip_tags($test_wed) == "Nachrichten zum Tag"){
+  $modt_wed = $info[$i]->find("td");
+  $i = $i + 2;
+}else{
+  $i = $i + 1;
+}
+$test_thu = $info[$i]->find("th");
+if(strip_tags($test_thu) == "Nachrichten zum Tag"){
+  $modt_thu = $info[$i]->find("td");
+  $i = $i + 2;
+}else{
+  $i = $i + 1;
+}
+$test_fri = $info[$i]->find("th");
+if(strip_tags($test_fri) == "Nachrichten zum Tag"){
+  $modt_fri = $info[$i]->find("td");
+}
 
 mysqli_query($con, 'TRUNCATE TABLE `info_mon`');
 mysqli_query($con, 'TRUNCATE TABLE `info_tue`');
@@ -63,6 +92,8 @@ $wed = $list[2];
 $thu = $list[3];
 $fri = $list[4];
 
+$year = date("Y");
+
 mysqli_query($con, 'TRUNCATE TABLE `substitution_mon`');
 
 $mon = $mon->find("tr");
@@ -70,7 +101,7 @@ for($i=1; $i < count($mon); $i++){
   $row = $mon[$i]->find("td");
   $klasse = $row[0]->text();
   $date = $row[1]->text();
-  $datum = date('Y-m-d',strtotime($date));
+  $datum = date('Y-m-d',strtotime($date . $year));
   $stunde = $row[2]->text();
   $fach = $row[3]->text();
   $text = $row[4]->text();
@@ -87,7 +118,7 @@ for($i=1; $i < count($tue); $i++){
   $row = $tue[$i]->find("td");
   $klasse = $row[0]->text();
   $date = $row[1]->text();
-  $datum = date('Y-m-d',strtotime($date));
+  $datum = date('Y-m-d',strtotime($date . $year));
   $stunde = $row[2]->text();
   $fach = $row[3]->text();
   $text = $row[4]->text();
@@ -104,7 +135,7 @@ for($i=1; $i < count($wed); $i++){
   $row = $wed[$i]->find("td");
   $klasse = $row[0]->text();
   $date = $row[1]->text();
-  $datum = date('Y-m-d',strtotime($date));
+  $datum = date('Y-m-d',strtotime($date . $year));
   $stunde = $row[2]->text();
   $fach = $row[3]->text();
   $text = $row[4]->text();
@@ -121,7 +152,7 @@ for($i=1; $i < count($thu); $i++){
   $row = $thu[$i]->find("td");
   $klasse = $row[0]->text();
   $date = $row[1]->text();
-  $datum = date('Y-m-d',strtotime($date));
+  $datum = date('Y-m-d',strtotime($date . $year));
   $stunde = $row[2]->text();
   $fach = $row[3]->text();
   $text = $row[4]->text();
@@ -138,7 +169,7 @@ for($i=1; $i < count($fri); $i++){
   $row = $fri[$i]->find("td");
   $klasse = $row[0]->text();
   $date = $row[1]->text();
-  $datum = date('Y-m-d',strtotime($date));
+  $datum = date('Y-m-d',strtotime($date . $year));
   $stunde = $row[2]->text();
   $fach = $row[3]->text();
   $text = $row[4]->text();
