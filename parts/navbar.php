@@ -12,7 +12,7 @@ function getMoney($con){
   <div class='navbar-fixed'>
     <nav class="navbar">
       <div class="nav-wrapper green accent-4">
-        <a href="<?php echo url(); ?>" class="brand-logo">&nbsp;&nbsp;S-Points</a>
+        <a href="<?php echo url(); ?>" class="brand-logo"><img src="../pics/logo.png" class="logo"/></a>
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
         <a onclick="notify();"><i class="material-icons right notification_bell">notifications</i><small class="notification-badge right">0</small></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
