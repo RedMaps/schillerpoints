@@ -75,14 +75,14 @@
 .logo{
   margin:0px;
   margin-left:6px;
-  width: 250px;
+  width: 120%;
 }
 
 @media only screen and (min-width: 993px) {
   .money_desktop{
     visibility: visible;
     float: left;
-    margin-left: 220px;
+    margin-left: 270px;
   }
 }
 

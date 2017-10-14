@@ -12,40 +12,40 @@ $dom->loadFromUrl('http://www.schillergymnasium-muenster.de/rarw78tg/38o7fgn7/'.
 
 $info = $dom->find("table");
 
-$i = 0;
-
-$test_mon = $info[$i]->find("th");
-if(strip_tags($test_mon) == "Nachrichten zum Tag"){
-  $modt_mon = $info[$i]->find("td");
-  $i = $i + 2;
-}else{
-  $i = $i + 1;
-}
-$test_tue = $info[$i]->find("th");
-if(strip_tags($test_tue) == "Nachrichten zum Tag"){
-  $modt_tue = $info[$i]->find("td");
-  $i = $i + 2;
-}else{
-  $i = $i + 1;
-}
-$test_wed = $info[$i]->find("th");
-if(strip_tags($test_wed) == "Nachrichten zum Tag"){
-  $modt_wed = $info[$i]->find("td");
-  $i = $i + 2;
-}else{
-  $i = $i + 1;
-}
-$test_thu = $info[$i]->find("th");
-if(strip_tags($test_thu) == "Nachrichten zum Tag"){
-  $modt_thu = $info[$i]->find("td");
-  $i = $i + 2;
-}else{
-  $i = $i + 1;
-}
-$test_fri = $info[$i]->find("th");
-if(strip_tags($test_fri) == "Nachrichten zum Tag"){
-  $modt_fri = $info[$i]->find("td");
-}
+// $i = 0;
+//
+// $test_mon = $info[$i]->find("th");
+// if(strip_tags($test_mon) == "Nachrichten zum Tag"){
+//   $modt_mon = $info[$i]->find("td");
+//   $i = $i + 2;
+// }else{
+//   $i = $i + 1;
+// }
+// $test_tue = $info[$i]->find("th");
+// if(strip_tags($test_tue) == "Nachrichten zum Tag"){
+//   $modt_tue = $info[$i]->find("td");
+//   $i = $i + 2;
+// }else{
+//   $i = $i + 1;
+// }
+// $test_wed = $info[$i]->find("th");
+// if(strip_tags($test_wed) == "Nachrichten zum Tag"){
+//   $modt_wed = $info[$i]->find("td");
+//   $i = $i + 2;
+// }else{
+//   $i = $i + 1;
+// }
+// $test_thu = $info[$i]->find("th");
+// if(strip_tags($test_thu) == "Nachrichten zum Tag"){
+//   $modt_thu = $info[$i]->find("td");
+//   $i = $i + 2;
+// }else{
+//   $i = $i + 1;
+// }
+// $test_fri = $info[$i]->find("th");
+// if(strip_tags($test_fri) == "Nachrichten zum Tag"){
+//   $modt_fri = $info[$i]->find("td");
+// }
 
 mysqli_query($con, 'TRUNCATE TABLE `info_mon`');
 mysqli_query($con, 'TRUNCATE TABLE `info_tue`');
@@ -190,12 +190,12 @@ $raum = array();
 
 
 
-// mysql_query('TRUNCATE TABLE `vertretung_new`');
-//
-// $arraySize = count($klasse);
+mysqli_query($con, 'TRUNCATE TABLE `vertretung_new`');
 
-// for($c = 0; $c < $arraySize; $c++){
-//   mysql_query("INSERT INTO vertretung_new(id, klasse, datum, stunde, fach, text, vertreter, raum) VALUES('$c','$klasse[$c]','$datum[$c]','$stunde[$c]','$fach[$c]','$text[$c]','$vertreter[$c]','$raum[$c]')");
-//  }
+$arraySize = count($klasse);
+
+for($c = 0; $c < $arraySize; $c++){
+  mysqli_query($con, "INSERT INTO vertretung_new(id, klasse, datum, stunde, fach, text, vertreter, raum) VALUES('$c','$klasse[$c]','$datum[$c]','$stunde[$c]','$fach[$c]','$text[$c]','$vertreter[$c]','$raum[$c]')");
+ }
 
 ?>
